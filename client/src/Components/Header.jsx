@@ -105,7 +105,7 @@ const Header = () => {
                 >
                   <Avatar
                     alt=""
-                    src={currentUser.details.img || "../assets/noavatar.png"}
+                    src={currentUser.details.img || `../assets/noavatar.png`}
                     sx={{ width: 40, height: 40 }}
                   />
                 </IconButton>

@@ -148,11 +148,25 @@ router.delete("/:id", async (req, res, next) => {
 
 //update user
 
-router.put("/:id", async (req, res, next) => {
+router.put("/:id/updatePfp", upload.single("img"), async (req, res, next) => {
   try {
     //TODO handle profile pic change
+    const url = req.protocol + "://" + req.get("host");
     const user = await User.findById(req.params.id);
-    console.log(req.body);
+    user.img = url + "/Images/" + req.file.filename || user.img;
+    await User.findByIdAndUpdate(req.params.id, {
+      $set: {
+        img: user.img,
+      },
+    });
+  } catch (err) {
+    next(err);
+  }
+});
+
+router.put("/:id", async (req, res, next) => {
+  try {
+    const user = await User.findById(req.params.id);
     if (user) {
       user.firstName = req.body.firstName || user.firstName;
       user.lastName = req.body.lastName || user.lastName;
@@ -162,7 +176,6 @@ router.put("/:id", async (req, res, next) => {
     if (req.body.password !== "") {
       user.password = bcrypt.hashSync(req.body.password, 10);
     }
-    console.log(req.body);
     await User.findByIdAndUpdate(req.params.id, {
       $set: user,
     });
