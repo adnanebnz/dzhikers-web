@@ -1,0 +1,69 @@
+.card {
+  width: auto;
+  min-width: 200px;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.label {
+  width: max-content;
+  --tw-text-opacity: 1;
+  color: rgb(59 130 246 / var(--tw-text-opacity));
+  font-size: 13px;
+  border-bottom: 0.5px solid rgb(59 130 246 / var(--tw-text-opacity));
+  margin: 3px 0;
+}
+
+.desc {
+  font-size: 14px;
+}
+
+.star {
+  color: gold;
+}
+
+.username {
+  font-size: 14px;
+}
+
+.date {
+  font-size: 12px;
+}
+
+.form {
+  width: 250px;
+  height: 500px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  color: rgb(88, 87, 87);
+}
+
+.input {
+  border: none;
+  border-bottom: 1px solid gray;
+}
+
+.input::placeholder,
+.textarea::placeholder {
+  font-size: 12px;
+  color: rgb(56, 55, 55);
+}
+
+.input:focus,
+.textarea:focus,
+.textarea {
+  border: none;
+  border-bottom: 1px solid gray;
+}
+
+.submitButton {
+  border: none;
+  padding: 5px;
+  border-radius: 5px;
+  color: white;
+  background-color: rgb(59 130 246 / var(--tw-text-opacity));
+  cursor: pointer;
+}

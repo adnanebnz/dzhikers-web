@@ -1,0 +1,145 @@
+.hero-section {
+  position: relative;
+  height: 65vh;
+  margin-top: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.typewriter {
+  color: white;
+  font-size: 18px;
+}
+
+.hero-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.hero-background img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(90%);
+}
+
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+}
+
+.hero-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: #fff;
+}
+
+.hero-subtitle {
+  font-size: 1.5rem;
+  margin-bottom: 2rem;
+  color: #fff;
+}
+
+.cta-button {
+  display: inline-block;
+  padding: 1rem 2rem;
+  font-size: 1.2rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #fff;
+  background-color: #1e90ff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.cta-button:hover {
+  background-color: #0077b6;
+}
+
+/* For screens smaller than 768px (i.e. mobile devices) */
+@media (max-width: 767px) {
+  .hero-section {
+    height: 60vh;
+    padding: 30px;
+  }
+
+  .typewriter {
+    color: white;
+    font-size: 14px;
+  }
+
+  .hero-background {
+    height: 60vh;
+  }
+
+  .hero-title {
+    font-size: 1.5rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1rem;
+  }
+
+  .button-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    justify-content: center;
+  }
+
+  .cta-button {
+    font-size: 1rem;
+    padding: 1rem;
+  }
+}
+
+/* For screens larger than 768px (i.e. tablets and desktops) */
+@media (min-width: 768px) {
+  .hero-content {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .hero-title {
+    font-size: 2.5rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1.5rem;
+  }
+
+  .button-wrapper {
+    display: flex;
+    gap: 1.25rem;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .cta-button {
+    font-size: 1.2rem;
+    padding: 1rem 2rem;
+  }
+
+  .typewriter {
+    color: white;
+    font-size: 18px;
+  }
+}
