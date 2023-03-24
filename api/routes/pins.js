@@ -46,15 +46,22 @@ router.post("/", upload.single("image"), async (req, res, next) => {
 //get all pins
 
 router.get("/", async (req, res, next) => {
+  const page = req.query.page || 1;
+  const perPage = req.query.perPage || 20;
   try {
     const level = req.query.level;
+
     if (level !== "all") {
       const pins = await Pin.find({
         level: level,
-      });
+      })
+        .skip((page - 1) * parseInt(perPage))
+        .limit(parseInt(perPage));
       res.status(200).json(pins);
     } else if (level === "all") {
-      const pins = await Pin.find();
+      const pins = await Pin.find()
+        .skip((page - 1) * parseInt(perPage))
+        .limit(parseInt(perPage));
       res.status(200).json(pins);
     }
   } catch (err) {
