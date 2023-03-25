@@ -18,8 +18,8 @@ const Randos = () => {
         const res = await axios.get(
           `http://localhost:8800/api/pins?level=${level}&page=${page}`
         );
-        setItems(res.data);
-        setRandosCount(res.data.length);
+        setItems(res.data.pins);
+        setRandosCount(res.data.count);
       } catch (err) {
         console.log(err);
       }
@@ -27,7 +27,7 @@ const Randos = () => {
     fetchData();
   }, [level, page]);
   return (
-    <section className="bg-white mt-24 mb-20">
+    <section className="bg-white mt-24 mb-6">
       <div className="container px-6 py-8 mx-auto">
         <div className="lg:flex lg:-mx-2">
           <div className="space-y-3 lg:w-1/5 lg:px-2 lg:space-y-4">
@@ -70,17 +70,17 @@ const Randos = () => {
             </div>
 
             {/* ITEMS MAPPING  HERE */}
-            <div className="flex flex-col justify-between">
-              <div className="grid grid-cols-1 gap-8 mt-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 sm:gap-3">
+            <div className="">
+              <div className="grid grid-cols-1 gap-4 mt-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 sm:gap-3">
                 {items.map((item) => (
                   <>
-                    <div className="w-full h-screen flex justify-center">
+                    <div>
                       <div>
-                        <div className="w-auto">
+                        <div className="w-auto h-full">
                           <div className="shadow hover:shadow-lg transition duration-300 ease-in-out xl:mb-0 lg:mb-0 md:mb-0 mb-6 cursor-pointer group">
                             <div className="overflow-hidden relative">
                               <img
-                                className="w-full transition duration-700 ease-in-out group-hover:opacity-60"
+                                className="w-full h-40 overflow-hidden transition duration-700 ease-in-out group-hover:opacity-60"
                                 src={item.img}
                                 alt="image"
                               />
@@ -102,7 +102,7 @@ const Randos = () => {
                                 onClick={() => navigate("/randos/" + item._id)}
                                 className=""
                               >
-                                <h1 className="text-gray-800 font-semibold text-lg hover:text-blue-500 transition duration-300 ease-in-out">
+                                <h1 className="text-gray-800 font-semibold text-lg hover:text-blue-500 transition duration-300 ease-in-out truncate">
                                   {item.title}
                                 </h1>
                               </a>
@@ -132,12 +132,13 @@ const Randos = () => {
                 ))}
               </div>
               <Pagination
-                count={5}
+                count={Math.ceil(randosCount / 16)}
                 shape="rounded"
                 sx={{
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
+                  marginTop: "4rem",
                 }}
                 onChange={(e) => {
                   setPage(e.target.textContent);

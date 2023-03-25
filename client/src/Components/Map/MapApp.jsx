@@ -19,7 +19,7 @@ export default function MapApp() {
     const getPins = async () => {
       try {
         const res = await axios.get("http://localhost:8800/api/pins");
-        setPins(res.data);
+        setPins(res.data.pins);
       } catch (error) {
         console.log(error);
       }
