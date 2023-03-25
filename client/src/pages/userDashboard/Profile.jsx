@@ -11,6 +11,7 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
+import MapApp from "../../Components/Map/MapApp";
 const Profile = () => {
   const { id } = useParams();
   const [data, setData] = useState([]);

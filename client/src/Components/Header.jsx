@@ -30,6 +30,10 @@ const Header = () => {
 
     setAnchorEl(null);
   };
+  const handleOrgDashboard = () => {
+    navigate(`/organizer`);
+    setAnchorEl(null);
+  };
   const handleProfile = () => {
     navigate(`/profile/${currentUser.details._id}`);
     setAnchorEl(null);
@@ -129,14 +133,24 @@ const Header = () => {
                 }}
               >
                 <MenuItem onClick={handleProfile}>Profile</MenuItem>
-                {!currentUser.isAdmin && (
+                {!currentUser.isAdmin && !currentUser.isOrg && (
                   <MenuItem onClick={handleDashboard}>
                     Mes achats et réservations
                   </MenuItem>
                 )}
+
+                {currentUser.isOrg && (
+                  <MenuItem
+                    onClick={() => {
+                      navigate("/organizer");
+                    }}
+                  >
+                    Tableau de bord
+                  </MenuItem>
+                )}
                 {currentUser.isAdmin && (
                   <MenuItem onClick={() => navigate(`/admin`)}>
-                    Dashboard
+                    Tableau de bord
                   </MenuItem>
                 )}
                 <MenuItem onClick={handleDisconnect}>Se deconnecter</MenuItem>

@@ -22,6 +22,7 @@ import Success from "./pages/checkout/Success";
 import Cancel from "./pages/checkout/Cancel";
 import Error from "./pages/Error";
 import EditProfile from "./pages/userDashboard/EditProfile";
+import Organizer from "./pages/organizer/Organizer";
 
 const Layout = () => {
   return (
@@ -64,6 +65,10 @@ const router = createBrowserRouter([
       {
         path: "/admin",
         element: <Admin />,
+      },
+      {
+        path: "/organizer",
+        element: <Organizer />,
       },
       {
         path: "/profile/:id",

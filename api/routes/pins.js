@@ -43,7 +43,18 @@ router.post("/", upload.single("image"), async (req, res, next) => {
   }
 });
 
-//get all pins
+//GET ALL PINS WITHOUT FILTER
+router.get("/pure", async (req, res, next) => {
+  try {
+    const count = await Pin.countDocuments({});
+    const pins = await Pin.find();
+    res.status(200).json({ pins, count });
+  } catch (err) {
+    next(err);
+  }
+});
+
+//get pins filtering
 
 router.get("/", async (req, res, next) => {
   const page = req.query.page || 1;
