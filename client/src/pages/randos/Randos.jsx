@@ -72,7 +72,7 @@ const Randos = () => {
               <Slider
                 sx={{ width: "80%", marginTop: "2rem" }}
                 min={0}
-                max={100000}
+                max={10000}
                 value={value}
                 onChange={handleChange}
                 valueLabelDisplay="auto"
