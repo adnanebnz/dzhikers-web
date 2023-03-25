@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import logoo from "../assets/logoo.png";
+import logoo from "../assets/noback.png";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { VscChromeClose } from "react-icons/vsc";
 import { Link, useNavigate } from "react-router-dom";
@@ -48,7 +48,7 @@ const Header = () => {
       <Nav>
         <div className="brand">
           <div className="container" onClick={() => navigate("/")}>
-            <img src={logoo} alt="" style={{ height: "50px" }} />
+            <img src={logoo} alt="" style={{ height: "30px" }} />
             DZHIKERS
           </div>
         </div>
