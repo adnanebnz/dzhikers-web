@@ -6,7 +6,7 @@ import StarIcon from "@mui/icons-material/Star";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import SearchIcon from "@mui/icons-material/Search";
 import { Pagination } from "@mui/material";
-
+import Slider from "@mui/material/Slider";
 import { addToCart } from "../../state";
 const Shop = () => {
   const dispatch = useDispatch();
@@ -16,11 +16,20 @@ const Shop = () => {
   const [page, setPage] = useState(1);
   const [itemCount, setItemCount] = useState(0);
   const [category, setCategory] = useState("all");
+  const [minPrice, setMinPrice] = useState(0);
+  const [maxPrice, setMaxPrice] = useState(100000);
+  const [value, setValue] = useState([0, 1500]);
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+    setMinPrice(newValue[0]);
+    setMaxPrice(newValue[1]);
+  };
   useEffect(() => {
     const fetchData = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:8800/api/items?category=${category}&page=${page}`
+          `http://localhost:8800/api/items?category=${category}&page=${page}&min=${minPrice}&max=${maxPrice}`
         );
         setItems(res.data.items);
         setItemCount(res.data.count);
@@ -29,7 +38,7 @@ const Shop = () => {
       }
     };
     fetchData();
-  }, [category, page]);
+  }, [category, page, minPrice, maxPrice]);
   return (
     <section className="bg-white mt-24 mb-20">
       <div className="container px-6 py-8 mx-auto">
@@ -65,18 +74,35 @@ const Shop = () => {
             >
               Vetements
             </a>
+            <div>
+              <h1 className="text-gray-600 text-md font-semibold mt-10">
+                Filtrer par prix
+              </h1>
+              <div
+                className="flex gap-11 mb-2"
+                style={{ width: "100%", marginTop: "1rem" }}
+              >
+                <h1 className="text-gray-700 text-sm truncate">
+                  Min: {minPrice} DZD
+                </h1>
+                <h1 className="text-gray-700 text-sm truncate">
+                  Max: {maxPrice} DZD
+                </h1>
+              </div>
+              <Slider
+                sx={{ width: "80%" }}
+                min={0}
+                max={50000}
+                value={value}
+                onChange={handleChange}
+                valueLabelDisplay="auto"
+              />
+            </div>
           </div>
 
           <div className="mt-6 lg:mt-0 lg:px-2 lg:w-4/5 ">
             <div className="flex items-center justify-between text-sm tracking-widest uppercase ">
               <p className="text-gray-500 ">{itemCount} Produits</p>
-              <div className="flex items-center">
-                <p className="text-gray-500 ">Filtrer</p>
-                <select className="font-medium text-gray-700 bg-transparent  focus:outline-none">
-                  <option value="#">Popularité</option>
-                  <option value="#">Prix</option>
-                </select>
-              </div>
             </div>
 
             {/* ITEMS MAPPING  HERE */}

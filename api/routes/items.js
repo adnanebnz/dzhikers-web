@@ -93,6 +93,7 @@ router.get("/", async (req, res, next) => {
 
       const items = await Item.find({
         category: category,
+        price: { $gte: req.query.min, $lte: req.query.max },
       })
         .skip((page - 1) * parseInt(perPage))
         .limit(parseInt(perPage));
@@ -100,24 +101,14 @@ router.get("/", async (req, res, next) => {
 
       res.status(200).json({ items, count });
     } else if (category === "all") {
-      const items = await Item.find()
+      const items = await Item.find({
+        price: { $gte: req.query.min, $lte: req.query.max },
+      })
         .skip((page - 1) * parseInt(perPage))
         .limit(parseInt(perPage));
       const count = await Item.countDocuments({});
       res.status(200).json({ items, count });
     }
-  } catch (err) {
-    next(err);
-  }
-});
-//filter items by price
-router.get("/filter/:category", async (req, res, next) => {
-  try {
-    const items = await Item.find({
-      category: req.params.category,
-      price: { $gte: req.query.min, $lte: req.query.max },
-    });
-    res.status(200).json(items);
   } catch (err) {
     next(err);
   }
