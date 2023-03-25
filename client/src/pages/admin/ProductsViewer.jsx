@@ -34,7 +34,7 @@ const ProductsViewer = () => {
         const resultat = await axios.get("http://localhost:8800/api/items", {
           withCredentials: true,
         });
-        setProducts(resultat.data);
+        setProducts(resultat.data.items);
         setLoading(false);
       } catch (error) {
         console.log(error);

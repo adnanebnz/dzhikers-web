@@ -5,31 +5,33 @@ import { useDispatch } from "react-redux";
 import StarIcon from "@mui/icons-material/Star";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import SearchIcon from "@mui/icons-material/Search";
+import { Pagination } from "@mui/material";
+
 import { addToCart } from "../../state";
 const Shop = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [items, setItems] = useState([]);
   const [count, setCount] = useState(1);
+  const [page, setPage] = useState(1);
   const [itemCount, setItemCount] = useState(0);
   const [category, setCategory] = useState("all");
   useEffect(() => {
     const fetchData = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:8800/api/items?category=${category}`
+          `http://localhost:8800/api/items?category=${category}&page=${page}`
         );
-        setItems(res.data);
-        setItemCount(res.data.length);
+        setItems(res.data.items);
+        setItemCount(res.data.count);
       } catch (err) {
         console.log(err);
       }
     };
     fetchData();
-  }, [category]);
-  console.log(items);
+  }, [category, page]);
   return (
-    <section className="bg-white mt-24 mb-20 h-screen">
+    <section className="bg-white mt-24 mb-20">
       <div className="container px-6 py-8 mx-auto">
         <div className="lg:flex lg:-mx-2">
           <div className="space-y-3 lg:w-1/5 lg:px-2 lg:space-y-4">
@@ -81,13 +83,13 @@ const Shop = () => {
             <div className="grid grid-cols-1 gap-8 mt-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 sm:gap-3">
               {items.map((item) => (
                 <>
-                  <div className="w-full h-screen flex justify-center">
+                  <div>
                     <div>
                       <div className="w-auto">
                         <div className="shadow hover:shadow-lg transition duration-300 ease-in-out xl:mb-0 lg:mb-0 md:mb-0 mb-6 cursor-pointer group">
                           <div className="overflow-hidden relative">
                             <img
-                              className="w-full transition duration-700 ease-in-out group-hover:opacity-60"
+                              className="w-full h-96 sm:h-56 overflow-hidden transition duration-700 ease-in-out group-hover:opacity-60 object-cover"
                               src={item.img3}
                               alt="image"
                             />
@@ -151,6 +153,19 @@ const Shop = () => {
                 </>
               ))}
             </div>
+            <Pagination
+              count={Math.ceil(itemCount / 12)}
+              shape="rounded"
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                marginTop: "4rem",
+              }}
+              onChange={(e) => {
+                setPage(e.target.textContent);
+              }}
+            />
           </div>
         </div>
       </div>

@@ -23,6 +23,18 @@ const Profile = () => {
     };
     fetchData();
   }, [id]);
+  const handleAccountDelete = async () => {
+    try {
+      await axios.delete(`http://localhost:8800/api/users/${id}`, {
+        withCredentials: true,
+      });
+      localStorage.setItem("currentUser", null);
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <Box marginTop="20px" marginBottom="10px">
       {error && (
@@ -35,11 +47,20 @@ const Profile = () => {
       {!error && (
         <div className="mt-3 mb-10">
           <div className="flex flex-col items-center justify-center py-12">
-            <img
-              src={data.img || noavatar}
-              alt="Avatar"
-              className="w-32 h-32 rounded-full mb-4 object-cover"
-            />
+            {data.img === "http://localhost:8800/Images/undefined" && (
+              <img
+                src={noavatar}
+                alt="Avatar"
+                className="w-32 h-32 rounded-full mb-4 object-cover"
+              />
+            )}
+            {data.img !== "http://localhost:8800/Images/undefined" && (
+              <img
+                src={data.img}
+                alt="Avatar"
+                className="w-32 h-32 rounded-full mb-4 object-cover"
+              />
+            )}
             <h1 className="text-2xl font-bold mb-2">
               {data.lastName} {data.firstName}
             </h1>
@@ -54,7 +75,10 @@ const Profile = () => {
                 <EditIcon className="-ml-1 mr-2 h-5 w-5" aria-hidden="true" />
                 Modifier votre profil
               </button>
-              <button className="flex items-center px-3 py-2  rounded font-semibold text-white focus:outline-none focus:ring ring-red-300 bg-red-600 hover:bg-red-700">
+              <button
+                className="flex items-center px-3 py-2  rounded font-semibold text-white focus:outline-none  bg-red-600 hover:bg-red-700"
+                onClick={handleAccountDelete}
+              >
                 <DeleteIcon className="-ml-1 mr-2 h-5 w-5" aria-hidden="true" />
                 Supprimer votre compte
               </button>

@@ -76,11 +76,11 @@ const Randos = () => {
                   <>
                     <div>
                       <div>
-                        <div className="w-auto h-full">
+                        <div className="w-auto">
                           <div className="shadow hover:shadow-lg transition duration-300 ease-in-out xl:mb-0 lg:mb-0 md:mb-0 mb-6 cursor-pointer group">
                             <div className="overflow-hidden relative">
                               <img
-                                className="w-full h-40 overflow-hidden transition duration-700 ease-in-out group-hover:opacity-60"
+                                className="w-full h-96 sm:h-56 overflow-hidden transition duration-700 ease-in-out group-hover:opacity-60 object-cover"
                                 src={item.img}
                                 alt="image"
                               />

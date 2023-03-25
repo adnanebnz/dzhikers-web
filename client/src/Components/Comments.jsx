@@ -6,6 +6,7 @@ import Loading from "./Loading";
 import { useParams } from "react-router-dom";
 import TextField from "@mui/material/TextField";
 import Rating from "@mui/material/Rating";
+import noavatar from "../assets/noavatar.png";
 const Comments = () => {
   const [comments, setComments] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -90,11 +91,22 @@ const Comments = () => {
                 <Box
                   sx={{ display: "flex", alignItems: "center", gap: "0.5rem" }}
                 >
-                  <img
-                    src={currentUser.details.img || "./../assets/noavatar.png"}
-                    alt=""
-                    className="rounded-full h-12 w-12 object-cover"
-                  />
+                  {currentUser.details.img ===
+                    "http://localhost:8800/Images/undefined" && (
+                    <img
+                      src={noavatar}
+                      alt=""
+                      className="rounded-full h-12 w-12 object-cover"
+                    />
+                  )}
+                  {currentUser.details.img !==
+                    "http://localhost:8800/Images/undefined" && (
+                    <img
+                      src={currentUser.details.img}
+                      alt=""
+                      className="rounded-full h-12 w-12 object-cover"
+                    />
+                  )}
                   <Typography variant="h6" fontSize="16px" fontWeight={600}>
                     {currentUser.details.username}
                   </Typography>

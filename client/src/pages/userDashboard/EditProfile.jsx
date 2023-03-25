@@ -12,6 +12,8 @@ export default function EditProfile() {
   const [error, setError] = useState(undefined);
   const [pfpAlert, setPfpAlert] = useState(false);
   const [infosAlert, setInfosAlert] = useState(false);
+  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
       return;
@@ -22,7 +24,6 @@ export default function EditProfile() {
   };
   const handleFileSelect = (event) => {
     setSelectedFile(event.target.files[0]);
-    console.log(selectedFile);
     setImage(URL.createObjectURL(event.target.files[0]));
   };
   const handlePfpChange = async (event) => {
@@ -244,7 +245,8 @@ export default function EditProfile() {
             severity="success"
             sx={{ width: "100%" }}
           >
-            Photo de profile modifié avec success!.
+            La photo de profil a été mise à jour avec succès, vous la verrez une
+            fois que vous vous reconnecterez !
           </Alert>
         </Snackbar>
       )}

@@ -85,21 +85,31 @@ router.delete("/:id", async (req, res, next) => {
 //get items by category
 router.get("/", async (req, res, next) => {
   try {
+    const page = req.query.page || 1;
+    const perPage = 12;
     const category = req.query.category;
     if (category !== "all") {
+      //update the count each time the category changes
+
       const items = await Item.find({
         category: category,
-      });
-      res.status(200).json(items);
+      })
+        .skip((page - 1) * parseInt(perPage))
+        .limit(parseInt(perPage));
+      const count = await Item.countDocuments({});
+
+      res.status(200).json({ items, count });
     } else if (category === "all") {
-      const items = await Item.find();
-      res.status(200).json(items);
+      const items = await Item.find()
+        .skip((page - 1) * parseInt(perPage))
+        .limit(parseInt(perPage));
+      const count = await Item.countDocuments({});
+      res.status(200).json({ items, count });
     }
   } catch (err) {
     next(err);
   }
 });
-
 //filter items by price
 router.get("/filter/:category", async (req, res, next) => {
   try {

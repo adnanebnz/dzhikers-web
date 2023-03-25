@@ -134,11 +134,17 @@ router.delete("/:id", async (req, res, next) => {
     res.status(401).json("you cant you dont have the auth");
   }
   jwt.verify(token, process.env.JWT, async (err, payload) => {
-    if (payload.isAdmin == false) {
-      res.status(401).json("You're not an admin");
-    } else if (payload.isAdmin) {
+    if (payload.isAdmin || payload.id == req.params.id) {
       await User.findByIdAndDelete(req.params.id);
-      res.status(200).json("user deleted");
+      res
+        .clearCookie("access_token", {
+          sameSite: "none",
+          secure: true,
+        })
+        .status(200)
+        .send("User has been deleted.");
+    } else if (payload.isAdmin == false) {
+      res.status(401).json("You're not an admin");
     }
     if (err) {
       res.status(404).json(err);
@@ -154,10 +160,13 @@ router.put("/:id/updatePfp", upload.single("img"), async (req, res, next) => {
     const url = req.protocol + "://" + req.get("host");
     const user = await User.findById(req.params.id);
     user.img = url + "/Images/" + req.file.filename || user.img;
-    await User.findByIdAndUpdate(req.params.id, {
+    const updatedUser = await User.findByIdAndUpdate(req.params.id, {
       $set: {
         img: user.img,
       },
+    });
+    res.status(200).json({
+      img: user.img,
     });
   } catch (err) {
     next(err);
