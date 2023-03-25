@@ -71,6 +71,16 @@ const Product = () => {
                       DZD
                     </span>
                   </div>
+                  {data.quantity === 0 && (
+                    <h1 className="mt-2 text-red-700 text-lg font-semibold">
+                      En rupture de stock
+                    </h1>
+                  )}
+                  {data.quantity > 0 && (
+                    <h1 className="mt-2 text-green-700 text-lg font-semibold">
+                      En stock: {data.quantity}
+                    </h1>
+                  )}
                 </div>
               </div>
 
