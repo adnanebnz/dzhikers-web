@@ -13,6 +13,8 @@ const Shop = () => {
   const navigate = useNavigate();
   const [items, setItems] = useState([]);
   const [count, setCount] = useState(1);
+  const [countOne, setCountOne] = useState(0);
+
   const [page, setPage] = useState(1);
   const [itemCount, setItemCount] = useState(0);
   const [category, setCategory] = useState("all");
@@ -33,6 +35,7 @@ const Shop = () => {
         );
         setItems(res.data.items);
         setItemCount(res.data.count);
+        setCountOne(res.data.items.length);
       } catch (err) {
         console.log(err);
       }
@@ -170,19 +173,21 @@ const Shop = () => {
                 </>
               ))}
             </div>
-            <Pagination
-              count={Math.ceil(itemCount / 12)}
-              shape="rounded"
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                marginTop: "4rem",
-              }}
-              onChange={(e) => {
-                setPage(e.target.textContent);
-              }}
-            />
+            {countOne > 0 && (
+              <Pagination
+                count={Math.ceil(itemCount / 12)}
+                shape="rounded"
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  marginTop: "4rem",
+                }}
+                onChange={(e) => {
+                  setPage(e.target.textContent);
+                }}
+              />
+            )}
           </div>
         </div>
       </div>

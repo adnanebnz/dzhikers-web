@@ -5,11 +5,21 @@ import axios from "axios";
 import { Typography, Box } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import noavatar from "../../assets/noavatar.png";
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
 const Profile = () => {
   const { id } = useParams();
   const [data, setData] = useState([]);
   const [error, setError] = useState("");
+  const [open, setOpen] = useState(false);
   const navigate = useNavigate();
+  const handleClose = () => {
+    setOpen(false);
+  };
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -77,7 +87,7 @@ const Profile = () => {
               </button>
               <button
                 className="flex items-center px-3 py-2  rounded font-semibold text-white focus:outline-none  bg-red-600 hover:bg-red-700"
-                onClick={handleAccountDelete}
+                onClick={() => setOpen(true)}
               >
                 <DeleteIcon className="-ml-1 mr-2 h-5 w-5" aria-hidden="true" />
                 Supprimer votre compte
@@ -107,6 +117,20 @@ const Profile = () => {
           </div>
         </div>
       )}
+      <Dialog open={open} keepMounted onClose={handleClose}>
+        <DialogTitle>{"Êtes-vous sûr?"}</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            <h1 className="text-gray-700">
+              Vous voulez vraiment supprimer votre compte?
+            </h1>
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>ANNULER</Button>
+          <Button onClick={handleAccountDelete}>ACCEPTER</Button>
+        </DialogActions>
+      </Dialog>
     </Box>
   );
 };

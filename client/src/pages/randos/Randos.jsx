@@ -12,6 +12,7 @@ const Randos = () => {
   const [level, setLevel] = useState("all");
   const [page, setPage] = useState(1);
   const [randosCount, setRandosCount] = useState(0);
+  const [count, setCount] = useState(0);
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(100000);
   const [value, setValue] = useState([0, 3000]);
@@ -29,6 +30,7 @@ const Randos = () => {
         );
         setItems(res.data.pins);
         setRandosCount(res.data.count);
+        setCount(res.data.pins.length);
       } catch (err) {
         console.log(err);
       }
@@ -144,19 +146,21 @@ const Randos = () => {
                   </>
                 ))}
               </div>
-              <Pagination
-                count={Math.ceil(randosCount / 16)}
-                shape="rounded"
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  marginTop: "4rem",
-                }}
-                onChange={(e) => {
-                  setPage(e.target.textContent);
-                }}
-              />
+              {count > 0 && (
+                <Pagination
+                  count={Math.ceil(randosCount / 16)}
+                  shape="rounded"
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    marginTop: "4rem",
+                  }}
+                  onChange={(e) => {
+                    setPage(e.target.textContent);
+                  }}
+                />
+              )}
             </div>
           </div>
         </div>
