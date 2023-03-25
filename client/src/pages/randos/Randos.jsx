@@ -16,7 +16,7 @@ const Randos = () => {
   const [maxPrice, setMaxPrice] = useState(100000);
   const [value, setValue] = useState([0, 3000]);
 
-  const handleChange = (newValue) => {
+  const handleChange = (event, newValue) => {
     setValue(newValue);
     setMinPrice(newValue[0]);
     setMaxPrice(newValue[1]);
@@ -72,7 +72,7 @@ const Randos = () => {
               <Slider
                 sx={{ width: "80%", marginTop: "2rem" }}
                 min={0}
-                max={10000}
+                max={100000}
                 value={value}
                 onChange={handleChange}
                 valueLabelDisplay="auto"
