@@ -78,24 +78,15 @@ const Shop = () => {
               <h1 className="text-gray-600 text-md font-semibold mt-10">
                 Filtrer par prix
               </h1>
-              <div
-                className="flex gap-11 mb-2"
-                style={{ width: "100%", marginTop: "1rem" }}
-              >
-                <h1 className="text-gray-700 text-sm truncate">
-                  Min: {minPrice} DZD
-                </h1>
-                <h1 className="text-gray-700 text-sm truncate">
-                  Max: {maxPrice} DZD
-                </h1>
-              </div>
+
               <Slider
-                sx={{ width: "80%" }}
+                sx={{ width: "80%", marginTop: "2rem" }}
                 min={0}
                 max={50000}
                 value={value}
                 onChange={handleChange}
                 valueLabelDisplay="auto"
+                valueLabelFormat={(value) => `${value} DZD`}
               />
             </div>
           </div>

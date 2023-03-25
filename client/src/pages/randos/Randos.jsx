@@ -4,6 +4,7 @@ import StarIcon from "@mui/icons-material/Star";
 import SearchIcon from "@mui/icons-material/Search";
 import { useNavigate } from "react-router-dom";
 import { Pagination } from "@mui/material";
+import Slider from "@mui/material/Slider";
 
 const Randos = () => {
   const navigate = useNavigate();
@@ -11,12 +12,20 @@ const Randos = () => {
   const [level, setLevel] = useState("all");
   const [page, setPage] = useState(1);
   const [randosCount, setRandosCount] = useState(0);
+  const [minPrice, setMinPrice] = useState(0);
+  const [maxPrice, setMaxPrice] = useState(100000);
+  const [value, setValue] = useState([0, 1500]);
 
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+    setMinPrice(newValue[0]);
+    setMaxPrice(newValue[1]);
+  };
   useEffect(() => {
     const fetchData = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:8800/api/pins?level=${level}&page=${page}`
+          `http://localhost:8800/api/pins?level=${level}&page=${page}&min=${minPrice}&max=${maxPrice}`
         );
         setItems(res.data.pins);
         setRandosCount(res.data.count);
@@ -25,7 +34,7 @@ const Randos = () => {
       }
     };
     fetchData();
-  }, [level, page]);
+  }, [level, page, minPrice, maxPrice]);
   return (
     <section className="bg-white mt-24 mb-6">
       <div className="container px-6 py-8 mx-auto">
@@ -55,20 +64,24 @@ const Randos = () => {
             >
               Difficile
             </a>
+            <div>
+              <h1 className="text-gray-600 text-md font-semibold mt-10">
+                Filtrer par prix
+              </h1>
+
+              <Slider
+                sx={{ width: "80%", marginTop: "2rem" }}
+                min={0}
+                max={10000}
+                value={value}
+                onChange={handleChange}
+                valueLabelDisplay="auto"
+                valueLabelFormat={(value) => `${value} DZD`}
+              />
+            </div>
           </div>
 
           <div className="mt-6 lg:mt-0 lg:px-2 lg:w-4/5">
-            <div className="flex items-center justify-between text-sm tracking-widest uppercase ">
-              <p className="text-gray-500 ">{randosCount} Randonnées</p>
-              <div className="flex items-center">
-                <p className="text-gray-500 ">Filtrer</p>
-                <select className="font-medium text-gray-700 bg-transparent  focus:outline-none">
-                  <option value="#">Popularité</option>
-                  <option value="#">Prix</option>
-                </select>
-              </div>
-            </div>
-
             {/* ITEMS MAPPING  HERE */}
             <div className="">
               <div className="grid grid-cols-1 gap-4 mt-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 sm:gap-3">

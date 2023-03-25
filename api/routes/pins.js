@@ -54,6 +54,7 @@ router.get("/", async (req, res, next) => {
       const count = await Pin.countDocuments({});
       const pins = await Pin.find({
         level: level,
+        price: { $gte: req.query.min, $lte: req.query.max },
       })
         .skip((page - 1) * parseInt(perPage))
         .limit(parseInt(perPage));
@@ -61,7 +62,9 @@ router.get("/", async (req, res, next) => {
     } else if (level === "all") {
       const count = await Pin.countDocuments({});
 
-      const pins = await Pin.find()
+      const pins = await Pin.find({
+        price: { $gte: req.query.min, $lte: req.query.max },
+      })
         .skip((page - 1) * parseInt(perPage))
         .limit(parseInt(perPage));
       res.status(200).json({ pins, count });
