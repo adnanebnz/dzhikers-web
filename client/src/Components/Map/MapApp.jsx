@@ -14,7 +14,7 @@ export default function MapApp() {
   const [currentPlaceId, setCurrentPlaceId] = useState(null);
   const [lng, setLng] = useState(3.25);
   const [lat, setLat] = useState(34.666667);
-  const [zoom, setZoom] = useState(5);
+  const [zoom, setZoom] = useState(5.6);
   const currentUser = JSON.parse(localStorage.getItem("currentUser"));
   const navigate = useNavigate();
   useEffect(() => {
@@ -82,7 +82,7 @@ export default function MapApp() {
     "pk.eyJ1Ijoic2tpbGx6ZGV2IiwiYSI6ImNsZThrbmV0NjA3NjEzeW8zZTNoN3NremEifQ.J2OUiRda51tADGWwnH-cuw";
 
   return (
-    <div className="mx-6">
+    <div className="mx-6 h-full w-full">
       <Map
         initialViewState={{
           latitude: lat,
@@ -183,6 +183,7 @@ export default function MapApp() {
               closeButton={true}
               closeOnClick={false}
               onClose={() => {
+                setNewPin(false);
                 setCurrentPlaceId(null);
                 setLat(null);
                 setLng(null);

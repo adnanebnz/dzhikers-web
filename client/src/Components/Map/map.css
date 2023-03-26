@@ -34,9 +34,10 @@
 
 .form {
   width: 250px;
-  height: 500px;
+  height: auto;
   display: flex;
   flex-direction: column;
+  gap: 0.5rem;
   justify-content: space-between;
   color: rgb(88, 87, 87);
 }
