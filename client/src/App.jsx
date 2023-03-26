@@ -23,6 +23,7 @@ import Cancel from "./pages/checkout/Cancel";
 import Error from "./pages/Error";
 import EditProfile from "./pages/userDashboard/EditProfile";
 import Organizer from "./pages/organizer/Organizer";
+import OrganizerView from "./pages/organizer/OrganizerView";
 
 const Layout = () => {
   return (
@@ -69,6 +70,10 @@ const router = createBrowserRouter([
       {
         path: "/organizer",
         element: <Organizer />,
+      },
+      {
+        path: "/organizer/overview",
+        element: <OrganizerView />,
       },
       {
         path: "/profile/:id",

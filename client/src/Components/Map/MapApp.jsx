@@ -82,7 +82,7 @@ export default function MapApp() {
     "pk.eyJ1Ijoic2tpbGx6ZGV2IiwiYSI6ImNsZThrbmV0NjA3NjEzeW8zZTNoN3NremEifQ.J2OUiRda51tADGWwnH-cuw";
 
   return (
-    <div className="mx-6 h-full w-full">
+    <div>
       <Map
         initialViewState={{
           latitude: lat,
@@ -92,7 +92,7 @@ export default function MapApp() {
         mapStyle="mapbox://styles/mapbox/streets-v9"
         mapboxAccessToken={MAPBOX_TOKEN}
         onDblClick={handleAddClick}
-        style={{ height: "60vh   " }}
+        style={{ height: "100vh" }}
       >
         {pins.map((p) => (
           <>
