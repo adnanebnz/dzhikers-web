@@ -73,4 +73,17 @@ router.delete("/:id", async (req, res, next) => {
   }
 });
 
+//get all reservations for an organizer
+router.get("/organizer/:id", async (req, res, next) => {
+  try {
+    const reservations = await Reservation.find({
+      organizerUsername: req.params.id,
+    });
+
+    res.status(200).json(reservations);
+  } catch (err) {
+    next(err);
+  }
+});
+
 module.exports = router;

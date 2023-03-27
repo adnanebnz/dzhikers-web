@@ -32,7 +32,7 @@ function Copyright(props) {
 
 const theme = createTheme();
 
-export default function ResetPassword() {
+export default function SendEmail() {
   const [error, setError] = useState(null);
   const [open, setOpen] = useState(false);
 
