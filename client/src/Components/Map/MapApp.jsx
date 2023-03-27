@@ -1,4 +1,9 @@
-import Map, { Marker, Popup } from "react-map-gl";
+import Map, {
+  Marker,
+  Popup,
+  NavigationControl,
+  GeolocateControl,
+} from "react-map-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -16,6 +21,7 @@ export default function MapApp() {
   const [lat, setLat] = useState(34.666667);
   const [zoom, setZoom] = useState(5.6);
   const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+
   const navigate = useNavigate();
   useEffect(() => {
     const getPins = async () => {
@@ -80,7 +86,6 @@ export default function MapApp() {
 
   const MAPBOX_TOKEN =
     "pk.eyJ1Ijoic2tpbGx6ZGV2IiwiYSI6ImNsZThrbmV0NjA3NjEzeW8zZTNoN3NremEifQ.J2OUiRda51tADGWwnH-cuw";
-
   return (
     <div>
       <Map
@@ -94,6 +99,8 @@ export default function MapApp() {
         onDblClick={handleAddClick}
         style={{ height: "100vh" }}
       >
+        <NavigationControl />
+        <GeolocateControl />
         {pins.map((p) => (
           <>
             <Marker longitude={p.long} latitude={p.lat}>
