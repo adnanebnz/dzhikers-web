@@ -53,6 +53,16 @@ router.get("/pure", async (req, res, next) => {
     next(err);
   }
 });
+//get all pins for organizer
+router.get("/organizer/:username", async (req, res, next) => {
+  try {
+    const hikes = await Pin.find({ organizer: req.params.username });
+
+    res.status(200).json(hikes);
+  } catch (err) {
+    next(err);
+  }
+});
 
 //get pins filtering
 

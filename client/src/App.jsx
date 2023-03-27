@@ -24,6 +24,7 @@ import EditProfile from "./pages/userDashboard/EditProfile";
 import Organizer from "./pages/organizer/Organizer";
 import OrganizerView from "./pages/organizer/OrganizerView";
 import ResetPassword from "./pages/auth/ResetPassword";
+import SingleRandoViewer from "./pages/organizer/SingleRandoViewer";
 
 const Layout = () => {
   return (
@@ -74,6 +75,10 @@ const router = createBrowserRouter([
       {
         path: "/organizer/overview",
         element: <OrganizerView />,
+      },
+      {
+        path: "/organizer/overview/:id",
+        element: <SingleRandoViewer />,
       },
       {
         path: "/profile/:id",

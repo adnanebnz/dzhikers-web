@@ -5,11 +5,16 @@ import {
   TableCell,
   TableHead,
   TableRow,
-  Typography,
 } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import PreviewIcon from "@mui/icons-material/Preview";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import Loading from "../../Components/Loading";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import moment from "moment";
 const OrganizerView = () => {
@@ -17,12 +22,13 @@ const OrganizerView = () => {
   const [count, setCount] = useState(0);
   const [loading, setLoading] = useState(true);
   const currentUser = JSON.parse(localStorage.getItem("currentUser"));
-
+  const navigate = useNavigate();
+  // TODO DELETE RANDOS ON TRASHICON CLICK
   useEffect(() => {
     const fetchData = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:8800/api/reservations/organizer/${currentUser.details.username}`,
+          `http://localhost:8800/api/pins/organizer/${currentUser.details.username}`,
           { withCredentials: true }
         );
         setData(res.data);
@@ -37,49 +43,52 @@ const OrganizerView = () => {
   return (
     <>
       <div className="h-screen">
-        {/* CARDS */}
-        <div className="flex justify-center  bg-gray-50 py-10 p-14  mt-10">
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-9 ">
-            <div className=" bg-white  rounded-sm  shadow-lg hover:shadow-2xl transition duration-500 transform hover:scale-100 cursor-pointer">
-              <div className="h-20 bg-red-400 flex items-center justify-between">
-                <p className="mr-0 text-white text-lg pl-5">
-                  Randonnées hébergées
-                </p>
-              </div>
-              <div className="flex justify-between px-5 pt-6 mb-2 text-sm text-gray-600">
-                <p>TOTAL</p>
-              </div>
-              <p className="py-4 text-3xl ml-5">10</p>
-              <hr />
+        {data.length !== 0 && (
+          <>
+            <h1 className="text-center text-gray-800 text-xl font-semibold mt-16">
+              Mes Randonées
+            </h1>
+            <div className="mx-4 flex justify-center">
+              <Table className="shadow-lg mt-10" style={{ width: "70%" }}>
+                <TableHead>
+                  <TableRow>
+                    <TableCell>Date</TableCell>
+                    <TableCell>Nom</TableCell>
+                    <TableCell>Places restantes</TableCell>
+                    <TableCell>Prix</TableCell>
+                    <TableCell>Action</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {data.map((row) => (
+                    <TableRow hover="true">
+                      <TableCell>
+                        {moment(row.createdAt).format("LL")}
+                      </TableCell>
+                      <TableCell>{row.title}</TableCell>
+                      <TableCell>{row.places}</TableCell>
+                      <TableCell>{row.price} DZD</TableCell>
+                      <TableCell>
+                        <div className="flex items-center gap-3">
+                          <IconButton>
+                            <DeleteForeverIcon className="text-red-600" />
+                          </IconButton>
+                          <IconButton
+                            onClick={() => {
+                              navigate("/organizer/overview/" + row._id);
+                            }}
+                          >
+                            <PreviewIcon className="text-blue-500" />
+                          </IconButton>
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
             </div>
-
-            <div className="w-72 bg-white max-w-xs mx-auto rounded-sm overflow-hidden shadow-lg hover:shadow-2xl transition duration-500 transform hover:scale-100 cursor-pointer">
-              <div className="h-20 bg-blue-500 flex items-center justify-between">
-                <p className="mr-0 text-white text-lg pl-5">
-                  Participants total
-                </p>
-              </div>
-              <div className="flex justify-between px-5 pt-6 mb-2 text-sm text-gray-600">
-                <p>TOTAL</p>
-              </div>
-              <p className="py-4 text-3xl ml-5">{count}</p>
-              <hr />
-            </div>
-
-            <div className="w-72 bg-white max-w-xs mx-auto rounded-sm overflow-hidden shadow-lg hover:shadow-2xl transition duration-500 transform hover:scale-100 cursor-pointer">
-              <div className="h-20 bg-purple-400 flex items-center justify-between">
-                <p className="mr-0 text-white text-lg pl-5">
-                  Total des revenus
-                </p>
-              </div>
-              <div className="flex justify-between pt-6 px-5 mb-2 text-sm text-gray-600">
-                <p>TOTAL</p>
-              </div>
-              <p className="py-4 text-3xl ml-5">78000 DZD</p>
-              <hr />
-            </div>
-          </div>
-        </div>
+          </>
+        )}
       </div>
     </>
   );
