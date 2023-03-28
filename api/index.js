@@ -1,6 +1,4 @@
-const http = require("http");
 const express = require("express");
-const socketIO = require("socket.io");
 require("dotenv").config();
 const mongoose = require("mongoose");
 const cors = require("cors");
@@ -23,28 +21,6 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({ origin: "http://localhost:5173", credentials: true }));
-let server = http.createServer(app);
-let io = socketIO(server);
-
-let interval;
-
-io.on("connection", (socket) => {
-  console.log("New client connected");
-  if (interval) {
-    clearInterval(interval);
-  }
-  interval = setInterval(() => getApiAndEmit(socket), 1000);
-  socket.on("disconnect", () => {
-    console.log("Client disconnected");
-    clearInterval(interval);
-  });
-});
-
-const getApiAndEmit = (socket) => {
-  const response = new Date();
-  // Emitting a new message. Will be consumed by the client
-  socket.emit("FromAPI", response);
-};
 
 app.use(express.static("Images"));
 app.use("/images", express.static("Images"));
@@ -74,6 +50,6 @@ app.use((err, req, res, next) => {
 
 //SERVER STARTUP
 
-server.listen(8800, () => {
+app.listen(8800, () => {
   console.log("Server listening at port 8800 🚀");
 });
