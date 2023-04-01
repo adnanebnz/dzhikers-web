@@ -11,6 +11,7 @@ const resetPasswordRoute = require("./routes/reset");
 const messagesRoute = require("./routes/messages");
 const reviewsRoute = require("./routes/reviews");
 const reservationsRoute = require("./routes/reservations");
+const announcesRoute = require("./routes/announces");
 mongoose.set("strictQuery", false);
 
 mongoose
@@ -35,6 +36,7 @@ app.use("/api/reset", resetPasswordRoute);
 app.use("/api/items", itemRoute);
 app.use("/api/orders", orderRoute);
 app.use("/api/messages", messagesRoute);
+app.use("/api/announces", announcesRoute);
 
 //ERROR HANDLING
 app.use((err, req, res, next) => {
