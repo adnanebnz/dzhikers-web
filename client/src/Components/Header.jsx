@@ -4,6 +4,7 @@ import logoo from "../assets/noback.png";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { VscChromeClose } from "react-icons/vsc";
 import { Link, useNavigate } from "react-router-dom";
+import DashboardIcon from "@mui/icons-material/Dashboard";
 import { useDispatch, useSelector } from "react-redux";
 import { Avatar, Badge, IconButton, Typography, Box } from "@mui/material";
 import { ShoppingBagOutlined } from "@mui/icons-material";
@@ -11,7 +12,8 @@ import { setIsCartOpen } from "../state";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import axios from "axios";
-
+import LogoutIcon from "@mui/icons-material/Logout";
+import SettingsIcon from "@mui/icons-material/Settings";
 const Header = () => {
   const [navbarState, setNavbarState] = useState(false);
   const navigate = useNavigate();
@@ -132,9 +134,31 @@ const Header = () => {
                   "aria-labelledby": "basic-button",
                 }}
               >
-                <MenuItem onClick={handleProfile}>Profile</MenuItem>
+                <MenuItem
+                  onClick={handleProfile}
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: ".25rem",
+                    justifyItems: "center",
+                  }}
+                >
+                  <SettingsIcon sx={{ color: "#4b5563", fontSize: "20px" }} />
+                  Profile
+                </MenuItem>
                 {!currentUser.isAdmin && !currentUser.isOrg && (
-                  <MenuItem onClick={handleDashboard}>
+                  <MenuItem
+                    onClick={handleDashboard}
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: ".25rem",
+                      justifyItems: "center",
+                    }}
+                  >
+                    <DashboardIcon
+                      sx={{ color: "#4b5563", fontSize: "20px" }}
+                    />
                     Mes achats et réservations
                   </MenuItem>
                 )}
@@ -144,16 +168,47 @@ const Header = () => {
                     onClick={() => {
                       navigate("/organizer");
                     }}
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: ".25rem",
+                      justifyItems: "center",
+                    }}
                   >
+                    <DashboardIcon
+                      sx={{ color: "#4b5563", fontSize: "20px" }}
+                    />
                     Tableau de bord
                   </MenuItem>
                 )}
                 {currentUser.isAdmin && (
-                  <MenuItem onClick={() => navigate(`/admin`)}>
+                  <MenuItem
+                    onClick={() => navigate(`/admin`)}
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: ".25rem",
+                      justifyItems: "center",
+                    }}
+                  >
+                    <DashboardIcon
+                      sx={{ color: "#4b5563", fontSize: "20px" }}
+                    />
                     Tableau de bord
                   </MenuItem>
                 )}
-                <MenuItem onClick={handleDisconnect}>Se deconnecter</MenuItem>
+                <MenuItem
+                  onClick={handleDisconnect}
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: ".25rem",
+                    justifyItems: "center",
+                  }}
+                >
+                  <LogoutIcon sx={{ color: "#4b5563", fontSize: "20px" }} />
+                  Déconnecter
+                </MenuItem>
               </Menu>
             </div>
           )}
