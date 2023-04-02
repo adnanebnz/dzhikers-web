@@ -1,6 +1,33 @@
 const router = require("express").Router();
 const Announce = require("../models/Announce");
+const Reservation = require("../models/Reservation");
 const Pin = require("../models/Pin");
+
+router.get("/notifs/:userId", async (req, res, next) => {
+  try {
+    const reservations = await Reservation.find({ userId: req.params.userId });
+    const announces = await Announce.find({
+      hikeId: { $in: reservations.map((r) => r.hikeId) },
+    });
+    const hikeInfos = await Pin.find({
+      _id: { $in: announces.map((a) => a.hikeId) },
+    });
+    res.status(200).json({ announces, hikeInfos });
+  } catch (err) {
+    next(err);
+  }
+});
+
+router.delete("/notifs/:id", async (req, res, next) => {
+  try {
+    const announce = await Announce.findById(req.params.id);
+    await announce.remove();
+    res.status(200).json({ message: "Announce deleted" });
+  } catch (err) {
+    next(err);
+  }
+});
+
 router.get("/:hikeId", async (req, res, next) => {
   try {
     const announce = await Announce.find({ hikeId: req.params.hikeId });

@@ -1,41 +1,52 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import logoo from "../assets/noback.png";
 import { GiHamburgerMenu } from "react-icons/gi";
+import { FiSettings } from "react-icons/fi";
+import { IoLogOutOutline } from "react-icons/io5";
+import { AiOutlineDashboard } from "react-icons/ai";
+import { GrClose, GrNotification } from "react-icons/gr";
 import { VscChromeClose } from "react-icons/vsc";
+import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
-import DashboardIcon from "@mui/icons-material/Dashboard";
 import { useDispatch, useSelector } from "react-redux";
 import { Avatar, Badge, IconButton, Typography, Box } from "@mui/material";
 import { ShoppingBagOutlined } from "@mui/icons-material";
 import { setIsCartOpen } from "../state";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import axios from "axios";
-import LogoutIcon from "@mui/icons-material/Logout";
-import SettingsIcon from "@mui/icons-material/Settings";
+import moment from "moment";
+import ClickAwayListener from "@mui/base/ClickAwayListener";
 const Header = () => {
   const [navbarState, setNavbarState] = useState(false);
   const navigate = useNavigate();
+  const [notifications, setNotifications] = useState([]);
+  const [hikeInfos, setHikeInfos] = useState([]);
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart.cart);
   const [anchorEl, setAnchorEl] = useState(null);
+  const [anchorElOne, setAnchorElOne] = useState(null);
   const open = Boolean(anchorEl);
+  const openOne = Boolean(anchorElOne);
   const handleBtn = (event) => {
     setAnchorEl(event.currentTarget);
   };
+
+  const handleBtnOne = (event) => {
+    setAnchorElOne(event.currentTarget);
+  };
   const handleClose = () => {
     setAnchorEl(null);
+  };
+  const handleCloseOne = () => {
+    setAnchorElOne(null);
   };
   const handleDashboard = () => {
     navigate(`/profile/dashboard/${currentUser.details._id}`);
 
     setAnchorEl(null);
   };
-  const handleOrgDashboard = () => {
-    navigate(`/organizer`);
-    setAnchorEl(null);
-  };
+
   const handleProfile = () => {
     navigate(`/profile/${currentUser.details._id}`);
     setAnchorEl(null);
@@ -49,6 +60,23 @@ const Header = () => {
     navigate("/");
   };
   const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+  useEffect(() => {
+    const fetchNotifs = async () => {
+      try {
+        const res = await axios.get(
+          `http://localhost:8800/api/announces/notifs/${currentUser.details._id}`,
+          {
+            withCredentials: true,
+          }
+        );
+        setNotifications(res.data.announces);
+        setHikeInfos(res.data.hikeInfos);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchNotifs();
+  }, []);
   return (
     <div>
       <Nav>
@@ -75,29 +103,105 @@ const Header = () => {
         </ul>
         <div className="flex gap-4 items-center">
           {!currentUser?.isAdmin && (
-            <Badge
-              className="badge"
-              badgeContent={cart.length}
-              color="error"
-              invisible={cart.length === 0}
-              sx={{
-                "& .MuiBadge-badge": {
-                  right: 5,
-                  top: 5,
-                  padding: "0 4px",
-                  height: "18px",
-                  minWidth: "18px",
-                },
-              }}
-            >
-              <IconButton
-                className="cart"
-                onClick={() => dispatch(setIsCartOpen({}))}
-                sx={{ color: "black", height: "40px" }}
+            <>
+              <Badge
+                className="badge"
+                badgeContent={notifications.length}
+                color="error"
+                invisible={notifications.length === 0}
+                sx={{
+                  "& .MuiBadge-badge": {
+                    right: 5,
+                    top: 5,
+                    padding: "0 4px",
+                    height: "18px",
+                    minWidth: "18px",
+                  },
+                }}
               >
-                <ShoppingBagOutlined />
-              </IconButton>
-            </Badge>
+                <IconButton
+                  className="cart"
+                  id="basic-buttonOne"
+                  aria-controls={openOne ? "basic-menuOne" : undefined}
+                  aria-haspopup="true"
+                  aria-expanded={openOne ? "true" : undefined}
+                  onClick={handleBtnOne}
+                  sx={{ color: "black", height: "40px" }}
+                >
+                  <GrNotification size={18} />
+                </IconButton>
+              </Badge>
+              {notifications.length > 0 && (
+                <>
+                  <Menu
+                    anchorOrigin={{
+                      vertical: "bottom",
+                      horizontal: "left",
+                    }}
+                    transformOrigin={{ vertical: "top", horizontal: "center" }}
+                    id="basic-menuOne"
+                    anchorEl={anchorElOne}
+                    open={openOne}
+                    onClose={handleCloseOne}
+                    MenuListProps={{
+                      "aria-labelledby": "basic-buttonOne",
+                    }}
+                  >
+                    {notifications.map((notif) => (
+                      <MenuItem>
+                        <div className="flex flex-col gap-2">
+                          <div>
+                            {hikeInfos.map((hike) =>
+                              hike._id === notif.hikeId ? (
+                                <div className="flex items-center gap-2">
+                                  <Avatar
+                                    src={hike.img}
+                                    sx={{ width: "40px", height: "40px" }}
+                                  />
+                                  <h1>{hike.title}</h1>
+                                </div>
+                              ) : null
+                            )}
+                          </div>
+                          <div>
+                            <h1 className="text-md text-gray-800 font-medium">
+                              {notif.title}
+                            </h1>
+                            <h1 className="text-sm text-gray-600">
+                              {moment(notif.createdAt).fromNow()}
+                            </h1>
+                          </div>
+                        </div>
+                      </MenuItem>
+                    ))}
+                  </Menu>
+                </>
+              )}
+
+              <Badge
+                className="badge"
+                badgeContent={cart.length}
+                color="error"
+                invisible={cart.length === 0}
+                sx={{
+                  "& .MuiBadge-badge": {
+                    right: 5,
+                    top: 5,
+                    padding: "0 4px",
+                    height: "18px",
+                    minWidth: "18px",
+                  },
+                }}
+              >
+                <IconButton
+                  className="cart"
+                  onClick={() => dispatch(setIsCartOpen({}))}
+                  sx={{ color: "black", height: "40px" }}
+                >
+                  <ShoppingBagOutlined />
+                </IconButton>
+              </Badge>
+            </>
           )}
           {currentUser && (
             <div className="userInfos">
@@ -139,11 +243,11 @@ const Header = () => {
                   sx={{
                     display: "flex",
                     alignItems: "center",
-                    gap: ".25rem",
+                    gap: ".4rem",
                     justifyItems: "center",
                   }}
                 >
-                  <SettingsIcon sx={{ color: "#4b5563", fontSize: "20px" }} />
+                  <FiSettings size={17} />
                   Profile
                 </MenuItem>
                 {!currentUser.isAdmin && !currentUser.isOrg && (
@@ -152,13 +256,11 @@ const Header = () => {
                     sx={{
                       display: "flex",
                       alignItems: "center",
-                      gap: ".25rem",
+                      gap: ".4rem",
                       justifyItems: "center",
                     }}
                   >
-                    <DashboardIcon
-                      sx={{ color: "#4b5563", fontSize: "20px" }}
-                    />
+                    <AiOutlineDashboard size={17} />
                     Mes achats et réservations
                   </MenuItem>
                 )}
@@ -171,13 +273,11 @@ const Header = () => {
                     sx={{
                       display: "flex",
                       alignItems: "center",
-                      gap: ".25rem",
+                      gap: ".4rem",
                       justifyItems: "center",
                     }}
                   >
-                    <DashboardIcon
-                      sx={{ color: "#4b5563", fontSize: "20px" }}
-                    />
+                    <AiOutlineDashboard size={17} />
                     Tableau de bord
                   </MenuItem>
                 )}
@@ -187,13 +287,11 @@ const Header = () => {
                     sx={{
                       display: "flex",
                       alignItems: "center",
-                      gap: ".25rem",
+                      gap: ".4rem",
                       justifyItems: "center",
                     }}
                   >
-                    <DashboardIcon
-                      sx={{ color: "#4b5563", fontSize: "20px" }}
-                    />
+                    <AiOutlineDashboard size={17} />
                     Tableau de bord
                   </MenuItem>
                 )}
@@ -202,11 +300,10 @@ const Header = () => {
                   sx={{
                     display: "flex",
                     alignItems: "center",
-                    gap: ".25rem",
-                    justifyItems: "center",
+                    gap: ".4rem",
                   }}
                 >
-                  <LogoutIcon sx={{ color: "#4b5563", fontSize: "20px" }} />
+                  <IoLogOutOutline size={19} className="" />
                   Déconnecter
                 </MenuItem>
               </Menu>
