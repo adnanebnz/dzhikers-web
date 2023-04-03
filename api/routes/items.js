@@ -2,6 +2,7 @@ const router = require("express").Router();
 const Item = require("../models/Item");
 const path = require("path");
 const multer = require("multer");
+const Reviews = require("../models/Review");
 //MULTER CONFIG
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -76,6 +77,7 @@ router.put("/:id", async (req, res, next) => {
 router.delete("/:id", async (req, res, next) => {
   try {
     await Item.findByIdAndDelete(req.params.id);
+    await Reviews.deleteMany({ publicationId: req.params.id });
     res.status(200).json("Item deleted");
   } catch (err) {
     next(err);

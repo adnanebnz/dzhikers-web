@@ -2,6 +2,8 @@ const router = require("express").Router();
 const Pin = require("../models/Pin");
 const multer = require("multer");
 const path = require("path");
+const Announce = require("../models/Announce");
+const Reservation = require("../models/Reservation");
 
 //MULTER CONFIG
 const storage = multer.diskStorage({
@@ -108,6 +110,8 @@ router.get("/:id", async (req, res, next) => {
 router.delete("/:id", async (req, res, next) => {
   try {
     await Pin.findByIdAndDelete(req.params.id);
+    await Announce.deleteMany({ hikeId: req.params.id });
+    await Reservation.deleteMany({ hikeId: req.params.id });
     res.status(200).json("pin deleted");
   } catch (err) {
     next(err);

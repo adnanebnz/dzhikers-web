@@ -1,5 +1,6 @@
 import {
   IconButton,
+  Button,
   Table,
   TableBody,
   TableCell,
@@ -22,6 +23,14 @@ const OrganizerView = () => {
   const [count, setCount] = useState(0);
   const [loading, setLoading] = useState(true);
   const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+  const [open, setOpen] = useState(false);
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
   const navigate = useNavigate();
   // TODO DELETE RANDOS ON TRASHICON CLICK
   useEffect(() => {
@@ -40,8 +49,37 @@ const OrganizerView = () => {
     };
     fetchData();
   }, []);
+  const handleDelete = async (id) => {
+    try {
+      const res = await axios.delete(`http://localhost:8800/api/pins/${id}`, {
+        withCredentials: true,
+      });
+      setOpen(false);
+      setData(data.filter((item) => item._id !== id));
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <>
+      {data.length === 0 && (
+        <div className="flex justify-center mt-20">
+          <div className="flex flex-col items-center gap-3">
+            <h1 className="text-2xl font-semibold text-gray-800">
+              Vous n'avez pas encore créé de randonnée
+            </h1>
+            <button
+              onClick={() => {
+                navigate("/organizer");
+              }}
+              className="bg-blue-500 text-white px-4 py-2 rounded-md"
+            >
+              Créer une randonnée
+            </button>
+          </div>
+        </div>
+      )}
       <div className="h-screen">
         {data.length !== 0 && (
           <>
@@ -70,9 +108,29 @@ const OrganizerView = () => {
                       <TableCell>{row.price} DZD</TableCell>
                       <TableCell>
                         <div className="flex items-center gap-3">
-                          <IconButton>
+                          <IconButton
+                            onClick={() => {
+                              setOpen(true);
+                            }}
+                          >
                             <DeleteForeverIcon className="text-red-600" />
                           </IconButton>
+                          <Dialog open={open} keepMounted onClose={handleClose}>
+                            <DialogTitle>
+                              {"Supprimer la randonnée?"}
+                            </DialogTitle>
+                            <DialogContent>
+                              <DialogContentText>
+                                Vous supprimez cette randonnée. Êtes-vous sûr?
+                              </DialogContentText>
+                            </DialogContent>
+                            <DialogActions>
+                              <Button onClick={handleClose}>ANNULER</Button>
+                              <Button onClick={() => handleDelete(row._id)}>
+                                ACCEPTER
+                              </Button>
+                            </DialogActions>
+                          </Dialog>
                           <IconButton
                             onClick={() => {
                               navigate("/organizer/overview/" + row._id);

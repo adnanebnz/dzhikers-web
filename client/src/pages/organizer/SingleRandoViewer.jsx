@@ -13,6 +13,7 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
+import { IoNotificationsSharp as IoMdNotifications } from "react-icons/io5";
 
 const SingleRandoViewer = () => {
   moment.locale("fr");
@@ -118,10 +119,10 @@ const SingleRandoViewer = () => {
   };
 
   return (
-    <div className="h-full">
+    <div>
       {data.length === 0 && (
-        <h1 className="text-xl text-center mt-20 h-screen">
-          Rien a afficher pour le momment
+        <h1 className="text-xl text-center mt-20">
+          Auccun participant pour cette randonnée
         </h1>
       )}
       {data.length !== 0 && (
@@ -327,10 +328,13 @@ const SingleRandoViewer = () => {
         </div> 
       </div> */}
       {/* MAKE AN ANNOUNCE */}
-      <div className="container px-11 pt-11">
-        <h1 className="text-gray-800 text-2xl">
-          Faire une annonce pour cette randonnée
-        </h1>
+      <div className="container px-11 pt-11 mt-5">
+        <div className="flex items-center gap-2 mb-3">
+          <h1 className="underline  decoration-sky-600 hover:decoration-blue-500 hover:transition text-2xl font-semibold underline-offset-8 text-gray-700">
+            Faire une annonce pour cet événement
+          </h1>
+          <IoMdNotifications size={20} className="mt-3 text-gray-700" />
+        </div>
         <div className="flex items-center justify-center p-12">
           <div className="mx-auto w-full max-w-[550px]">
             <form onSubmit={handleSubmit}>
@@ -378,87 +382,89 @@ const SingleRandoViewer = () => {
         </div>
       </div>
       {/* ANNOUNCEMENTS */}
-      <div className="container px-11 pt-11">
-        <h1 className="text-gray-800 text-2xl">Annonces Envoyées</h1>
-        <div className="flex items-center justify-center p-12">
-          <div className="mx-auto w-full max-w-[550px]">
-            <div className="flex flex-col space-y-4">
-              {announces.map((announcement) => (
-                <div className="bg-white rounded-md shadow-md p-4">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center space-x-4">
-                      <img
-                        src={currentUser.details.img}
-                        alt="Avatar"
-                        className="w-10 h-10 rounded-full"
-                      />
+      {announces.length > 0 && (
+        <div className="container px-11 pt-11">
+          <h1 className="text-gray-800 text-2xl">Annonces Envoyées</h1>
+          <div className="flex items-center justify-center p-12">
+            <div className="mx-auto w-full max-w-[550px]">
+              <div className="flex flex-col space-y-4">
+                {announces.map((announcement) => (
+                  <div className="bg-white rounded-md shadow-md p-4">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center space-x-4">
+                        <img
+                          src={currentUser.details.img}
+                          alt="Avatar"
+                          className="w-10 h-10 rounded-full"
+                        />
 
-                      <div>
-                        <h1 className="text-gray-800 text-base font-semibold">
-                          {announcement.title}
-                        </h1>
-                        <p className="text-gray-500 text-sm">
-                          {moment(announcement.createdAt).format("LL")}
-                        </p>
+                        <div>
+                          <h1 className="text-gray-800 text-base font-semibold">
+                            {announcement.title}
+                          </h1>
+                          <p className="text-gray-500 text-sm">
+                            {moment(announcement.createdAt).format("LL")}
+                          </p>
 
-                        <p>{announcement.description}</p>
-                        {editComment && (
-                          <>
-                            <input
-                              type="text"
-                              name="title"
-                              id="title"
-                              onChange={(e) => {
-                                setTitle(e.target.value);
-                              }}
-                              placeholder="Titre"
-                              className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md mt-3 mb-3"
-                            />
-                            <textarea
-                              name="description"
-                              id="description"
-                              rows="5"
-                              onChange={(e) => {
-                                setDesc(e.target.value);
-                              }}
-                              placeholder="Description"
-                              className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                            ></textarea>
-                            <button
-                              onClick={() => {
-                                handleEdit(announcement._id);
-                              }}
-                              className="px-3 py-1 bg-blue-500 hover:transition hover:bg-blue-600 text-white mt-2"
-                            >
-                              Modifier
-                            </button>
-                          </>
-                        )}
+                          <p>{announcement.description}</p>
+                          {editComment && (
+                            <>
+                              <input
+                                type="text"
+                                name="title"
+                                id="title"
+                                onChange={(e) => {
+                                  setTitle(e.target.value);
+                                }}
+                                placeholder="Titre"
+                                className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md mt-3 mb-3"
+                              />
+                              <textarea
+                                name="description"
+                                id="description"
+                                rows="5"
+                                onChange={(e) => {
+                                  setDesc(e.target.value);
+                                }}
+                                placeholder="Description"
+                                className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                              ></textarea>
+                              <button
+                                onClick={() => {
+                                  handleEdit(announcement._id);
+                                }}
+                                className="px-3 py-1 bg-blue-500 hover:transition hover:bg-blue-600 text-white mt-2"
+                              >
+                                Modifier
+                              </button>
+                            </>
+                          )}
+                        </div>
+                      </div>
+                      <div className="flex gap-3 items-center">
+                        <IconButton
+                          onClick={() => {
+                            setEditComment(true);
+                          }}
+                        >
+                          <EditIcon className="text-green-600 cursor-pointer" />
+                        </IconButton>
+                        <IconButton
+                          onClick={() => {
+                            handleDelete(announcement._id);
+                          }}
+                        >
+                          <DeleteIcon className="text-red-600 cursor-pointer" />
+                        </IconButton>
                       </div>
                     </div>
-                    <div className="flex gap-3 items-center">
-                      <IconButton
-                        onClick={() => {
-                          setEditComment(true);
-                        }}
-                      >
-                        <EditIcon className="text-green-600 cursor-pointer" />
-                      </IconButton>
-                      <IconButton
-                        onClick={() => {
-                          handleDelete(announcement._id);
-                        }}
-                      >
-                        <DeleteIcon className="text-red-600 cursor-pointer" />
-                      </IconButton>
-                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      )}
       {open && (
         <Snackbar
           open={open}
