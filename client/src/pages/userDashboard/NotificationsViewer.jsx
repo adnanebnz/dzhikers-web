@@ -2,7 +2,7 @@ import axios from "axios";
 import moment from "moment";
 import { Avatar } from "@mui/material";
 import { useState, useEffect } from "react";
-
+import { IoNotificationsSharp as IoMdNotifications } from "react-icons/io5";
 const NotificationsViewer = () => {
   moment.locale("fr");
   const [notifications, setNotifications] = useState([]);
@@ -27,19 +27,27 @@ const NotificationsViewer = () => {
   }, []);
   return (
     <div className="h-screen container p-10 mt-5 mb-5">
+      <div className="flex items-center gap-2 mb-3">
+        <h1 className="underline  decoration-sky-600 hover:decoration-blue-500 hover:transition text-2xl font-semibold underline-offset-8 text-gray-700">
+          Notifications
+        </h1>
+        <IoMdNotifications size={20} className="mt-3 text-gray-700" />
+      </div>
       {notifications.map((notif) => (
-        <div className="bg-white max-w-full rounded-2xl px-5 py-8 shadow-lg hover:shadow-2xl transition duration-500">
+        <div className="bg-white max-w-full rounded-2xl px-5 py-8 shadow-lg hover:shadow-2xl transition duration-500 mb-3">
           <div className="flex flex-col gap-4">
             <div>
               {hikeInfos.map((hike) =>
                 hike._id === notif.hikeId ? (
-                  <div className="flex items-center gap-4">
+                  <div className="flex flex-col sm:flex-row sm:items-center gap-4">
                     <Avatar
                       src={hike.img}
                       sx={{ width: "65px", height: "65px" }}
                     />
-                    <h1 className="text-xl font-semibold">{hike.title}</h1>
-                    <span> - </span>
+                    <h1 className="text-lg sm:text-xl font-semibold">
+                      {hike.title}
+                    </h1>
+
                     <h1 className=" text-md text-gray-700">
                       Prévu le {moment(hike.date).format("LLL")}
                     </h1>
