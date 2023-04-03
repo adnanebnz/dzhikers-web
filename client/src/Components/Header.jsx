@@ -16,7 +16,6 @@ import { setIsCartOpen } from "../state";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import moment from "moment";
-import ClickAwayListener from "@mui/base/ClickAwayListener";
 const Header = () => {
   const [navbarState, setNavbarState] = useState(false);
   const navigate = useNavigate();
@@ -101,36 +100,40 @@ const Header = () => {
             <Link to="/contact">Contact</Link>
           </li>
         </ul>
+
         <div className="flex gap-4 items-center">
           {!currentUser?.isAdmin && (
             <>
-              <Badge
-                className="badge"
-                badgeContent={notifications.length}
-                color="error"
-                invisible={notifications.length === 0}
-                sx={{
-                  "& .MuiBadge-badge": {
-                    right: 5,
-                    top: 5,
-                    padding: "0 4px",
-                    height: "18px",
-                    minWidth: "18px",
-                  },
-                }}
-              >
-                <IconButton
-                  className="cart"
-                  id="basic-buttonOne"
-                  aria-controls={openOne ? "basic-menuOne" : undefined}
-                  aria-haspopup="true"
-                  aria-expanded={openOne ? "true" : undefined}
-                  onClick={handleBtnOne}
-                  sx={{ color: "black", height: "40px" }}
+              {currentUser && (
+                <Badge
+                  className="badge"
+                  badgeContent={notifications.length}
+                  color="error"
+                  invisible={notifications.length === 0}
+                  sx={{
+                    "& .MuiBadge-badge": {
+                      right: 5,
+                      top: 5,
+                      padding: "0 4px",
+                      height: "18px",
+                      minWidth: "18px",
+                    },
+                  }}
                 >
-                  <GrNotification size={18} />
-                </IconButton>
-              </Badge>
+                  <IconButton
+                    className="cart"
+                    id="basic-buttonOne"
+                    aria-controls={openOne ? "basic-menuOne" : undefined}
+                    aria-haspopup="true"
+                    aria-expanded={openOne ? "true" : undefined}
+                    onClick={handleBtnOne}
+                    sx={{ color: "black", height: "40px" }}
+                  >
+                    <GrNotification size={18} />
+                  </IconButton>
+                </Badge>
+              )}
+
               {notifications.length > 0 && (
                 <>
                   <Menu
@@ -147,6 +150,16 @@ const Header = () => {
                       "aria-labelledby": "basic-buttonOne",
                     }}
                   >
+                    <div className="flex items-end justify-end px-2 py-1">
+                      <button
+                        className="bg-blue-500 text-white px-2 py-1 mb-2"
+                        onClick={() => {
+                          navigate("/profile/notifs");
+                        }}
+                      >
+                        Voir plus
+                      </button>
+                    </div>
                     {notifications.map((notif) => (
                       <MenuItem>
                         <div className="flex flex-col gap-2">

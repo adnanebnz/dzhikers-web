@@ -25,6 +25,7 @@ import Organizer from "./pages/organizer/Organizer";
 import OrganizerView from "./pages/organizer/OrganizerView";
 import ResetPassword from "./pages/auth/ResetPassword";
 import SingleRandoViewer from "./pages/organizer/SingleRandoViewer";
+import NotificationsViewer from "./pages/userDashboard/NotificationsViewer";
 
 const Layout = () => {
   return (
@@ -91,6 +92,10 @@ const router = createBrowserRouter([
       {
         path: "/profile/dashboard/:id",
         element: <UserDashboard />,
+      },
+      {
+        path: "/profile/notifs",
+        element: <NotificationsViewer />,
       },
       {
         path: "/contact",
