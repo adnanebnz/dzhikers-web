@@ -17,29 +17,24 @@ export default function AddProduct() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    data.append("title", title);
-    data.append("desc", desc);
-    data.append("price", price);
-    data.append("quantity", quantity);
-    data.append("brand", brand);
-    data.append("category", category);
-    data.append("rating", rating);
+    data.set("title", title);
+    data.set("desc", desc);
+    data.set("price", price);
+    data.set("quantity", quantity);
+    data.set("brand", brand);
+    data.set("category", category);
+    data.set("rating", rating);
 
     images.forEach((file) => {
       data.append("images", file);
     });
+
     try {
-      await axios.post(
-        "http://localhost:8800/api/items",
-
-        data,
-
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
+      await axios.post("http://localhost:8800/api/items", data, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
     } catch (error) {
       console.log(error);
     }
