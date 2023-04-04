@@ -15,11 +15,15 @@ import {
   Typography,
   Stack,
   Button,
+  Pagination,
 } from "@mui/material";
 const ProductsViewer = () => {
+  const [page, setPage] = useState(1);
+
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [open, setOpen] = useState(false);
+  const [itemCount, setItemCount] = useState(0);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -31,10 +35,14 @@ const ProductsViewer = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const resultat = await axios.get("http://localhost:8800/api/items", {
-          withCredentials: true,
-        });
+        const resultat = await axios.get(
+          `http://localhost:8800/api/items?category=all&page=${page}&min=0&max=1000000`,
+          {
+            withCredentials: true,
+          }
+        );
         setProducts(resultat.data.items);
+        setItemCount(resultat.data.count);
         setLoading(false);
       } catch (error) {
         console.log(error);
@@ -82,7 +90,7 @@ const ProductsViewer = () => {
                         {moment(row.createdAt).format("DD-MM-YYYY HH:mm ")}
                       </TableCell>
                       <TableCell>
-                        <img src={row.img} height="80px" width="80px" />
+                        <img src={row.img3} height="80px" width="80px" />
                       </TableCell>
                       <TableCell>{row.title}</TableCell>
                       <TableCell align="center">{row.quantity}</TableCell>
@@ -113,6 +121,19 @@ const ProductsViewer = () => {
           )}
         </>
       )}
+      <Pagination
+        count={Math.ceil(itemCount / 12)}
+        shape="rounded"
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          marginTop: "4rem",
+        }}
+        onChange={(e) => {
+          setPage(e.target.textContent);
+        }}
+      />
     </Box>
   );
 };

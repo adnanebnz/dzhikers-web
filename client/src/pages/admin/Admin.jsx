@@ -30,7 +30,7 @@ const Drawer = styled(MuiDrawer, {
     position: "relative",
     overflowX: "hidden",
     whiteSpace: "nowrap",
-    backgroundColor: "#fffe",
+    backgroundColor: "#ffffff",
     width: drawerWidth,
     transition: theme.transitions.create("width", {
       easing: theme.transitions.easing.sharp,
@@ -165,7 +165,7 @@ function DashboardContent() {
           sx={{
             backgroundColor: (theme) =>
               theme.palette.mode === "light"
-                ? theme.palette.grey[100]
+                ? theme.palette.grey[50]
                 : theme.palette.grey[900],
             flexGrow: 1,
             height: "90vh",

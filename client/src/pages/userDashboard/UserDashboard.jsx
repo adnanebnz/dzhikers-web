@@ -157,7 +157,7 @@ const UserDashboard = () => {
                         )}
                       </TableCell>
                       <TableCell>
-                        {row.payment_status === "not payed" && (
+                        {row.payment_status === "not_payed" && (
                           <Typography
                             color="error"
                             size="small"
@@ -178,7 +178,7 @@ const UserDashboard = () => {
                       </TableCell>
 
                       <TableCell>
-                        {row.payment_status === "not payed" && (
+                        {row.payment_status === "not_payed" && (
                           <IconButton>
                             <DeleteForeverIcon
                               sx={{ color: "tomato" }}

@@ -27,7 +27,7 @@ const orderSchema = new mongoose.Schema(
     phoneNumber: { type: Number, required: "true" },
     emailAddress: { type: String, required: "true" },
     delivery_status: { type: String, default: "pending" },
-    payment_status: { type: String, default: "not payed" },
+    payment_status: { type: String, default: "not_payed" },
   },
   { timestamps: true }
 );
