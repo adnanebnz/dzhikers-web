@@ -1,39 +1,39 @@
 import { useState } from "react";
 import axios from "axios";
+import Dropzone from "react-dropzone";
 export default function AddProduct() {
-  const [imageOne, setImageOne] = useState(null);
-  const [imageTwo, setImageTwo] = useState(null);
-  const [imageThree, setImageThree] = useState(null);
-  const handleFilesSelect = (event) => {
-    //set selected files
-    setImageOne(event.target.file[0]);
-    setImageTwo(event.target.file[1]);
-    setImageThree(event.target.file[2]);
-  };
+  const [images, setImages] = useState([]);
+  const [title, setTitle] = useState("");
+  const [desc, setDesc] = useState("");
+  const [price, setPrice] = useState(null);
+  const [quantity, setQuantity] = useState(null);
+  const [brand, setBrand] = useState("");
+  const [category, setCategory] = useState("");
+  const [rating, setRating] = useState(null);
 
+  const handleDrop = (acceptedFiles) => {
+    setImages(acceptedFiles);
+  };
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const data = new FormData(event.target);
-    const name = data.get("title");
-    const desc = data.get("desc");
-    const price = data.get("price");
-    const quantity = data.get("quantity");
-    const brand = data.get("brand");
-    const category = data.get("category");
-    const rating = data.get("rating");
+    const data = new FormData(event.currentTarget);
+    data.append("title", title);
+    data.append("desc", desc);
+    data.append("price", price);
+    data.append("quantity", quantity);
+    data.append("brand", brand);
+    data.append("category", category);
+    data.append("rating", rating);
+
+    images.forEach((file) => {
+      data.append("images", file);
+    });
     try {
       await axios.post(
         "http://localhost:8800/api/items",
-        {
-          name,
-          desc,
-          price,
-          quantity,
-          brand,
-          category,
-          rating,
-          images: [imageOne, imageTwo, imageThree],
-        },
+
+        data,
+
         {
           headers: {
             "Content-Type": "multipart/form-data",
@@ -44,7 +44,6 @@ export default function AddProduct() {
       console.log(error);
     }
   };
-  console.log(imageOne, imageTwo, imageThree);
   return (
     <div className="max-w-md mx-auto">
       <form
@@ -61,6 +60,7 @@ export default function AddProduct() {
             type="text"
             placeholder="Product name"
             name="title"
+            onChange={(e) => setTitle(e.target.value)}
           />
         </div>
         <div className="mb-4">
@@ -75,6 +75,7 @@ export default function AddProduct() {
             id="description"
             placeholder="Product description"
             name="desc"
+            onChange={(e) => setDesc(e.target.value)}
           ></textarea>
         </div>
         <div className="mb-4">
@@ -87,6 +88,7 @@ export default function AddProduct() {
             type="text"
             placeholder="Marque du produit"
             name="brand"
+            onChange={(e) => setBrand(e.target.value)}
           />
         </div>
         <div className="mb-4">
@@ -99,6 +101,7 @@ export default function AddProduct() {
             type="text"
             placeholder="Catégorie du produit"
             name="category"
+            onChange={(e) => setCategory(e.target.value)}
           />
         </div>
         <div className="mb-4">
@@ -111,6 +114,7 @@ export default function AddProduct() {
             type="number"
             placeholder="Note du produit sur 5"
             name="rating"
+            onChange={(e) => setRating(e.target.value)}
           />
         </div>
         <div className="mb-4">
@@ -123,6 +127,7 @@ export default function AddProduct() {
             type="number"
             placeholder="Product price"
             name="price"
+            onChange={(e) => setPrice(e.target.value)}
           />
         </div>
         <div className="mb-4">
@@ -138,24 +143,28 @@ export default function AddProduct() {
             type="number"
             placeholder="Product quantity"
             name="quantity"
+            onChange={(e) => setQuantity(e.target.value)}
           />
         </div>
         <div className="mb-4">
           <label className="block text-gray-700 font-bold mb-2" htmlFor="image">
             Product Cover
           </label>
-          <input
-            className="w-full"
-            type="file"
-            name="images"
-            required
-            onChange={handleFilesSelect}
-            multiple
-          />
+          <Dropzone onDrop={handleDrop}>
+            {({ getRootProps, getInputProps }) => (
+              <div {...getRootProps()}>
+                <input {...getInputProps()} />
+                <p>Drag and drop some files here, or click to select files</p>
+              </div>
+            )}
+          </Dropzone>
         </div>
         <div className="flex items-center justify-between">
-          <button type="submit" className="px-2 py-1 bg-blue-500 rounded-md">
-            <span className="text-white font-bold">Add Product</span>
+          <button
+            type="submit"
+            className="px-2 py-1 bg-blue-500 rounded-md text-white font-bold"
+          >
+            Add Product
           </button>
         </div>
       </form>

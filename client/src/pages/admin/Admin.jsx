@@ -237,7 +237,7 @@ function DashboardContent() {
             {homeOpen && (
               <>
                 <div className="flex justify-center  py-10 p-14  mt-2">
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-9 ">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-9 ">
                     <div className="w-72 bg-white max-w-xs mx-auto rounded-sm overflow-hidden shadow-lg hover:shadow-2xl transition duration-500 transform hover:scale-100 cursor-pointer">
                       <div className="h-20 bg-blue-500 flex items-center justify-between">
                         <p className="mr-0 text-white text-lg pl-5">Produits</p>

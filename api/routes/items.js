@@ -28,22 +28,24 @@ const upload = multer({
 });
 //create an Item
 router.post("/", upload.array("images", 3), async (req, res, next) => {
+  console.log(req.files);
+  console.log(req.body.title);
   const url = req.protocol + "://" + req.get("host");
-  const newItem = new Item({
-    title: req.body.title,
-    desc: req.body.desc,
-    img: url + "/Images/" + req.files[0].filename,
-    img2: url + "/Images/" + req.files[1].filename,
-    img3: url + "/Images/" + req.files[2].filename,
-    rating: req.body.rating,
-    price: req.body.price,
-    quantity: req.body.quantity,
-    category: req.body.category,
-    brand: req.body.brand,
-  });
   try {
-    const savedItem = await newItem.save();
-    res.status(200).json(savedItem);
+    // const newItem = new Item({
+    //   title: req.body.title,
+    //   desc: req.body.desc,
+    //   img: url + "/Images/" + req.files[0].filename,
+    //   img2: url + "/Images/" + req.files[1].filename,
+    //   img3: url + "/Images/" + req.files[2].filename,
+    //   rating: req.body.rating,
+    //   price: req.body.price,
+    //   quantity: req.body.quantity,
+    //   category: req.body.category,
+    //   brand: req.body.brand,
+    // });
+    // const savedItem = await newItem.save();
+    res.status(200).json("done");
   } catch (err) {
     next(err);
   }

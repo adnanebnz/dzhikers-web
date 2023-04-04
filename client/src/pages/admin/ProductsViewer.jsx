@@ -56,7 +56,7 @@ const ProductsViewer = () => {
       }
     };
     fetchProducts();
-  }, []);
+  }, [page]);
   const handleDelete = async (id) => {
     try {
       await axios.delete(`http://localhost:8800/api/items/${id}`, {
@@ -67,7 +67,6 @@ const ProductsViewer = () => {
       console.log(error);
     }
   };
-
   return (
     <Box marginTop="10px">
       <Box
@@ -175,6 +174,7 @@ const ProductsViewer = () => {
             alignItems: "center",
             justifyContent: "center",
             marginTop: "4rem",
+            marginBottom: "4rem",
           }}
           onChange={(e) => {
             setPage(e.target.textContent);
