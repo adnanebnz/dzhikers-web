@@ -26,6 +26,7 @@ import OrganizerView from "./pages/organizer/OrganizerView";
 import ResetPassword from "./pages/auth/ResetPassword";
 import SingleRandoViewer from "./pages/organizer/SingleRandoViewer";
 import NotificationsViewer from "./pages/userDashboard/NotificationsViewer";
+import AddProduct from "./pages/admin/AddProduct";
 
 const Layout = () => {
   return (
@@ -68,6 +69,10 @@ const router = createBrowserRouter([
       {
         path: "/admin",
         element: <Admin />,
+      },
+      {
+        path: "/admin/ajouter-produit",
+        element: <AddProduct />,
       },
       {
         path: "/organizer",

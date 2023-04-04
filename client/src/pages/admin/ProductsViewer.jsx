@@ -17,7 +17,14 @@ import {
   Button,
   Pagination,
 } from "@mui/material";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
+import { useNavigate } from "react-router-dom";
 const ProductsViewer = () => {
+  const navigate = useNavigate();
   const [page, setPage] = useState(1);
 
   const [products, setProducts] = useState([]);
@@ -50,6 +57,17 @@ const ProductsViewer = () => {
     };
     fetchProducts();
   }, []);
+  const handleDelete = async (id) => {
+    try {
+      await axios.delete(`http://localhost:8800/api/items/${id}`, {
+        withCredentials: true,
+      });
+      setProducts(products.filter((product) => product._id !== id));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <Box marginTop="10px">
       <Box
@@ -60,7 +78,14 @@ const ProductsViewer = () => {
           padding: "20px",
         }}
       >
-        <Button variant="contained">Ajouter un produit</Button>
+        <Button
+          variant="contained"
+          onClick={() => {
+            navigate("/admin/ajouter-produit");
+          }}
+        >
+          Ajouter un produit
+        </Button>
       </Box>
       {loading && <Loading />}
       {!loading && (
@@ -108,10 +133,30 @@ const ProductsViewer = () => {
                             color="primary"
                             aria-label="Modifier"
                             component="span"
+                            onClick={handleClickOpen}
                           >
                             <DeleteForeverIcon color="error" />
                           </IconButton>
                         </Stack>
+                        <Dialog open={open} keepMounted onClose={handleClose}>
+                          <DialogTitle>{"Supprimer ce produit?"}</DialogTitle>
+                          <DialogContent>
+                            <DialogContentText>
+                              Vous supprimez ce produit. Êtes-vous sûr?
+                            </DialogContentText>
+                          </DialogContent>
+                          <DialogActions>
+                            <Button onClick={handleClose}>ANNULER</Button>
+                            <Button
+                              onClick={() => {
+                                handleDelete(row._id);
+                                handleClose();
+                              }}
+                            >
+                              ACCEPTER
+                            </Button>
+                          </DialogActions>
+                        </Dialog>
                       </TableCell>
                     </TableRow>
                   ))}
@@ -121,19 +166,21 @@ const ProductsViewer = () => {
           )}
         </>
       )}
-      <Pagination
-        count={Math.ceil(itemCount / 12)}
-        shape="rounded"
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          marginTop: "4rem",
-        }}
-        onChange={(e) => {
-          setPage(e.target.textContent);
-        }}
-      />
+      {products.length !== 0 && (
+        <Pagination
+          count={Math.ceil(itemCount / 12)}
+          shape="rounded"
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            marginTop: "4rem",
+          }}
+          onChange={(e) => {
+            setPage(e.target.textContent);
+          }}
+        />
+      )}
     </Box>
   );
 };
