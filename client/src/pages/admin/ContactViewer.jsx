@@ -22,7 +22,11 @@ const ContactViewer = () => {
   }, []);
   console.log(contact);
   return (
-    <div className="py-5" style={{ overflow: "hidden" }}>
+    <div className="mt-7" style={{ overflow: "hidden" }}>
+      <h1 className="text-xl font-semibold mb-7 text-gray-700">
+        Messages de contact
+      </h1>
+
       <Table className="shadow-lg">
         <TableHead>
           <TableRow>
