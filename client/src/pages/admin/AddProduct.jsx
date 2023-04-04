@@ -40,9 +40,9 @@ export default function AddProduct() {
     }
   };
   return (
-    <div className="max-w-md mx-auto">
+    <div className="max-w-lg mx-auto">
       <form
-        className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+        className="bg-gray-200 shadow-xl rounded px-8 pt-6 pb-8 mb-6"
         onSubmit={handleSubmit}
       >
         <div className="mb-4">
@@ -53,7 +53,7 @@ export default function AddProduct() {
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             id="name"
             type="text"
-            placeholder="Product name"
+            placeholder="Nom du produit"
             name="title"
             onChange={(e) => setTitle(e.target.value)}
           />
@@ -68,15 +68,16 @@ export default function AddProduct() {
           <textarea
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             id="description"
-            placeholder="Product description"
+            placeholder="Description du produit"
             name="desc"
             onChange={(e) => setDesc(e.target.value)}
           ></textarea>
         </div>
-        <div className="mb-4">
-          <label className="block text-gray-700 font-bold mb-2" htmlFor="price">
-            Marque
-          </label>
+        <div className="mb-4 flex items-center justify-around gap-4">
+          <h1 className="block text-gray-700 font-bold">Marque</h1>
+          <h1 className="block text-gray-700 font-bold">Catégorie</h1>
+        </div>
+        <div className="flex items-center gap-3 mb-4">
           <input
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             id="price"
@@ -85,11 +86,7 @@ export default function AddProduct() {
             name="brand"
             onChange={(e) => setBrand(e.target.value)}
           />
-        </div>
-        <div className="mb-4">
-          <label className="block text-gray-700 font-bold mb-2" htmlFor="price">
-            Catégorie
-          </label>
+
           <input
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             id="price"
@@ -99,67 +96,58 @@ export default function AddProduct() {
             onChange={(e) => setCategory(e.target.value)}
           />
         </div>
+
         <div className="mb-4">
-          <label className="block text-gray-700 font-bold mb-2" htmlFor="price">
-            Note
-          </label>
-          <input
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            id="price"
-            type="number"
-            placeholder="Note du produit sur 5"
-            name="rating"
-            onChange={(e) => setRating(e.target.value)}
-          />
+          <div className="mb-4 flex items-center justify-around gap-4">
+            <h1 className="block text-gray-700 font-bold">Prix</h1>
+            <h1 className="block text-gray-700 font-bold">Stock</h1>
+          </div>
+          <div className="flex items-center gap-3">
+            <input
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              id="price"
+              type="number"
+              placeholder="Prix du produit"
+              name="price"
+              onChange={(e) => setPrice(e.target.value)}
+            />
+
+            <input
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              id="quantity"
+              type="number"
+              placeholder="Quantité du produit"
+              name="quantity"
+              onChange={(e) => setQuantity(e.target.value)}
+            />
+          </div>
         </div>
-        <div className="mb-4">
-          <label className="block text-gray-700 font-bold mb-2" htmlFor="price">
-            Price
-          </label>
-          <input
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            id="price"
-            type="number"
-            placeholder="Product price"
-            name="price"
-            onChange={(e) => setPrice(e.target.value)}
-          />
-        </div>
-        <div className="mb-4">
-          <label
-            className="block text-gray-700 font-bold mb-2"
-            htmlFor="quantity"
-          >
-            Quantity
-          </label>
-          <input
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            id="quantity"
-            type="number"
-            placeholder="Product quantity"
-            name="quantity"
-            onChange={(e) => setQuantity(e.target.value)}
-          />
-        </div>
+
         <div className="mb-4">
           <label className="block text-gray-700 font-bold mb-2" htmlFor="image">
-            Product Cover
+            Images du produit
           </label>
-          <Dropzone onDrop={handleDrop}>
-            {({ getRootProps, getInputProps }) => (
-              <div {...getRootProps()}>
-                <input {...getInputProps()} />
-                <p>Drag and drop some files here, or click to select files</p>
-              </div>
-            )}
-          </Dropzone>
+          <div className="border border-solid border-blue-500 p-4">
+            <Dropzone onDrop={handleDrop}>
+              {({ getRootProps, getInputProps }) => (
+                <div {...getRootProps()}>
+                  <input {...getInputProps()} />
+                  <p className="text-gray-700 font-semibold text-sm text-center">
+                    Faites glisser pour déposez vos images ici, ou simplement
+                    cliquez ici.
+                  </p>
+                </div>
+              )}
+            </Dropzone>
+          </div>
         </div>
         <div className="flex items-center justify-between">
           <button
             type="submit"
-            className="px-2 py-1 bg-blue-500 rounded-md text-white font-bold"
+            className="px-2 py-1 bg-blue-500 rounded-md text-white font-semibold
+            hover:bg-blue-600 hover:transition-all duration-100"
           >
-            Add Product
+            Ajouter le produit
           </button>
         </div>
       </form>
