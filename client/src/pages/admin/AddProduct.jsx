@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import Dropzone from "react-dropzone";
+import { Alert, Snackbar } from "@mui/material";
 export default function AddProduct() {
   const [images, setImages] = useState([]);
   const [title, setTitle] = useState("");
@@ -9,8 +10,14 @@ export default function AddProduct() {
   const [quantity, setQuantity] = useState(null);
   const [brand, setBrand] = useState("");
   const [category, setCategory] = useState("");
-  const [rating, setRating] = useState(null);
+  const [open, setOpen] = useState(false);
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
 
+    setOpen(false);
+  };
   const handleDrop = (acceptedFiles) => {
     setImages(acceptedFiles);
   };
@@ -23,7 +30,6 @@ export default function AddProduct() {
     data.set("quantity", quantity);
     data.set("brand", brand);
     data.set("category", category);
-    data.set("rating", rating);
 
     images.forEach((file) => {
       data.append("images", file);
@@ -35,12 +41,16 @@ export default function AddProduct() {
           "Content-Type": "multipart/form-data",
         },
       });
+      setOpen(true);
     } catch (error) {
       console.log(error);
     }
   };
   return (
-    <div className="max-w-lg mx-auto">
+    <div className="max-w-lg mx-auto mt-10 mb-10">
+      <h1 className="mb-3 text-lg text-gray-700 font-semibold">
+        Ajouter un produit
+      </h1>
       <form
         className="bg-gray-200 shadow-xl rounded px-8 pt-6 pb-8 mb-6"
         onSubmit={handleSubmit}
@@ -151,6 +161,22 @@ export default function AddProduct() {
           </button>
         </div>
       </form>
+      {open && (
+        <Snackbar
+          open={open}
+          autoHideDuration={6000}
+          onClose={handleClose}
+          anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+        >
+          <Alert
+            onClose={handleClose}
+            severity="success"
+            sx={{ width: "100%" }}
+          >
+            Produit Ajoutée avec success!
+          </Alert>
+        </Snackbar>
+      )}
     </div>
   );
 }

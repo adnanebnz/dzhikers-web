@@ -27,6 +27,7 @@ import ResetPassword from "./pages/auth/ResetPassword";
 import SingleRandoViewer from "./pages/organizer/SingleRandoViewer";
 import NotificationsViewer from "./pages/userDashboard/NotificationsViewer";
 import AddProduct from "./pages/admin/AddProduct";
+import EditProduct from "./pages/admin/EditProduct";
 
 const Layout = () => {
   return (
@@ -73,6 +74,10 @@ const router = createBrowserRouter([
       {
         path: "/admin/ajouter-produit",
         element: <AddProduct />,
+      },
+      {
+        path: "/admin/modifier-produit/:id",
+        element: <EditProduct />,
       },
       {
         path: "/organizer",

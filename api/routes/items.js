@@ -64,10 +64,38 @@ router.get("/:id", async (req, res, next) => {
 
 router.put("/:id", async (req, res, next) => {
   try {
-    const editedItem = await Item.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
+    const item = await Item.findById(req.params.id);
+    if (item) {
+      item.title = req.body.title || item.title;
+      item.desc = req.body.desc || item.desc;
+      item.quantity = req.body.quantity || item.quantity;
+      item.brand = req.body.brand || item.brand;
+      item.category = req.body.category || item.category;
+      item.price = req.body.price || item.price;
+    }
+    await Item.findByIdAndUpdate(req.params.id, {
+      $set: item,
     });
-    res.status(200).json(editedItem);
+    res.status(200).json(item);
+  } catch (err) {
+    next(err);
+  }
+});
+
+//handle product images update:
+router.put("/images/:id", upload.array("images", 3), async (req, res, next) => {
+  try {
+    const url = req.protocol + "://" + req.get("host");
+    const item = await Item.findById(req.params.id);
+    if (item) {
+      item.img = url + "/Images/" + req.files[0].filename || item.img;
+      item.img2 = url + "/Images/" + req.files[1].filename || item.img2;
+      item.img3 = url + "/Images/" + req.files[2].filename || item.img3;
+    }
+    await Item.findByIdAndUpdate(req.params.id, {
+      $set: item,
+    });
+    res.status(200).json(item);
   } catch (err) {
     next(err);
   }

@@ -125,6 +125,9 @@ const ProductsViewer = () => {
                             color="primary"
                             aria-label="Modifier"
                             component="span"
+                            onClick={() => {
+                              navigate("/admin/modifier-produit/" + row._id);
+                            }}
                           >
                             <EditIcon color="success" />
                           </IconButton>
