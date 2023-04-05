@@ -41,7 +41,7 @@ app.use("/api/announces", announcesRoute);
 //ERROR HANDLING
 app.use((err, req, res, next) => {
   const errorStatus = err.status || 500;
-  const errorMessage = err.message || "Something went wrong!";
+  const errorMessage = err.message || "Une erreur est occuré!";
   return res.status(errorStatus).json({
     success: false,
     status: errorStatus,
