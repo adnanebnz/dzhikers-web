@@ -4,6 +4,7 @@ import Dropzone from "react-dropzone";
 import { Alert, Snackbar } from "@mui/material";
 export default function AddProduct() {
   const [images, setImages] = useState([]);
+  const [imagesPreview, setImagesPreview] = useState([]);
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
   const [price, setPrice] = useState(null);
@@ -20,7 +21,9 @@ export default function AddProduct() {
   };
   const handleDrop = (acceptedFiles) => {
     setImages(acceptedFiles);
+    setImagesPreview(acceptedFiles.map((file) => URL.createObjectURL(file)));
   };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -151,6 +154,17 @@ export default function AddProduct() {
               )}
             </Dropzone>
           </div>
+        </div>
+        <div className="flex items-center justify-center gap-4 mb-4">
+          {imagesPreview.map((image) => (
+            <div>
+              <img
+                alt="image"
+                className="w-32 h-32 object-cover rounded-md"
+                src={image}
+              />
+            </div>
+          ))}
         </div>
         <div className="flex items-center justify-between">
           <button

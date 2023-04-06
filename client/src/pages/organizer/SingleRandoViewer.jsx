@@ -21,10 +21,13 @@ const SingleRandoViewer = () => {
   moment.locale("fr");
   const handleDrop = (acceptedFiles) => {
     setImage(acceptedFiles);
+    setImagesPreview(acceptedFiles.map((file) => URL.createObjectURL(file)));
   };
   const { id } = useParams();
   const [data, setData] = useState([]);
   const [editComment, setEditComment] = useState(false);
+  const [imagesPreview, setImagesPreview] = useState([]);
+
   const [participants, setParticipants] = useState([]);
   const [announces, setAnnounces] = useState([]);
   const [title, setTitle] = useState("");
@@ -256,7 +259,7 @@ const SingleRandoViewer = () => {
                 <Dropzone onDrop={handleDrop}>
                   {({ getRootProps, getInputProps }) => (
                     <div {...getRootProps()}>
-                      <input {...getInputProps()} />
+                      <input {...getInputProps()} multiple={false} />
                       <p className="text-gray-700 font-semibold text-sm text-center">
                         Faites glisser pour déposez vos images ici, ou
                         simplement cliquez ici.
@@ -265,6 +268,18 @@ const SingleRandoViewer = () => {
                   )}
                 </Dropzone>
               </div>
+              <div className="flex items-center justify-center gap-4 mb-4 mt-4">
+                {imagesPreview.map((image) => (
+                  <div>
+                    <img
+                      alt="image"
+                      className="w-32 h-32 object-cover rounded-md"
+                      src={image}
+                    />
+                  </div>
+                ))}
+              </div>
+
               <button
                 type="submit"
                 className="px-2 py-1 bg-blue-500 rounded-md text-white font-semibold

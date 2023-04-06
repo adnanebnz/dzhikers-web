@@ -7,6 +7,7 @@ export default function EditProduct() {
   const { id } = useParams();
   const [images, setImages] = useState([]);
   const [title, setTitle] = useState("");
+  const [imagesPreview, setImagesPreview] = useState([]);
   const [desc, setDesc] = useState("");
   const [price, setPrice] = useState(null);
   const [quantity, setQuantity] = useState(null);
@@ -22,6 +23,7 @@ export default function EditProduct() {
   };
   const handleDrop = (acceptedFiles) => {
     setImages(acceptedFiles);
+    setImagesPreview(acceptedFiles.map((file) => URL.createObjectURL(file)));
   };
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -83,6 +85,17 @@ export default function EditProduct() {
                   </div>
                 )}
               </Dropzone>
+            </div>
+            <div className="flex items-center justify-center gap-4 mb-4 mt-4">
+              {imagesPreview.map((image) => (
+                <div>
+                  <img
+                    alt="image"
+                    className="w-32 h-32 object-cover rounded-md"
+                    src={image}
+                  />
+                </div>
+              ))}
             </div>
             <button
               type="submit"
