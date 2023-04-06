@@ -5,7 +5,6 @@ const jwt = require("jsonwebtoken");
 const createError = require("../utils/error");
 const path = require("path");
 const multer = require("multer");
-const { verifyAdmin, verifyUser } = require("../utils/verifyToken");
 
 //MULTER CONFIG
 const storage = multer.diskStorage({
@@ -117,7 +116,7 @@ router.get("/", async (req, res, next) => {
 
 //get a single user
 
-router.get("/:id", verifyUser, async (req, res, next) => {
+router.get("/:id", async (req, res, next) => {
   try {
     const user = await User.findById(req.params.id);
     res.status(200).json(user);
@@ -128,7 +127,7 @@ router.get("/:id", verifyUser, async (req, res, next) => {
 
 //delete user
 
-router.delete("/:id", verifyUser, async (req, res, next) => {
+router.delete("/:id", async (req, res, next) => {
   const token = req.cookies.access_token;
   if (!token) {
     res.status(401).json("you cant you dont have the auth");
@@ -154,31 +153,26 @@ router.delete("/:id", verifyUser, async (req, res, next) => {
 
 //update user
 
-router.put(
-  "/:id/updatePfp",
-  verifyUser,
-  upload.single("img"),
-  async (req, res, next) => {
-    try {
-      //TODO handle profile pic change
-      const url = req.protocol + "://" + req.get("host");
-      const user = await User.findById(req.params.id);
-      user.img = url + "/Images/" + req.file.filename || user.img;
-      const updatedUser = await User.findByIdAndUpdate(req.params.id, {
-        $set: {
-          img: user.img,
-        },
-      });
-      res.status(200).json({
+router.put("/:id/updatePfp", upload.single("img"), async (req, res, next) => {
+  try {
+    //TODO handle profile pic change
+    const url = req.protocol + "://" + req.get("host");
+    const user = await User.findById(req.params.id);
+    user.img = url + "/Images/" + req.file.filename || user.img;
+    const updatedUser = await User.findByIdAndUpdate(req.params.id, {
+      $set: {
         img: user.img,
-      });
-    } catch (err) {
-      next(err);
-    }
+      },
+    });
+    res.status(200).json({
+      img: user.img,
+    });
+  } catch (err) {
+    next(err);
   }
-);
+});
 
-router.put("/:id", verifyUser, async (req, res, next) => {
+router.put("/:id", async (req, res, next) => {
   try {
     const user = await User.findById(req.params.id);
     if (user) {

@@ -1,7 +1,6 @@
 const router = require("express").Router();
 const Contact = require("../models/Contact");
 const { sendMessage } = require("../utils/sendFormMessage");
-const { verifyAdmin } = require("../utils/verifyToken");
 
 router.post("/", async (req, res) => {
   const newContact = new Contact(req.body);
@@ -13,7 +12,7 @@ router.post("/", async (req, res) => {
     res.status(500).json(err);
   }
 });
-router.get("/", verifyAdmin, async (req, res, next) => {
+router.get("/", async (req, res, next) => {
   const contacts = await Contact.find();
   try {
     res.status(200).json(contacts);
@@ -21,7 +20,7 @@ router.get("/", verifyAdmin, async (req, res, next) => {
     next(err);
   }
 });
-router.delete("/:id", verifyAdmin, async (req, res, next) => {
+router.delete("/:id", async (req, res, next) => {
   try {
     const contact = Contact.findById(req.params.id);
     if (!contact) {
