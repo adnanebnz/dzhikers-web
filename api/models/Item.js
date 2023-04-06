@@ -39,15 +39,6 @@ const itemSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    rating: {
-      type: Number,
-      min: 0,
-      max: 5,
-    },
-    numberOfRatings: {
-      type: Number,
-      min: 0,
-    },
   },
   { timestamps: true }
 );

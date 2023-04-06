@@ -28,6 +28,7 @@ import SingleRandoViewer from "./pages/organizer/SingleRandoViewer";
 import NotificationsViewer from "./pages/userDashboard/NotificationsViewer";
 import AddProduct from "./pages/admin/AddProduct";
 import EditProduct from "./pages/admin/EditProduct";
+import AddUser from "./pages/admin/AddUser";
 
 const Layout = () => {
   return (
@@ -74,6 +75,10 @@ const router = createBrowserRouter([
       {
         path: "/admin/ajouter-produit",
         element: <AddProduct />,
+      },
+      {
+        path: "/admin/ajouter-utulisateur",
+        element: <AddUser />,
       },
       {
         path: "/admin/modifier-produit/:id",

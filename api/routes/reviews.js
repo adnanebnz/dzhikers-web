@@ -72,24 +72,5 @@ router.delete("/:id", async (req, res, next) => {
     next(err);
   }
 });
-//count all reviews
-router.get("/count/:id", async (req, res, next) => {
-  try {
-    const ratings = await Review.aggregate([
-      { $match: { publicationId: req.params.id } },
-    ]);
-    const rating = ratings.map((item) => {
-      return item.rating;
-    });
-    // calculate average
-    const average = rating.reduce((a, b) => a + b, 0) / rating.length;
-    const lastAverage = Math.ceil(average);
-    const length = rating.length;
-
-    res.status(200).json({ lastAverage, length });
-  } catch (err) {
-    next(err);
-  }
-});
 
 module.exports = router;

@@ -48,15 +48,6 @@ const PinSchema = new mongoose.Schema(
     img: {
       type: String,
     },
-    rating: {
-      type: Number,
-      min: 0,
-      max: 5,
-    },
-    numberOfRatings: {
-      type: Number,
-      min: 0,
-    },
   },
   { timestamps: true }
 );
