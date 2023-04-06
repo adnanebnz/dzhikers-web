@@ -2,8 +2,9 @@ const router = require("express").Router();
 const Announce = require("../models/Announce");
 const Reservation = require("../models/Reservation");
 const Pin = require("../models/Pin");
+const { verifyUser, verifyOrg } = require("../utils/verifyToken");
 
-router.get("/notifs/:userId", async (req, res, next) => {
+router.get("/notifs/:userId", verifyUser, async (req, res, next) => {
   try {
     const reservations = await Reservation.find({ userId: req.params.userId });
     const announces = await Announce.find({
@@ -18,7 +19,7 @@ router.get("/notifs/:userId", async (req, res, next) => {
   }
 });
 
-router.delete("/notifs/:id", async (req, res, next) => {
+router.delete("/notifs/:id", verifyOrg, async (req, res, next) => {
   try {
     const announce = await Announce.findById(req.params.id);
     await announce.remove();
@@ -38,7 +39,7 @@ router.get("/:hikeId", async (req, res, next) => {
   }
 });
 
-router.post("/", async (req, res, next) => {
+router.post("/", verifyOrg, async (req, res, next) => {
   try {
     const announce = new Announce(req.body);
     await announce.save();
@@ -48,7 +49,7 @@ router.post("/", async (req, res, next) => {
   }
 });
 
-router.put("/:id", async (req, res, next) => {
+router.put("/:id", verifyOrg, async (req, res, next) => {
   try {
     const announce = await Announce.findById(req.params.id);
     if (!announce) {
@@ -63,7 +64,7 @@ router.put("/:id", async (req, res, next) => {
   }
 });
 //delete an announce
-router.delete("/:id", async (req, res, next) => {
+router.delete("/:id", verifyOrg, async (req, res, next) => {
   try {
     const announce = await Announce.findById(req.params.id);
     if (!announce) {

@@ -4,6 +4,7 @@ const multer = require("multer");
 const path = require("path");
 const Announce = require("../models/Announce");
 const Reservation = require("../models/Reservation");
+const { verifyOrg } = require("../utils/verifyToken");
 
 //MULTER CONFIG
 const storage = multer.diskStorage({
@@ -21,7 +22,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 //create a pin
-router.post("/", upload.single("image"), async (req, res, next) => {
+router.post("/", verifyOrg, upload.single("image"), async (req, res, next) => {
   const url = req.protocol + "://" + req.get("host");
   const newPin = new Pin({
     organizer: req.body.organizer,
@@ -106,7 +107,7 @@ router.get("/:id", async (req, res, next) => {
 });
 
 //DELETE A PIN
-router.delete("/:id", async (req, res, next) => {
+router.delete("/:id", verifyOrg, async (req, res, next) => {
   try {
     await Pin.findByIdAndDelete(req.params.id);
     await Announce.deleteMany({ hikeId: req.params.id });
@@ -117,7 +118,7 @@ router.delete("/:id", async (req, res, next) => {
   }
 });
 //UPDATE A PIN
-router.put("/:id", async (req, res, next) => {
+router.put("/:id", verifyOrg, async (req, res, next) => {
   try {
     const pin = await Pin.findById(req.params.id);
     pin.organizer = req.body.organizer || pin.organizer;
@@ -144,20 +145,25 @@ router.put("/:id", async (req, res, next) => {
 });
 
 //UPDATE PIN IMAGE
-router.put("/image/:id", upload.single("image"), async (req, res, next) => {
-  try {
-    const url = req.protocol + "://" + req.get("host");
-    const pin = await Pin.findById(req.params.id);
-    if (pin) {
-      pin.img = url + "/Images/" + req.file.filename || pin.img;
+router.put(
+  "/image/:id",
+  verifyOrg,
+  upload.single("image"),
+  async (req, res, next) => {
+    try {
+      const url = req.protocol + "://" + req.get("host");
+      const pin = await Pin.findById(req.params.id);
+      if (pin) {
+        pin.img = url + "/Images/" + req.file.filename || pin.img;
+      }
+      await Pin.findByIdAndUpdate(req.params.id, {
+        $set: pin,
+      });
+      res.status(200).json(pin);
+    } catch (err) {
+      next(err);
     }
-    await Pin.findByIdAndUpdate(req.params.id, {
-      $set: pin,
-    });
-    res.status(200).json(pin);
-  } catch (err) {
-    next(err);
   }
-});
+);
 
 module.exports = router;

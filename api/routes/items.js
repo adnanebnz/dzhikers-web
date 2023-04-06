@@ -3,6 +3,7 @@ const Item = require("../models/Item");
 const path = require("path");
 const multer = require("multer");
 const Reviews = require("../models/Review");
+const { verifyAdmin } = require("../utils/verifyToken");
 //MULTER CONFIG
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -27,27 +28,32 @@ const upload = multer({
   },
 });
 //create an Item
-router.post("/", upload.array("images", 3), async (req, res, next) => {
-  const url = req.protocol + "://" + req.get("host");
-  try {
-    const newItem = new Item({
-      title: req.body.title,
-      desc: req.body.desc,
-      img: url + "/Images/" + req.files[0].filename,
-      img2: url + "/Images/" + req.files[1].filename,
-      img3: url + "/Images/" + req.files[2].filename,
+router.post(
+  "/",
+  verifyAdmin,
+  upload.array("images", 3),
+  async (req, res, next) => {
+    const url = req.protocol + "://" + req.get("host");
+    try {
+      const newItem = new Item({
+        title: req.body.title,
+        desc: req.body.desc,
+        img: url + "/Images/" + req.files[0].filename,
+        img2: url + "/Images/" + req.files[1].filename,
+        img3: url + "/Images/" + req.files[2].filename,
 
-      price: req.body.price,
-      quantity: req.body.quantity,
-      category: req.body.category,
-      brand: req.body.brand,
-    });
-    const savedItem = await newItem.save();
-    res.status(200).json(newItem);
-  } catch (err) {
-    next(err);
+        price: req.body.price,
+        quantity: req.body.quantity,
+        category: req.body.category,
+        brand: req.body.brand,
+      });
+      const savedItem = await newItem.save();
+      res.status(200).json(newItem);
+    } catch (err) {
+      next(err);
+    }
   }
-});
+);
 
 //get a single item
 
@@ -62,7 +68,7 @@ router.get("/:id", async (req, res, next) => {
 
 //UPDATE ITEM
 
-router.put("/:id", async (req, res, next) => {
+router.put("/:id", verifyAdmin, async (req, res, next) => {
   try {
     const item = await Item.findById(req.params.id);
     if (item) {
@@ -83,26 +89,31 @@ router.put("/:id", async (req, res, next) => {
 });
 
 //handle product images update:
-router.put("/images/:id", upload.array("images", 3), async (req, res, next) => {
-  try {
-    const url = req.protocol + "://" + req.get("host");
-    const item = await Item.findById(req.params.id);
-    if (item) {
-      item.img = url + "/Images/" + req.files[0].filename || item.img;
-      item.img2 = url + "/Images/" + req.files[1].filename || item.img2;
-      item.img3 = url + "/Images/" + req.files[2].filename || item.img3;
+router.put(
+  "/images/:id",
+  verifyAdmin,
+  upload.array("images", 3),
+  async (req, res, next) => {
+    try {
+      const url = req.protocol + "://" + req.get("host");
+      const item = await Item.findById(req.params.id);
+      if (item) {
+        item.img = url + "/Images/" + req.files[0].filename || item.img;
+        item.img2 = url + "/Images/" + req.files[1].filename || item.img2;
+        item.img3 = url + "/Images/" + req.files[2].filename || item.img3;
+      }
+      await Item.findByIdAndUpdate(req.params.id, {
+        $set: item,
+      });
+      res.status(200).json(item);
+    } catch (err) {
+      next(err);
     }
-    await Item.findByIdAndUpdate(req.params.id, {
-      $set: item,
-    });
-    res.status(200).json(item);
-  } catch (err) {
-    next(err);
   }
-});
+);
 
 //DELETE ITEM
-router.delete("/:id", async (req, res, next) => {
+router.delete("/:id", verifyAdmin, async (req, res, next) => {
   try {
     await Item.findByIdAndDelete(req.params.id);
     await Reviews.deleteMany({ publicationId: req.params.id });
