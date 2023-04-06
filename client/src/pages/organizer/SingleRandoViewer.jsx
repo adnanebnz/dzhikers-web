@@ -5,6 +5,7 @@ import { Alert, Snackbar } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import moment from "moment";
+import { GiMountainRoad } from "react-icons/gi";
 import Dropzone from "react-dropzone";
 import {
   IconButton,
@@ -18,7 +19,9 @@ import { IoNotificationsSharp as IoMdNotifications } from "react-icons/io5";
 
 const SingleRandoViewer = () => {
   moment.locale("fr");
-  const handleDrop = (acceptedFiles) => {};
+  const handleDrop = (acceptedFiles) => {
+    setImage(acceptedFiles);
+  };
   const { id } = useParams();
   const [data, setData] = useState([]);
   const [editComment, setEditComment] = useState(false);
@@ -27,6 +30,15 @@ const SingleRandoViewer = () => {
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
   const [open, setOpen] = useState(false);
+  const [openOne, setOpenOne] = useState(false);
+  const [randoTitle, setRandoTitle] = useState("");
+  const [randoDesc, setRandoDesc] = useState("");
+  const [randoDate, setRandoDate] = useState("");
+  const [randoPrice, setRandoPrice] = useState("");
+  const [randoDuration, setRandoDuration] = useState("");
+  const [randoMaxParticipants, setRandoMaxParticipants] = useState("");
+  const [randoLevel, setRandoLevel] = useState("");
+  const [image, setImage] = useState(null);
   const currentUser = JSON.parse(localStorage.getItem("currentUser"));
 
   useEffect(() => {
@@ -87,7 +99,7 @@ const SingleRandoViewer = () => {
     if (reason === "clickaway") {
       return;
     }
-
+    setOpenOne(false);
     setOpen(false);
   };
   const handleDelete = async (id) => {
@@ -122,13 +134,38 @@ const SingleRandoViewer = () => {
   const handleRandoEdit = async (event) => {
     event.preventDefault();
     try {
-      await axios.put("", {
+      const res = await axios.put(`http://localhost:8800/api/pins/${id}`, {
         organizer: currentUser.details.username,
+        title: randoTitle,
+        desc: randoDesc,
+        date: randoDate,
+        price: randoPrice,
+        duration: randoDuration,
+        places: randoMaxParticipants,
+        level: randoLevel,
       });
+      console.log(res);
+      setOpenOne(true);
     } catch (err) {
       console.log(err);
     }
   };
+  const handleRandoImage = async (event) => {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    formData.append("image", image[0]);
+    try {
+      await axios.put(`http://localhost:8800/api/pins/image/${id}`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      setOpenOne(true);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <div>
       {data.length === 0 && (
@@ -199,13 +236,16 @@ const SingleRandoViewer = () => {
       )}
       <div className="container px-11 pt-11 mt-5">
         <div className="flex items-center gap-2 mb-3">
-          <h1 className="underline  decoration-sky-600 hover:decoration-blue-500 hover:transition text-2xl font-semibold underline-offset-8 text-gray-700">
-            Modifier la randonée
-          </h1>
+          <div className="flex gap-2 items-center">
+            <h1 className="underline  decoration-sky-600 hover:decoration-blue-500 hover:transition text-2xl font-semibold underline-offset-8 text-gray-700">
+              Modifier la randonée
+            </h1>
+            <GiMountainRoad size={24} className="mt-2 text-gray-700" />
+          </div>
         </div>
         <div className="mt-10 mb-10 flex  flex-col items-center justify-center sm:items-start sm:flex-row gap-10 sm:px-7">
           <div className="w-4/5 sm:w-2/5">
-            <form onSubmit={handleRandoEdit}>
+            <form onSubmit={handleRandoImage}>
               <label
                 className="block text-gray-700 font-bold mb-2"
                 htmlFor="image"
@@ -234,7 +274,10 @@ const SingleRandoViewer = () => {
               </button>
             </form>
           </div>
-          <form className="bg-gray-200 shadow-xl rounded px-8 pt-6 pb-8 mb-6  w-4/5 sm:w-3/5">
+          <form
+            className="bg-gray-200 shadow-xl rounded px-8 pt-6 pb-8 mb-6  w-4/5 sm:w-3/5"
+            onSubmit={handleRandoEdit}
+          >
             <div className="mb-4">
               <label
                 className="block text-gray-700 font-bold mb-2"
@@ -248,6 +291,7 @@ const SingleRandoViewer = () => {
                 type="text"
                 placeholder="Nom du produit"
                 name="title"
+                onChange={(e) => setRandoTitle(e.target.value)}
               />
             </div>
             <div className="mb-4">
@@ -262,6 +306,7 @@ const SingleRandoViewer = () => {
                 id="description"
                 placeholder="Description du produit"
                 name="desc"
+                onChange={(e) => setRandoDesc(e.target.value)}
               ></textarea>
             </div>
             <div className="mb-4 flex items-center justify-around gap-4">
@@ -274,6 +319,7 @@ const SingleRandoViewer = () => {
                 id="price"
                 type="date"
                 name="brand"
+                onChange={(e) => setRandoDate(e.target.value)}
               />
 
               <input
@@ -282,6 +328,7 @@ const SingleRandoViewer = () => {
                 type="number"
                 placeholder="Prix de la randonnée"
                 name="price"
+                onChange={(e) => setRandoPrice(e.target.value)}
               />
             </div>
 
@@ -291,7 +338,10 @@ const SingleRandoViewer = () => {
                 <h1 className="block text-gray-700 font-bold">Places</h1>
               </div>
               <div className="flex items-center gap-3">
-                <select className="w-full p-2">
+                <select
+                  className="w-full p-2"
+                  onChange={(e) => setRandoLevel(e.target.value)}
+                >
                   <option>facile</option>
                   <option>moyen</option>
                   <option>difficile</option>
@@ -303,8 +353,23 @@ const SingleRandoViewer = () => {
                   type="number"
                   placeholder="Maximum de places disponibles"
                   name="quantity"
+                  onChange={(e) => setRandoMaxParticipants(e.target.value)}
                 />
               </div>
+            </div>
+            <div className="mb-4">
+              <label
+                className="block text-gray-700 font-bold mb-2"
+                htmlFor="name"
+              >
+                Durée de la randonée
+              </label>
+              <input
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                type="number"
+                placeholder="Durée de la randonnée (jours)"
+                onChange={(e) => setRandoDuration(e.target.value)}
+              />
             </div>
 
             <div className="flex items-center justify-between">
@@ -456,6 +521,22 @@ const SingleRandoViewer = () => {
             </div>
           </div>
         </div>
+      )}
+      {openOne && (
+        <Snackbar
+          open={openOne}
+          autoHideDuration={6000}
+          onClose={handleClose}
+          anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+        >
+          <Alert
+            onClose={handleClose}
+            severity="success"
+            sx={{ width: "100%" }}
+          >
+            Randonée modifié avec succès!
+          </Alert>
+        </Snackbar>
       )}
       {open && (
         <Snackbar
