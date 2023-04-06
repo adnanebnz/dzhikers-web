@@ -15,13 +15,19 @@ import Contact from "./pages/Contact";
 import Checkout from "./pages/checkout/Checkout";
 import Register from "./pages/auth/Register";
 import SendEmail from "./pages/auth/SendEmail";
-import ResetPassword from "./pages/auth/ResetPassword";
 import Login from "./pages/auth/Login";
 import ProcessCheckout from "./pages/checkout/ProcessCheckout";
 import Success from "./pages/checkout/Success";
 import Cancel from "./pages/checkout/Cancel";
 import Error from "./pages/Error";
 import EditProfile from "./pages/userDashboard/EditProfile";
+import Organizer from "./pages/organizer/Organizer";
+import OrganizerView from "./pages/organizer/OrganizerView";
+import ResetPassword from "./pages/auth/ResetPassword";
+import SingleRandoViewer from "./pages/organizer/SingleRandoViewer";
+import NotificationsViewer from "./pages/userDashboard/NotificationsViewer";
+import AddProduct from "./pages/admin/AddProduct";
+import EditProduct from "./pages/admin/EditProduct";
 
 const Layout = () => {
   return (
@@ -66,6 +72,26 @@ const router = createBrowserRouter([
         element: <Admin />,
       },
       {
+        path: "/admin/ajouter-produit",
+        element: <AddProduct />,
+      },
+      {
+        path: "/admin/modifier-produit/:id",
+        element: <EditProduct />,
+      },
+      {
+        path: "/organizer",
+        element: <Organizer />,
+      },
+      {
+        path: "/organizer/overview",
+        element: <OrganizerView />,
+      },
+      {
+        path: "/organizer/overview/:id",
+        element: <SingleRandoViewer />,
+      },
+      {
         path: "/profile/:id",
         element: <Profile />,
       },
@@ -76,6 +102,10 @@ const router = createBrowserRouter([
       {
         path: "/profile/dashboard/:id",
         element: <UserDashboard />,
+      },
+      {
+        path: "/profile/notifs",
+        element: <NotificationsViewer />,
       },
       {
         path: "/contact",

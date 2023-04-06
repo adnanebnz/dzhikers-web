@@ -1,6 +1,12 @@
-import Map, { Marker, Popup } from "react-map-gl";
+import Map, {
+  Marker,
+  Popup,
+  NavigationControl,
+  GeolocateControl,
+} from "react-map-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./map.css";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import axios from "axios";
@@ -13,13 +19,15 @@ export default function MapApp() {
   const [currentPlaceId, setCurrentPlaceId] = useState(null);
   const [lng, setLng] = useState(3.25);
   const [lat, setLat] = useState(34.666667);
-  const [zoom, setZoom] = useState(5);
+  const [zoom, setZoom] = useState(5.6);
   const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+
+  const navigate = useNavigate();
   useEffect(() => {
     const getPins = async () => {
       try {
-        const res = await axios.get("http://localhost:8800/api/pins");
-        setPins(res.data);
+        const res = await axios.get("http://localhost:8800/api/pins/pure");
+        setPins(res.data.pins);
       } catch (error) {
         console.log(error);
       }
@@ -49,7 +57,7 @@ export default function MapApp() {
     const price = data.get("price");
 
     try {
-      await axios.post(
+      const res = await axios.post(
         "http://localhost:8800/api/pins",
         {
           title,
@@ -70,6 +78,7 @@ export default function MapApp() {
           },
         }
       );
+      setPins([...pins, res.data]);
     } catch (err) {
       console.log(err);
     }
@@ -77,9 +86,8 @@ export default function MapApp() {
 
   const MAPBOX_TOKEN =
     "pk.eyJ1Ijoic2tpbGx6ZGV2IiwiYSI6ImNsZThrbmV0NjA3NjEzeW8zZTNoN3NremEifQ.J2OUiRda51tADGWwnH-cuw";
-
   return (
-    <div className="mx-6">
+    <div>
       <Map
         initialViewState={{
           latitude: lat,
@@ -89,14 +97,21 @@ export default function MapApp() {
         mapStyle="mapbox://styles/mapbox/streets-v9"
         mapboxAccessToken={MAPBOX_TOKEN}
         onDblClick={handleAddClick}
-        style={{ height: "60vh   " }}
+        style={{ height: "100vh" }}
       >
+        <NavigationControl />
+        <GeolocateControl />
         {pins.map((p) => (
           <>
             <Marker longitude={p.long} latitude={p.lat}>
               <LocationOnIcon
+                className={`${
+                  p.organizer === currentUser.details.username
+                    ? "text-blue-500"
+                    : "text-red-500"
+                }`}
                 onClick={() => handleMarkerClick(p._id, p.lat, p.long)}
-                sx={{ cursor: "pointer", color: "red", fontSize: "2rem" }}
+                sx={{ cursor: "pointer", fontSize: "2rem" }}
               />
             </Marker>
             {p._id === currentPlaceId && (
@@ -135,7 +150,12 @@ export default function MapApp() {
                     </b>
                   </span>
                   <div className="flex items-center justify-center pt-2">
-                    <button className="bg-blue-500 hover:transition-all hover:bg-blue-600 text-white font-semibold h-8 w-24">
+                    <button
+                      className="bg-blue-500 hover:transition-all hover:bg-blue-600 text-white font-semibold h-8 w-24"
+                      onClick={() => {
+                        navigate(`/randos/${p._id}`);
+                      }}
+                    >
                       VOIR PLUS
                     </button>
                   </div>
@@ -159,7 +179,7 @@ export default function MapApp() {
               <LocationOnIcon
                 style={{
                   fontSize: 7 * zoom,
-                  color: "tomato",
+                  color: "green",
                   cursor: "pointer",
                 }}
               />
@@ -170,6 +190,7 @@ export default function MapApp() {
               closeButton={true}
               closeOnClick={false}
               onClose={() => {
+                setNewPin(false);
                 setCurrentPlaceId(null);
                 setLat(null);
                 setLng(null);

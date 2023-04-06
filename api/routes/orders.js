@@ -59,7 +59,7 @@ router.post("/create-order", async (req, res, next) => {
     next(err);
   }
 });
-router.get("/:id", verifyUser, async (req, res, next) => {
+router.get("/:id", async (req, res, next) => {
   try {
     const order = await Order.find({ userId: req.params.id });
     res.status(200).json(order);
@@ -88,4 +88,30 @@ router.delete("/:id", async (req, res, next) => {
     next(err);
   }
 });
+
+router.delete("/admin/:id", async (req, res, next) => {
+  try {
+    await Order.findOneAndDelete({ _id: req.params.id });
+    res.status(200).json("Order Deleted");
+  } catch (err) {
+    next(err);
+  }
+});
+
+//modify order
+router.put("/:id", async (req, res, next) => {
+  try {
+    const order = await Order.findById(req.params.id);
+    if (!order) {
+      return res.status(404).json({ message: "Ordeer not found" });
+    }
+    order.delivery_status = req.body.delivery_status;
+    order.payment_status = req.body.payment_status;
+    await order.save();
+    res.status(200).json(order);
+  } catch (err) {
+    next(err);
+  }
+});
+
 module.exports = router;

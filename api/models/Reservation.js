@@ -5,6 +5,10 @@ const reservationSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  organizerUsername: {
+    type: String,
+    required: true,
+  },
   hikeTitle: {
     type: String,
     required: true,

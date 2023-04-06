@@ -93,7 +93,7 @@ const UserDashboard = () => {
           <h1 className="text-2xl font-semibold text-center mb-10">
             TABLEAU DE BORD
           </h1>
-          {data.length === 0 && (
+          {data.length === 0 && pins.length === 0 && (
             <h1 className="my-10 text-center text-gray-700 text-lg">
               Rien a afficher
             </h1>
@@ -157,7 +157,7 @@ const UserDashboard = () => {
                         )}
                       </TableCell>
                       <TableCell>
-                        {row.payment_status === "not payed" && (
+                        {row.payment_status === "not_payed" && (
                           <Typography
                             color="error"
                             size="small"
@@ -178,7 +178,7 @@ const UserDashboard = () => {
                       </TableCell>
 
                       <TableCell>
-                        {row.payment_status === "not payed" && (
+                        {row.payment_status === "not_payed" && (
                           <IconButton>
                             <DeleteForeverIcon
                               sx={{ color: "tomato" }}

@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const Reservation = require("../models/Reservation");
 const Pin = require("../models/Pin");
+const User = require("../models/User");
 async function updatePlaces(_id) {
   const pin = await Pin.findById(_id);
   pin.places -= 1;
@@ -68,6 +69,21 @@ router.delete("/:id", async (req, res, next) => {
     await increasePlaces(reservation.hikeId);
     await reservation.remove();
     res.status(200).json({ message: "Reservation deleted" });
+  } catch (err) {
+    next(err);
+  }
+});
+//get all details and analytics of a single reservation
+//WE HAVE RANDO ID AND ORGANIZER USERNAME
+router.get("/:id/details", async (req, res, next) => {
+  try {
+    const reservations = await Reservation.find({ hikeId: req.params.id });
+    //get all participants
+    const participants = await User.find({
+      _id: { $in: reservations.map((r) => r.userId) },
+    });
+
+    res.status(200).json({ reservations, participants });
   } catch (err) {
     next(err);
   }

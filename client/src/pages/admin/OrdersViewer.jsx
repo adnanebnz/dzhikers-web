@@ -1,8 +1,7 @@
-import { useParams } from "react-router-dom";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import Loading from "../../Components/Loading";
-import { Container } from "@mui/system";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import moment from "moment";
 import {
@@ -25,7 +24,8 @@ const OrdersViewer = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [open, setOpen] = useState(false);
-
+  const [shipping, setShipping] = useState("pending");
+  const [payed, setPayed] = useState("not payed");
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -47,7 +47,38 @@ const OrdersViewer = () => {
     };
     fetchOrders();
   }, []);
-  console.log(orders);
+  const handleDelete = async (id) => {
+    try {
+      await axios.delete(`http://localhost:8800/api/orders/admin/${id}`, {
+        withCredentials: true,
+      });
+      setOrders(orders.filter((order) => order._id !== id));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const handleUpdate = async (id) => {
+    try {
+      await axios.put(
+        `http://localhost:8800/api/orders/${id}`,
+        {
+          delivery_status: shipping,
+          payment_status: payed,
+        },
+        {
+          withCredentials: true,
+        }
+      );
+      setOrders(
+        orders.map((order) =>
+          order._id === id ? { ...order, shipping, payed } : order
+        )
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <Box padding="30px">
       {loading && <Loading />}
@@ -88,64 +119,47 @@ const OrdersViewer = () => {
                       <TableCell>{row.total} د.ج</TableCell>
 
                       <TableCell>
-                        {row.delivery_status === "pending" && (
-                          <Typography
-                            color="error"
-                            size="small"
-                            textAlign="center"
-                          >
+                        <select
+                          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                          onChange={(e) => {
+                            setShipping(e.target.value);
+                          }}
+                        >
+                          <option value="pending">
                             En cours de traitement
-                          </Typography>
-                        )}
-                        {row.delivery_status === "shipping" && (
-                          <Typography
-                            className="text-amber-500"
-                            size="small"
-                            textAlign="center"
-                          >
-                            En cours d'expédition
-                          </Typography>
-                        )}
-                        {row.delivery_status === "done" && (
-                          <Typography
-                            className="text-green-600"
-                            size="small"
-                            textAlign="center"
-                          >
-                            Livrée
-                          </Typography>
-                        )}
+                          </option>
+                          <option value="shipping">
+                            En cours d'expedition
+                          </option>
+                          <option value="done">Livrée</option>
+                        </select>
                       </TableCell>
                       <TableCell>
-                        {row.payment_status === "not payed" && (
-                          <Typography
-                            color="error"
-                            size="small"
-                            textAlign="center"
-                          >
-                            Non payée
-                          </Typography>
-                        )}
-                        {row.payment_status === "payed" && (
-                          <Typography
-                            className="text-green-600"
-                            size="small"
-                            textAlign="center"
-                          >
-                            Payée
-                          </Typography>
-                        )}
+                        <select
+                          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                          onChange={(e) => {
+                            setPayed(e.target.value);
+                          }}
+                        >
+                          <option value="payed">Payé</option>
+                          <option value="not_payed">Non payé</option>
+                        </select>
                       </TableCell>
 
                       <TableCell>
-                        {row.payment_status === "not payed" && (
-                          <IconButton>
-                            <DeleteForeverIcon
-                              sx={{ color: "tomato" }}
-                              onClick={handleClickOpen}
-                            />
-                          </IconButton>
-                        )}
+                        <IconButton
+                          onClick={() => {
+                            handleUpdate(row._id);
+                          }}
+                        >
+                          <CheckCircleIcon sx={{ color: "green" }} />
+                        </IconButton>
+                        <IconButton>
+                          <DeleteForeverIcon
+                            sx={{ color: "red" }}
+                            onClick={handleClickOpen}
+                          />
+                        </IconButton>
                         <Dialog open={open} keepMounted onClose={handleClose}>
                           <DialogTitle>{"Annuler votre commande?"}</DialogTitle>
                           <DialogContent>
@@ -156,7 +170,10 @@ const OrdersViewer = () => {
                           <DialogActions>
                             <Button onClick={handleClose}>ANNULER</Button>
                             <Button
-                              onClick={() => alert("DID YOU JUST PRESS ME?")}
+                              onClick={() => {
+                                handleDelete(row._id);
+                                handleClose();
+                              }}
                             >
                               ACCEPTER
                             </Button>

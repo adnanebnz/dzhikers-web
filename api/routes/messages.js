@@ -20,5 +20,18 @@ router.get("/", async (req, res, next) => {
     next(err);
   }
 });
+router.delete("/:id", async (req, res, next) => {
+  try {
+    const contact = Contact.findById(req.params.id);
+    if (!contact) {
+      res.status(404).json("Contact not found");
+    } else {
+      await contact.deleteOne();
+      res.status(403).json("success");
+    }
+  } catch (err) {
+    next(err);
+  }
+});
 
 module.exports = router;

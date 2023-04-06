@@ -32,7 +32,7 @@ function Copyright(props) {
 
 const theme = createTheme();
 
-export default function ResetPassword() {
+export default function SendEmail() {
   const [error, setError] = useState(null);
   const [open, setOpen] = useState(false);
 
@@ -54,10 +54,9 @@ export default function ResetPassword() {
         email: email,
       });
     } catch (err) {
-      console.log(err);
+      setError(err.response.data.message);
     }
   };
-
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
@@ -102,20 +101,38 @@ export default function ResetPassword() {
             </Button>
           </Box>
         </Box>
-        <Snackbar
-          open={open}
-          autoHideDuration={6000}
-          onClose={handleClose}
-          anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-        >
-          <Alert
+        {error == null && open && (
+          <Snackbar
+            open={open}
+            autoHideDuration={6000}
             onClose={handleClose}
-            severity="success"
-            sx={{ width: "100%", backgroundColor: "lightgreen" }}
+            anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
           >
-            Un lien de vérification a été envoyé à votre adresse email!
-          </Alert>
-        </Snackbar>
+            <Alert
+              onClose={handleClose}
+              severity="success"
+              sx={{ width: "100%", backgroundColor: "lightgreen" }}
+            >
+              Un lien de vérification a été envoyé à votre adresse email!
+            </Alert>
+          </Snackbar>
+        )}
+        {error != null && (
+          <Snackbar
+            open={open}
+            autoHideDuration={6000}
+            onClose={handleClose}
+            anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+          >
+            <Alert
+              onClose={handleClose}
+              severity="error"
+              sx={{ width: "100%" }}
+            >
+              {error}
+            </Alert>
+          </Snackbar>
+        )}
         <Copyright sx={{ mt: 8, mb: 4 }} />
       </Container>
     </ThemeProvider>

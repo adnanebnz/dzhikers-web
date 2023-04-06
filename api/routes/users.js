@@ -134,11 +134,17 @@ router.delete("/:id", async (req, res, next) => {
     res.status(401).json("you cant you dont have the auth");
   }
   jwt.verify(token, process.env.JWT, async (err, payload) => {
-    if (payload.isAdmin == false) {
-      res.status(401).json("You're not an admin");
-    } else if (payload.isAdmin) {
+    if (payload.isAdmin || payload.id == req.params.id) {
       await User.findByIdAndDelete(req.params.id);
-      res.status(200).json("user deleted");
+      res
+        .clearCookie("access_token", {
+          sameSite: "none",
+          secure: true,
+        })
+        .status(200)
+        .send("User has been deleted.");
+    } else if (payload.isAdmin == false) {
+      res.status(401).json("You're not an admin");
     }
     if (err) {
       res.status(404).json(err);
@@ -148,11 +154,28 @@ router.delete("/:id", async (req, res, next) => {
 
 //update user
 
-router.put("/:id", async (req, res, next) => {
+router.put("/:id/updatePfp", upload.single("img"), async (req, res, next) => {
   try {
     //TODO handle profile pic change
+    const url = req.protocol + "://" + req.get("host");
     const user = await User.findById(req.params.id);
-    console.log(req.body);
+    user.img = url + "/Images/" + req.file.filename || user.img;
+    const updatedUser = await User.findByIdAndUpdate(req.params.id, {
+      $set: {
+        img: user.img,
+      },
+    });
+    res.status(200).json({
+      img: user.img,
+    });
+  } catch (err) {
+    next(err);
+  }
+});
+
+router.put("/:id", async (req, res, next) => {
+  try {
+    const user = await User.findById(req.params.id);
     if (user) {
       user.firstName = req.body.firstName || user.firstName;
       user.lastName = req.body.lastName || user.lastName;
@@ -162,7 +185,6 @@ router.put("/:id", async (req, res, next) => {
     if (req.body.password !== "") {
       user.password = bcrypt.hashSync(req.body.password, 10);
     }
-    console.log(req.body);
     await User.findByIdAndUpdate(req.params.id, {
       $set: user,
     });

@@ -15,11 +15,22 @@ import {
   Typography,
   Stack,
   Button,
+  Pagination,
 } from "@mui/material";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
+import { useNavigate } from "react-router-dom";
 const ProductsViewer = () => {
+  const navigate = useNavigate();
+  const [page, setPage] = useState(1);
+
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [open, setOpen] = useState(false);
+  const [itemCount, setItemCount] = useState(0);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -31,17 +42,31 @@ const ProductsViewer = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const resultat = await axios.get("http://localhost:8800/api/items", {
-          withCredentials: true,
-        });
-        setProducts(resultat.data);
+        const resultat = await axios.get(
+          `http://localhost:8800/api/items?category=all&page=${page}&min=0&max=1000000`,
+          {
+            withCredentials: true,
+          }
+        );
+        setProducts(resultat.data.items);
+        setItemCount(resultat.data.count);
         setLoading(false);
       } catch (error) {
         console.log(error);
       }
     };
     fetchProducts();
-  }, []);
+  }, [page]);
+  const handleDelete = async (id) => {
+    try {
+      await axios.delete(`http://localhost:8800/api/items/${id}`, {
+        withCredentials: true,
+      });
+      setProducts(products.filter((product) => product._id !== id));
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <Box marginTop="10px">
       <Box
@@ -52,7 +77,14 @@ const ProductsViewer = () => {
           padding: "20px",
         }}
       >
-        <Button variant="contained">Ajouter un produit</Button>
+        <Button
+          variant="contained"
+          onClick={() => {
+            navigate("/admin/ajouter-produit");
+          }}
+        >
+          Ajouter un produit
+        </Button>
       </Box>
       {loading && <Loading />}
       {!loading && (
@@ -82,7 +114,7 @@ const ProductsViewer = () => {
                         {moment(row.createdAt).format("DD-MM-YYYY HH:mm ")}
                       </TableCell>
                       <TableCell>
-                        <img src={row.img} height="80px" width="80px" />
+                        <img src={row.img3} height="80px" width="80px" />
                       </TableCell>
                       <TableCell>{row.title}</TableCell>
                       <TableCell align="center">{row.quantity}</TableCell>
@@ -93,6 +125,9 @@ const ProductsViewer = () => {
                             color="primary"
                             aria-label="Modifier"
                             component="span"
+                            onClick={() => {
+                              navigate("/admin/modifier-produit/" + row._id);
+                            }}
                           >
                             <EditIcon color="success" />
                           </IconButton>
@@ -100,10 +135,30 @@ const ProductsViewer = () => {
                             color="primary"
                             aria-label="Modifier"
                             component="span"
+                            onClick={handleClickOpen}
                           >
                             <DeleteForeverIcon color="error" />
                           </IconButton>
                         </Stack>
+                        <Dialog open={open} keepMounted onClose={handleClose}>
+                          <DialogTitle>{"Supprimer ce produit?"}</DialogTitle>
+                          <DialogContent>
+                            <DialogContentText>
+                              Vous supprimez ce produit. Êtes-vous sûr?
+                            </DialogContentText>
+                          </DialogContent>
+                          <DialogActions>
+                            <Button onClick={handleClose}>ANNULER</Button>
+                            <Button
+                              onClick={() => {
+                                handleDelete(row._id);
+                                handleClose();
+                              }}
+                            >
+                              ACCEPTER
+                            </Button>
+                          </DialogActions>
+                        </Dialog>
                       </TableCell>
                     </TableRow>
                   ))}
@@ -112,6 +167,22 @@ const ProductsViewer = () => {
             </>
           )}
         </>
+      )}
+      {products.length !== 0 && (
+        <Pagination
+          count={Math.ceil(itemCount / 12)}
+          shape="rounded"
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            marginTop: "4rem",
+            marginBottom: "4rem",
+          }}
+          onChange={(e) => {
+            setPage(e.target.textContent);
+          }}
+        />
       )}
     </Box>
   );

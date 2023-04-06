@@ -31,6 +31,7 @@ const Single = () => {
     const fetchData = async () => {
       const res = await axios.get(`http://localhost:8800/api/pins/${id}`);
       setData(res.data);
+      console.log(res.data);
       setLoading(false);
     };
     fetchData();
@@ -45,6 +46,7 @@ const Single = () => {
         `http://localhost:8800/api/reservations/${id}/register`,
         {
           hikeId: id,
+          organizerUsername: data.organizer,
           firstName: currentUser.details.firstName,
           lastName: currentUser.details.lastName,
           email: currentUser.details.email,

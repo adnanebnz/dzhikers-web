@@ -1,4 +1,4 @@
-import logo from "../assets/logoo.png";
+import logo from "../assets/black.png";
 export default function Footer() {
   const date = new Date();
   return (
@@ -6,8 +6,8 @@ export default function Footer() {
       <div className="max-w-screen-xl px-4 py-16 mx-auto sm:px-4 lg:px-5">
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
           <div>
-            <img src={logo} className="mr-5 h-6 sm:h-14" alt="logo" />
-            <p className="max-w-xs mt-4 text-sm text-gray-600">
+            <img src={logo} className="mr-5  h-24 sm:h-32" alt="logo" />
+            <p className="max-w-xs  text-sm text-gray-600">
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas,
               accusantium.
             </p>

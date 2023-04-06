@@ -1,8 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import logoo from "../assets/logoo.png";
+import logoo from "../assets/noback.png";
 import { GiHamburgerMenu } from "react-icons/gi";
+import { FiSettings } from "react-icons/fi";
+import { IoLogOutOutline } from "react-icons/io5";
+import { AiOutlineDashboard } from "react-icons/ai";
+import { GrNotification } from "react-icons/gr";
 import { VscChromeClose } from "react-icons/vsc";
+import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Avatar, Badge, IconButton, Typography, Box } from "@mui/material";
@@ -10,26 +15,37 @@ import { ShoppingBagOutlined } from "@mui/icons-material";
 import { setIsCartOpen } from "../state";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import axios from "axios";
-
+import moment from "moment";
 const Header = () => {
   const [navbarState, setNavbarState] = useState(false);
   const navigate = useNavigate();
+  const [notifications, setNotifications] = useState([]);
+  const [hikeInfos, setHikeInfos] = useState([]);
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart.cart);
   const [anchorEl, setAnchorEl] = useState(null);
+  const [anchorElOne, setAnchorElOne] = useState(null);
   const open = Boolean(anchorEl);
+  const openOne = Boolean(anchorElOne);
   const handleBtn = (event) => {
     setAnchorEl(event.currentTarget);
   };
+
+  const handleBtnOne = (event) => {
+    setAnchorElOne(event.currentTarget);
+  };
   const handleClose = () => {
     setAnchorEl(null);
+  };
+  const handleCloseOne = () => {
+    setAnchorElOne(null);
   };
   const handleDashboard = () => {
     navigate(`/profile/dashboard/${currentUser.details._id}`);
 
     setAnchorEl(null);
   };
+
   const handleProfile = () => {
     navigate(`/profile/${currentUser.details._id}`);
     setAnchorEl(null);
@@ -43,12 +59,29 @@ const Header = () => {
     navigate("/");
   };
   const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+  useEffect(() => {
+    const fetchNotifs = async () => {
+      try {
+        const res = await axios.get(
+          `http://localhost:8800/api/announces/notifs/${currentUser.details._id}`,
+          {
+            withCredentials: true,
+          }
+        );
+        setNotifications(res.data.announces);
+        setHikeInfos(res.data.hikeInfos);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchNotifs();
+  }, []);
   return (
     <div>
       <Nav>
         <div className="brand">
           <div className="container" onClick={() => navigate("/")}>
-            <img src={logoo} alt="" style={{ height: "50px" }} />
+            <img src={logoo} alt="" style={{ height: "30px" }} />
             DZHIKERS
           </div>
         </div>
@@ -67,31 +100,121 @@ const Header = () => {
             <Link to="/contact">Contact</Link>
           </li>
         </ul>
+
         <div className="flex gap-4 items-center">
           {!currentUser?.isAdmin && (
-            <Badge
-              className="badge"
-              badgeContent={cart.length}
-              color="error"
-              invisible={cart.length === 0}
-              sx={{
-                "& .MuiBadge-badge": {
-                  right: 5,
-                  top: 5,
-                  padding: "0 4px",
-                  height: "18px",
-                  minWidth: "18px",
-                },
-              }}
-            >
-              <IconButton
-                className="cart"
-                onClick={() => dispatch(setIsCartOpen({}))}
-                sx={{ color: "black", height: "40px" }}
+            <>
+              {currentUser && (
+                <Badge
+                  className="badge"
+                  badgeContent={notifications.length}
+                  color="error"
+                  invisible={notifications.length === 0}
+                  sx={{
+                    "& .MuiBadge-badge": {
+                      right: 5,
+                      top: 5,
+                      padding: "0 4px",
+                      height: "18px",
+                      minWidth: "18px",
+                    },
+                  }}
+                >
+                  <IconButton
+                    className="cart"
+                    id="basic-buttonOne"
+                    aria-controls={openOne ? "basic-menuOne" : undefined}
+                    aria-haspopup="true"
+                    aria-expanded={openOne ? "true" : undefined}
+                    onClick={handleBtnOne}
+                    sx={{ color: "black", height: "40px" }}
+                  >
+                    <GrNotification size={18} />
+                  </IconButton>
+                </Badge>
+              )}
+
+              {notifications.length > 0 && (
+                <>
+                  <Menu
+                    anchorOrigin={{
+                      vertical: "bottom",
+                      horizontal: "left",
+                    }}
+                    transformOrigin={{ vertical: "top", horizontal: "center" }}
+                    id="basic-menuOne"
+                    anchorEl={anchorElOne}
+                    open={openOne}
+                    onClose={handleCloseOne}
+                    MenuListProps={{
+                      "aria-labelledby": "basic-buttonOne",
+                    }}
+                  >
+                    <div className="flex items-end justify-end px-2 py-1">
+                      <button
+                        className="bg-blue-500 text-white px-2 py-1 mb-2"
+                        onClick={() => {
+                          navigate("/profile/notifs");
+                        }}
+                      >
+                        Voir plus
+                      </button>
+                    </div>
+                    {notifications.map((notif) => (
+                      <MenuItem>
+                        <div className="flex flex-col gap-2">
+                          <div>
+                            {hikeInfos.map((hike) =>
+                              hike._id === notif.hikeId ? (
+                                <div className="flex items-center gap-2">
+                                  <Avatar
+                                    src={hike.img}
+                                    sx={{ width: "40px", height: "40px" }}
+                                  />
+                                  <h1>{hike.title}</h1>
+                                </div>
+                              ) : null
+                            )}
+                          </div>
+                          <div>
+                            <h1 className="text-md text-gray-800 font-medium">
+                              {notif.title}
+                            </h1>
+                            <h1 className="text-sm text-gray-600">
+                              {moment(notif.createdAt).fromNow()}
+                            </h1>
+                          </div>
+                        </div>
+                      </MenuItem>
+                    ))}
+                  </Menu>
+                </>
+              )}
+
+              <Badge
+                className="badge"
+                badgeContent={cart.length}
+                color="error"
+                invisible={cart.length === 0}
+                sx={{
+                  "& .MuiBadge-badge": {
+                    right: 5,
+                    top: 5,
+                    padding: "0 4px",
+                    height: "18px",
+                    minWidth: "18px",
+                  },
+                }}
               >
-                <ShoppingBagOutlined />
-              </IconButton>
-            </Badge>
+                <IconButton
+                  className="cart"
+                  onClick={() => dispatch(setIsCartOpen({}))}
+                  sx={{ color: "black", height: "40px" }}
+                >
+                  <ShoppingBagOutlined />
+                </IconButton>
+              </Badge>
+            </>
           )}
           {currentUser && (
             <div className="userInfos">
@@ -105,7 +228,7 @@ const Header = () => {
                 >
                   <Avatar
                     alt=""
-                    src={currentUser.details.img || "../assets/noavatar.png"}
+                    src={currentUser.details.img || `../assets/noavatar.png`}
                     sx={{ width: 40, height: 40 }}
                   />
                 </IconButton>
@@ -128,18 +251,74 @@ const Header = () => {
                   "aria-labelledby": "basic-button",
                 }}
               >
-                <MenuItem onClick={handleProfile}>Profile</MenuItem>
-                {!currentUser.isAdmin && (
-                  <MenuItem onClick={handleDashboard}>
+                <MenuItem
+                  onClick={handleProfile}
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: ".4rem",
+                    justifyItems: "center",
+                  }}
+                >
+                  <FiSettings size={17} />
+                  Profile
+                </MenuItem>
+                {!currentUser.isAdmin && !currentUser.isOrg && (
+                  <MenuItem
+                    onClick={handleDashboard}
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: ".4rem",
+                      justifyItems: "center",
+                    }}
+                  >
+                    <AiOutlineDashboard size={17} />
                     Mes achats et réservations
                   </MenuItem>
                 )}
-                {currentUser.isAdmin && (
-                  <MenuItem onClick={() => navigate(`/admin`)}>
-                    Dashboard
+
+                {currentUser.isOrg && (
+                  <MenuItem
+                    onClick={() => {
+                      navigate("/organizer");
+                    }}
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: ".4rem",
+                      justifyItems: "center",
+                    }}
+                  >
+                    <AiOutlineDashboard size={17} />
+                    Tableau de bord
                   </MenuItem>
                 )}
-                <MenuItem onClick={handleDisconnect}>Se deconnecter</MenuItem>
+                {currentUser.isAdmin && (
+                  <MenuItem
+                    onClick={() => navigate(`/admin`)}
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: ".4rem",
+                      justifyItems: "center",
+                    }}
+                  >
+                    <AiOutlineDashboard size={17} />
+                    Tableau de bord
+                  </MenuItem>
+                )}
+                <MenuItem
+                  onClick={handleDisconnect}
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: ".4rem",
+                  }}
+                >
+                  <IoLogOutOutline size={19} className="" />
+                  Déconnecter
+                </MenuItem>
               </Menu>
             </div>
           )}
@@ -189,6 +368,11 @@ const Header = () => {
               Panier
             </Link>
           </li>
+          {currentUser && (
+            <li>
+              <Link to={"/profile/notifs"}>Notifications</Link>
+            </li>
+          )}
           {!currentUser && (
             <>
               <li>
@@ -304,7 +488,7 @@ const Nav = styled.nav`
 const ResponsiveNav = styled.div`
   display: flex;
   position: absolute;
-  z-index: 1;
+  z-index: 999;
   top: ${({ state }) => (state ? "90px" : "-400px")};
   background-color: white;
   height: auto;

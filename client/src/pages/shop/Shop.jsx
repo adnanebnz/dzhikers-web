@@ -5,31 +5,45 @@ import { useDispatch } from "react-redux";
 import StarIcon from "@mui/icons-material/Star";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import SearchIcon from "@mui/icons-material/Search";
+import { Pagination } from "@mui/material";
+import Slider from "@mui/material/Slider";
 import { addToCart } from "../../state";
 const Shop = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [items, setItems] = useState([]);
   const [count, setCount] = useState(1);
+  const [countOne, setCountOne] = useState(0);
+
+  const [page, setPage] = useState(1);
   const [itemCount, setItemCount] = useState(0);
   const [category, setCategory] = useState("all");
+  const [minPrice, setMinPrice] = useState(0);
+  const [maxPrice, setMaxPrice] = useState(100000);
+  const [value, setValue] = useState([0, 19000]);
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+    setMinPrice(newValue[0]);
+    setMaxPrice(newValue[1]);
+  };
   useEffect(() => {
     const fetchData = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:8800/api/items?category=${category}`
+          `http://localhost:8800/api/items?category=${category}&page=${page}&min=${minPrice}&max=${maxPrice}`
         );
-        setItems(res.data);
-        setItemCount(res.data.length);
+        setItems(res.data.items);
+        setItemCount(res.data.count);
+        setCountOne(res.data.items.length);
       } catch (err) {
         console.log(err);
       }
     };
     fetchData();
-  }, [category]);
-  console.log(items);
+  }, [category, page, minPrice, maxPrice]);
   return (
-    <section className="bg-white mt-24 mb-20 h-screen">
+    <section className="bg-white mt-24 mb-20">
       <div className="container px-6 py-8 mx-auto">
         <div className="lg:flex lg:-mx-2">
           <div className="space-y-3 lg:w-1/5 lg:px-2 lg:space-y-4">
@@ -63,31 +77,39 @@ const Shop = () => {
             >
               Vetements
             </a>
+            <div>
+              <h1 className="text-gray-600 text-md font-semibold mt-10">
+                Filtrer par prix
+              </h1>
+
+              <Slider
+                sx={{ width: "80%", marginTop: "2rem" }}
+                min={0}
+                max={50000}
+                value={value}
+                onChange={handleChange}
+                valueLabelDisplay="auto"
+                valueLabelFormat={(value) => `${value} DZD`}
+              />
+            </div>
           </div>
 
           <div className="mt-6 lg:mt-0 lg:px-2 lg:w-4/5 ">
             <div className="flex items-center justify-between text-sm tracking-widest uppercase ">
-              <p className="text-gray-500 ">{itemCount} Produits</p>
-              <div className="flex items-center">
-                <p className="text-gray-500 ">Filtrer</p>
-                <select className="font-medium text-gray-700 bg-transparent  focus:outline-none">
-                  <option value="#">Popularité</option>
-                  <option value="#">Prix</option>
-                </select>
-              </div>
+              <p className="text-gray-500 ">{countOne} Produits</p>
             </div>
 
             {/* ITEMS MAPPING  HERE */}
             <div className="grid grid-cols-1 gap-8 mt-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 sm:gap-3">
               {items.map((item) => (
                 <>
-                  <div className="w-full h-screen flex justify-center">
+                  <div>
                     <div>
                       <div className="w-auto">
                         <div className="shadow hover:shadow-lg transition duration-300 ease-in-out xl:mb-0 lg:mb-0 md:mb-0 mb-6 cursor-pointer group">
                           <div className="overflow-hidden relative">
                             <img
-                              className="w-full transition duration-700 ease-in-out group-hover:opacity-60"
+                              className="w-full h-96 sm:h-56 overflow-hidden transition duration-700 ease-in-out group-hover:opacity-60 object-cover"
                               src={item.img3}
                               alt="image"
                             />
@@ -151,6 +173,21 @@ const Shop = () => {
                 </>
               ))}
             </div>
+            {countOne > 0 && (
+              <Pagination
+                count={Math.ceil(itemCount / 12)}
+                shape="rounded"
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  marginTop: "4rem",
+                }}
+                onChange={(e) => {
+                  setPage(e.target.textContent);
+                }}
+              />
+            )}
           </div>
         </div>
       </div>

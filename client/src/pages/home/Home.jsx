@@ -5,6 +5,7 @@ import Services from "../../Components/Services";
 import Testimonials from "../../Components/Testimonials";
 import scrollreveal from "scrollreveal";
 import Section from "../../Components/Section";
+import MainMap from "../../Components/Map/MainMap";
 export default function App() {
   useEffect(() => {
     const sr = scrollreveal({
@@ -19,6 +20,7 @@ export default function App() {
         #hero,
         #services,
         #recommend,
+        #mapMain,
         #testimonials,
         footer
         `,
@@ -33,6 +35,7 @@ export default function App() {
       <ScrollToTop />
       <Hero />
       <Section />
+      <MainMap />
       <Services />
       <Testimonials />
     </div>

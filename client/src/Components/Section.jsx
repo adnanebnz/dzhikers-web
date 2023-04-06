@@ -4,7 +4,9 @@ import tante from "../assets/tante.jpg";
 import chair from "../assets/chair.jpg";
 import bottle from "../assets/bottle.jpg";
 import clothes from "../assets/adidassports.jpg";
+import { useNavigate } from "react-router-dom";
 const Section = () => {
+  const navigate = useNavigate();
   return (
     <div className=" bg-gray-50 px-14 py-10" id="recommend">
       <div className="col-span-full mb-3">
@@ -14,7 +16,12 @@ const Section = () => {
       </div>
       <div className="flex items-center justify-center gap-1 sm:block">
         <div className="grid grid-cols-1 items-center justify-center sm:grid-cols-3 lg:grid-cols-5  gap-x-4 gap-y-1">
-          <div className="">
+          <div
+            className=""
+            onClick={() => {
+              navigate("/randos");
+            }}
+          >
             <a href="">
               <img
                 src={hikers}
@@ -26,7 +33,12 @@ const Section = () => {
             </p>
           </div>
 
-          <div className="">
+          <div
+            className=""
+            onClick={() => {
+              navigate("/boutique");
+            }}
+          >
             <a href="">
               <img
                 src={tante}
@@ -38,7 +50,12 @@ const Section = () => {
             </p>
           </div>
 
-          <div className="">
+          <div
+            className=""
+            onClick={() => {
+              navigate("/boutique");
+            }}
+          >
             <a href="">
               <img
                 src={chair}
@@ -50,7 +67,12 @@ const Section = () => {
             </p>
           </div>
 
-          <div className="">
+          <div
+            className=""
+            onClick={() => {
+              navigate("/boutique");
+            }}
+          >
             <a href="">
               <img
                 src={bottle}
@@ -61,7 +83,12 @@ const Section = () => {
               Gourdes de camping
             </p>
           </div>
-          <div className="">
+          <div
+            className=""
+            onClick={() => {
+              navigate("/boutique");
+            }}
+          >
             <a href="">
               <img
                 src={clothes}

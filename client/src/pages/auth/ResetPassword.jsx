@@ -12,25 +12,8 @@ import InputAdornment from "@mui/material/InputAdornment";
 import { FormControl, IconButton } from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useParams, useNavigate, Link } from "react-router-dom";
-function Copyright(props) {
-  return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      {"Copyright © "}
-      <Link color="inherit" href="http://localhost:5173/">
-        DZHIKERS
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
-const ResetPassword = () => {
+import { useParams, useNavigate } from "react-router-dom";
+export default function ResetPassword() {
   const [error, setError] = useState(null);
   const [showPassword, setShowPassword] = useState(false);
   const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -43,7 +26,7 @@ const ResetPassword = () => {
   useEffect(() => {
     const fetchPage = async () => {
       try {
-        const res = await axios.get(
+        await axios.get(
           `http://localhost:8800/api/reset/reset-password/${id}/${token}`
         );
       } catch (err) {
@@ -58,10 +41,10 @@ const ResetPassword = () => {
     const password = data.get("password");
     const confirmPassword = data.get("confirmPassword");
     if (password !== confirmPassword) {
-      alert("Passwords do not match");
+      alert("Les mots de passe ne correspondent pas");
     } else {
       try {
-        const res = await axios.post(
+        await axios.post(
           `http://localhost:8800/api/reset/reset-password/${id}/${token}`,
           { password: password },
           { withCredentials: true }
@@ -160,9 +143,6 @@ const ResetPassword = () => {
           </Button>
         </Box>
       </Box>
-      <Copyright sx={{ mt: 8, mb: 4 }} />
     </Container>
   );
-};
-
-export default ResetPassword;
+}
