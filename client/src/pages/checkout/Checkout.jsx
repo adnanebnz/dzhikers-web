@@ -56,7 +56,7 @@ const Checkout = () => {
     } else if (choice === "livraison" && totalPrice > 0) {
       navigate("/checkout/process");
     } else {
-      setError("Error occured!");
+      setError("Erreur vous ne pouvez pas continuer.");
     }
   }
 
@@ -147,48 +147,52 @@ const Checkout = () => {
             </TableContainer>
           </Box>
         </Box>
-        <Box sx={{ marginTop: "50px" }}>
-          <Typography variant="h3" fontSize="22px">
-            Selectionnez le mode de paiement:
-          </Typography>
+        {totalPrice > 0 && (
+          <>
+            <Box sx={{ marginTop: "50px" }}>
+              <Typography variant="h3" fontSize="22px">
+                Selectionnez le mode de paiement:
+              </Typography>
 
-          <FormControl>
-            <RadioGroup
-              row
-              aria-labelledby="demo-row-radio-buttons-group-label"
-              name="row-radio-buttons-group"
+              <FormControl>
+                <RadioGroup
+                  row
+                  aria-labelledby="demo-row-radio-buttons-group-label"
+                  name="row-radio-buttons-group"
+                >
+                  <FormControlLabel
+                    value="livraison"
+                    control={<Radio />}
+                    label="Paiement a la livraison"
+                    onClick={() => setChoice("livraison")}
+                    defaultChecked={true}
+                  />
+                  <FormControlLabel
+                    value="credit"
+                    control={<Radio />}
+                    label="Payez avec votre carte de débit"
+                    onClick={() => setChoice("credit")}
+                  />
+                </RadioGroup>
+              </FormControl>
+            </Box>
+            <Box
+              display="flex"
+              alignItems="end"
+              sx={{
+                justifyContent: {
+                  xs: "center",
+                  sm: "end",
+                },
+                marginTop: "10px",
+              }}
             >
-              <FormControlLabel
-                value="livraison"
-                control={<Radio />}
-                label="Paiement a la livraison"
-                onClick={() => setChoice("livraison")}
-                defaultChecked={true}
-              />
-              <FormControlLabel
-                value="credit"
-                control={<Radio />}
-                label="Payez avec votre carte de débit"
-                onClick={() => setChoice("credit")}
-              />
-            </RadioGroup>
-          </FormControl>
-        </Box>
-        <Box
-          display="flex"
-          alignItems="end"
-          sx={{
-            justifyContent: {
-              xs: "center",
-              sm: "end",
-            },
-            marginTop: "10px",
-          }}
-        >
-          <Button variant="contained" size="large" onClick={makePayment}>
-            PASSER LA COMMANDE
-          </Button>
-        </Box>
+              <Button variant="contained" size="large" onClick={makePayment}>
+                PASSER LA COMMANDE
+              </Button>
+            </Box>
+          </>
+        )}
       </Box>
       {error && (
         <Typography sx={{ color: "red", textAlign: "center" }}>

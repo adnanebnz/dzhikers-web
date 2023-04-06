@@ -129,7 +129,7 @@ const CartMenu = () => {
             </FlexBox>
             <Box display="flex" justifyContent="center" alignItems="center">
               <button
-                className="p-2 w-full h-14 tracking-wide bg-blue-600 hover:bg-blue-700 text-white rounded-md"
+                className="p-2 w-full h-14 tracking-wide bg-blue-600 hover:bg-blue-700 text-white rounded-md text-lg font-normal"
                 onClick={() => {
                   navigate("/checkout");
                   dispatch(setIsCartOpen({}));
