@@ -64,165 +64,176 @@ export default function AddUser() {
       console.log(error);
     }
   };
+  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+
   return (
-    <div className="max-w-lg mx-auto mt-10 mb-10">
-      <h1 className="mb-3 text-lg text-gray-700 font-semibold">
-        Ajouter un utulisateur
-      </h1>
-      <form
-        className="bg-gray-200 shadow-xl rounded px-8 pt-6 pb-8 mb-6"
-        onSubmit={handleSubmit}
-      >
-        <div className="mb-4">
-          <div>
+    <>
+      {!currentUser.isAdmin && (
+        <h1 className="text-xl text-red-500">
+          Vous n'avez pas le droit d'acceder a cette page
+        </h1>
+      )}
+      {currentUser.isAdmin && (
+        <div className="max-w-lg mx-auto mt-10 mb-10">
+          <h1 className="mb-3 text-lg text-gray-700 font-semibold">
+            Ajouter un utulisateur
+          </h1>
+          <form
+            className="bg-gray-200 shadow-xl rounded px-8 pt-6 pb-8 mb-6"
+            onSubmit={handleSubmit}
+          >
+            <div className="mb-4">
+              <div>
+                <div className="mb-4">
+                  <label
+                    className="block text-gray-700 font-bold mb-2"
+                    htmlFor="name"
+                  >
+                    Nom
+                  </label>
+                  <input
+                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    id="name"
+                    type="text"
+                    placeholder="Nom*"
+                    name="lastName"
+                  />
+                </div>
+                <div>
+                  <label
+                    className="block text-gray-700 font-bold mb-2"
+                    htmlFor="name"
+                  >
+                    Prénom
+                  </label>
+                  <input
+                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    id="name"
+                    type="text"
+                    placeholder="Prénom*"
+                    name="firstName"
+                  />
+                </div>
+              </div>
+            </div>
             <div className="mb-4">
               <label
                 className="block text-gray-700 font-bold mb-2"
-                htmlFor="name"
+                htmlFor="description"
               >
-                Nom
+                Nom d'utulisateur
               </label>
               <input
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                id="name"
+                id="description"
+                placeholder="Nom d'utulisateur*"
+                name="username"
                 type="text"
-                placeholder="Nom*"
-                name="lastName"
               />
             </div>
-            <div>
+            <h1 className="block text-gray-700 font-bold mb-2">Age</h1>
+            <div className="flex items-center gap-3 mb-4">
+              <input
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                id="price"
+                type="number"
+                placeholder="Age*"
+                name="age"
+              />
+            </div>
+
+            <div className="mb-4">
+              <h1 className="block text-gray-700 font-bold mb-2">Role</h1>
+              <div className="flex items-center gap-6 justify-center">
+                <div>
+                  <input
+                    type="radio"
+                    name="role"
+                    value="user"
+                    onChange={onOptionChange}
+                  />
+                  <label className="text-gray-700 font-bold mb-2">User</label>
+                </div>
+                <div>
+                  <input
+                    type="radio"
+                    name="role"
+                    value="admin"
+                    onChange={onOptionChange}
+                  />
+                  <label className="text-gray-700 font-bold mb-2">Admin</label>
+                </div>
+                <div>
+                  <input
+                    type="radio"
+                    name="role"
+                    value="org"
+                    onChange={onOptionChange}
+                  />
+                  <label className="text-gray-700 font-bold mb-2">
+                    Organisateur
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div className="mb-4">
               <label
                 className="block text-gray-700 font-bold mb-2"
-                htmlFor="name"
+                htmlFor="description"
               >
-                Prénom
+                Email
               </label>
               <input
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                id="name"
+                id="description"
+                placeholder="Email*"
+                name="email"
                 type="text"
-                placeholder="Prénom*"
-                name="firstName"
               />
             </div>
-          </div>
-        </div>
-        <div className="mb-4">
-          <label
-            className="block text-gray-700 font-bold mb-2"
-            htmlFor="description"
-          >
-            Nom d'utulisateur
-          </label>
-          <input
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            id="description"
-            placeholder="Nom d'utulisateur*"
-            name="username"
-            type="text"
-          />
-        </div>
-        <h1 className="block text-gray-700 font-bold mb-2">Age</h1>
-        <div className="flex items-center gap-3 mb-4">
-          <input
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            id="price"
-            type="number"
-            placeholder="Age*"
-            name="age"
-          />
-        </div>
-
-        <div className="mb-4">
-          <h1 className="block text-gray-700 font-bold mb-2">Role</h1>
-          <div className="flex items-center gap-6 justify-center">
-            <div>
-              <input
-                type="radio"
-                name="role"
-                value="user"
-                onChange={onOptionChange}
-              />
-              <label className="text-gray-700 font-bold mb-2">User</label>
-            </div>
-            <div>
-              <input
-                type="radio"
-                name="role"
-                value="admin"
-                onChange={onOptionChange}
-              />
-              <label className="text-gray-700 font-bold mb-2">Admin</label>
-            </div>
-            <div>
-              <input
-                type="radio"
-                name="role"
-                value="org"
-                onChange={onOptionChange}
-              />
-              <label className="text-gray-700 font-bold mb-2">
-                Organisateur
+            <div className="mb-4">
+              <label
+                className="block text-gray-700 font-bold mb-2"
+                htmlFor="description"
+              >
+                Mot de passe
               </label>
+              <input
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                id="description"
+                placeholder="Mot dz passe*"
+                name="password"
+                type="password"
+              />
             </div>
-          </div>
+            <div className="flex items-center justify-between">
+              <button
+                type="submit"
+                className="px-2 py-1 bg-blue-500 rounded-md text-white font-semibold
+       hover:bg-blue-600 hover:transition-all duration-100"
+              >
+                Ajouter l'utulisateur
+              </button>
+            </div>
+          </form>
+          {open && (
+            <Snackbar
+              open={open}
+              autoHideDuration={6000}
+              onClose={handleClose}
+              anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+            >
+              <Alert
+                onClose={handleClose}
+                severity="success"
+                sx={{ width: "100%" }}
+              >
+                Utulisateur crée avec success!
+              </Alert>
+            </Snackbar>
+          )}
         </div>
-        <div className="mb-4">
-          <label
-            className="block text-gray-700 font-bold mb-2"
-            htmlFor="description"
-          >
-            Email
-          </label>
-          <input
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            id="description"
-            placeholder="Email*"
-            name="email"
-            type="text"
-          />
-        </div>
-        <div className="mb-4">
-          <label
-            className="block text-gray-700 font-bold mb-2"
-            htmlFor="description"
-          >
-            Mot de passe
-          </label>
-          <input
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            id="description"
-            placeholder="Mot dz passe*"
-            name="password"
-            type="password"
-          />
-        </div>
-        <div className="flex items-center justify-between">
-          <button
-            type="submit"
-            className="px-2 py-1 bg-blue-500 rounded-md text-white font-semibold
-            hover:bg-blue-600 hover:transition-all duration-100"
-          >
-            Ajouter l'utulisateur
-          </button>
-        </div>
-      </form>
-      {open && (
-        <Snackbar
-          open={open}
-          autoHideDuration={6000}
-          onClose={handleClose}
-          anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-        >
-          <Alert
-            onClose={handleClose}
-            severity="success"
-            sx={{ width: "100%" }}
-          >
-            Utulisateur crée avec success!
-          </Alert>
-        </Snackbar>
       )}
-    </div>
+    </>
   );
 }

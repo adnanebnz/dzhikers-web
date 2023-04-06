@@ -4,8 +4,8 @@ import { useEffect, useState } from "react";
 import Loading from "../../Components/Loading";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import moment from "moment";
-import UserMap from "../../Components/Map/UserMap";
 import {
+  Box,
   IconButton,
   Table,
   TableBody,
@@ -85,117 +85,190 @@ const UserDashboard = () => {
       console.log(err);
     }
   };
+  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+
   return (
-    <div className="mx-4  mt-11 mb-11 lg:mx-36">
-      {loading && <Loading />}
-      {!loading && (
-        <>
-          <h1 className="text-2xl font-semibold text-center mb-10">
-            TABLEAU DE BORD
-          </h1>
-          {data.length === 0 && pins.length === 0 && (
-            <h1 className="my-10 text-center text-gray-700 text-lg">
-              Rien a afficher
-            </h1>
-          )}
-          {data.length !== 0 && (
+    <>
+      {currentUser.details._id !== id && (
+        <Box height="100vh">
+          <Typography variant="h3" sx={{ color: "red" }} textAlign="center">
+            Vous n'avez pas accès à cette page
+          </Typography>
+        </Box>
+      )}
+      {currentUser.details._id === id && (
+        <div className="mx-4  mt-11 mb-11 lg:mx-36">
+          {loading && <Loading />}
+          {!loading && (
             <>
-              <Table className="shadow-lg">
+              <h1 className="text-2xl font-semibold text-center mb-10">
+                TABLEAU DE BORD
+              </h1>
+              {data.length === 0 && pins.length === 0 && (
+                <h1 className="my-10 text-center text-gray-700 text-lg">
+                  Rien a afficher
+                </h1>
+              )}
+              {data.length !== 0 && (
+                <>
+                  <Table className="shadow-lg">
+                    <TableHead>
+                      <TableRow>
+                        <TableCell>Date</TableCell>
+                        <TableCell>Produits</TableCell>
+                        <TableCell align="left">Total</TableCell>
+                        <TableCell>Status de delivrance</TableCell>
+                        <TableCell>Status de paiement</TableCell>
+                        <TableCell>Action</TableCell>
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      {data.map((row) => (
+                        <TableRow hover="true">
+                          <TableCell>
+                            {moment(row.createdAt).format("DD-MM-YYYY HH:mm ")}
+                          </TableCell>
+                          {row.products.map((product) => (
+                            <div key={product._id}>
+                              <TableCell>
+                                {product.title} ({product.count})
+                              </TableCell>
+                            </div>
+                          ))}
+
+                          <TableCell>{row.total} د.ج</TableCell>
+
+                          <TableCell>
+                            {row.delivery_status === "pending" && (
+                              <Typography
+                                color="error"
+                                size="small"
+                                textAlign="center"
+                              >
+                                En cours de traitement
+                              </Typography>
+                            )}
+                            {row.delivery_status === "shipping" && (
+                              <Typography
+                                className="text-amber-500"
+                                size="small"
+                                textAlign="center"
+                              >
+                                En cours d'expédition
+                              </Typography>
+                            )}
+                            {row.delivery_status === "done" && (
+                              <Typography
+                                className="text-green-600"
+                                size="small"
+                                textAlign="center"
+                              >
+                                Livrée
+                              </Typography>
+                            )}
+                          </TableCell>
+                          <TableCell>
+                            {row.payment_status === "not_payed" && (
+                              <Typography
+                                color="error"
+                                size="small"
+                                textAlign="center"
+                              >
+                                Non payée
+                              </Typography>
+                            )}
+                            {row.payment_status === "payed" && (
+                              <Typography
+                                className="text-green-600"
+                                size="small"
+                                textAlign="center"
+                              >
+                                Payée
+                              </Typography>
+                            )}
+                          </TableCell>
+
+                          <TableCell>
+                            {row.payment_status === "not_payed" && (
+                              <IconButton>
+                                <DeleteForeverIcon
+                                  sx={{ color: "tomato" }}
+                                  onClick={handleClickOpen}
+                                />
+                              </IconButton>
+                            )}
+                            <Dialog
+                              open={open}
+                              keepMounted
+                              onClose={handleClose}
+                            >
+                              <DialogTitle>
+                                {"Annuler votre commande?"}
+                              </DialogTitle>
+                              <DialogContent>
+                                <DialogContentText>
+                                  Vous annulerez votre commande. Êtes-vous sûr?
+                                </DialogContentText>
+                              </DialogContent>
+                              <DialogActions>
+                                <Button onClick={handleClose}>ANNULER</Button>
+                                <Button onClick={() => deleteOrder(row._id)}>
+                                  ACCEPTER
+                                </Button>
+                              </DialogActions>
+                            </Dialog>
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </>
+              )}
+            </>
+          )}
+          {pins.length !== 0 && (
+            <>
+              <Table className="shadow-lg mt-10">
                 <TableHead>
                   <TableRow>
                     <TableCell>Date</TableCell>
-                    <TableCell>Produits</TableCell>
-                    <TableCell align="left">Total</TableCell>
-                    <TableCell>Status de delivrance</TableCell>
-                    <TableCell>Status de paiement</TableCell>
+                    <TableCell>Réservation</TableCell>
+                    <TableCell>Prix</TableCell>
                     <TableCell>Action</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {data.map((row) => (
+                  {pins.map((row) => (
                     <TableRow hover="true">
                       <TableCell>
-                        {moment(row.createdAt).format("DD-MM-YYYY HH:mm ")}
+                        {moment(row.date).format("DD-MM-YYYY HH:mm ")}
                       </TableCell>
-                      {row.products.map((product) => (
-                        <div key={product._id}>
-                          <TableCell>
-                            {product.title} ({product.count})
-                          </TableCell>
-                        </div>
-                      ))}
+                      <TableCell>{row.hikeTitle}</TableCell>
 
-                      <TableCell>{row.total} د.ج</TableCell>
-
+                      <TableCell>{row.price} DZD</TableCell>
                       <TableCell>
-                        {row.delivery_status === "pending" && (
-                          <Typography
-                            color="error"
-                            size="small"
-                            textAlign="center"
-                          >
-                            En cours de traitement
-                          </Typography>
-                        )}
-                        {row.delivery_status === "shipping" && (
-                          <Typography
-                            className="text-amber-500"
-                            size="small"
-                            textAlign="center"
-                          >
-                            En cours d'expédition
-                          </Typography>
-                        )}
-                        {row.delivery_status === "done" && (
-                          <Typography
-                            className="text-green-600"
-                            size="small"
-                            textAlign="center"
-                          >
-                            Livrée
-                          </Typography>
-                        )}
-                      </TableCell>
-                      <TableCell>
-                        {row.payment_status === "not_payed" && (
-                          <Typography
-                            color="error"
-                            size="small"
-                            textAlign="center"
-                          >
-                            Non payée
-                          </Typography>
-                        )}
-                        {row.payment_status === "payed" && (
-                          <Typography
-                            className="text-green-600"
-                            size="small"
-                            textAlign="center"
-                          >
-                            Payée
-                          </Typography>
-                        )}
-                      </TableCell>
-
-                      <TableCell>
-                        {row.payment_status === "not_payed" && (
-                          <IconButton>
-                            <DeleteForeverIcon
-                              sx={{ color: "tomato" }}
-                              onClick={handleClickOpen}
-                            />
-                          </IconButton>
-                        )}
-                        <Dialog open={open} keepMounted onClose={handleClose}>
-                          <DialogTitle>{"Annuler votre commande?"}</DialogTitle>
+                        <IconButton>
+                          <DeleteForeverIcon
+                            sx={{ color: "tomato" }}
+                            onClick={handleClickOpenPin}
+                          />
+                        </IconButton>
+                        <Dialog
+                          open={openPin}
+                          keepMounted
+                          onClose={handleClosePin}
+                        >
+                          <DialogTitle>
+                            {"Annuler votre Réseration?"}
+                          </DialogTitle>
                           <DialogContent>
                             <DialogContentText>
-                              Vous annulerez votre commande. Êtes-vous sûr?
+                              Vous annulerez votre réservation. Êtes-vous sûr?
                             </DialogContentText>
                           </DialogContent>
                           <DialogActions>
-                            <Button onClick={handleClose}>ANNULER</Button>
-                            <Button onClick={() => deleteOrder(row._id)}>
+                            <Button onClick={handleClosePin}>ANNULER</Button>
+                            <Button onClick={() => deleteReservation(row._id)}>
                               ACCEPTER
                             </Button>
                           </DialogActions>
@@ -207,57 +280,9 @@ const UserDashboard = () => {
               </Table>
             </>
           )}
-        </>
+        </div>
       )}
-      {pins.length !== 0 && (
-        <>
-          <Table className="shadow-lg mt-10">
-            <TableHead>
-              <TableRow>
-                <TableCell>Date</TableCell>
-                <TableCell>Réservation</TableCell>
-                <TableCell>Prix</TableCell>
-                <TableCell>Action</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {pins.map((row) => (
-                <TableRow hover="true">
-                  <TableCell>
-                    {moment(row.date).format("DD-MM-YYYY HH:mm ")}
-                  </TableCell>
-                  <TableCell>{row.hikeTitle}</TableCell>
-
-                  <TableCell>{row.price} DZD</TableCell>
-                  <TableCell>
-                    <IconButton>
-                      <DeleteForeverIcon
-                        sx={{ color: "tomato" }}
-                        onClick={handleClickOpenPin}
-                      />
-                    </IconButton>
-                    <Dialog open={openPin} keepMounted onClose={handleClosePin}>
-                      <DialogTitle>{"Annuler votre Réseration?"}</DialogTitle>
-                      <DialogContent>
-                        <DialogContentText>
-                          Vous annulerez votre réservation. Êtes-vous sûr?
-                        </DialogContentText>
-                      </DialogContent>
-                      <DialogActions>
-                        <Button onClick={handleClosePin}>ANNULER</Button>
-                        <Button onClick={() => deleteReservation(row._id)}>
-                          ACCEPTER
-                        </Button>
-                      </DialogActions>
-                    </Dialog>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </>
-      )}
-    </div>
+    </>
   );
 };
 
