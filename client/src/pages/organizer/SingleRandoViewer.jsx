@@ -342,9 +342,9 @@ const SingleRandoViewer = () => {
                   className="w-full p-2"
                   onChange={(e) => setRandoLevel(e.target.value)}
                 >
-                  <option>facile</option>
-                  <option>moyen</option>
-                  <option>difficile</option>
+                  <option value="facile">facile</option>
+                  <option value="moyen">moyen</option>
+                  <option value="difficile">difficile</option>
                 </select>
 
                 <input

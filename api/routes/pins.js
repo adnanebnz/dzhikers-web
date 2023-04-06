@@ -28,7 +28,6 @@ router.post("/", upload.single("image"), async (req, res, next) => {
     title: req.body.title,
     desc: req.body.desc,
     date: req.body.date,
-    rating: req.body.rating,
     lat: req.body.lat,
     long: req.body.long,
     level: req.body.level,
@@ -125,7 +124,6 @@ router.put("/:id", async (req, res, next) => {
     pin.title = req.body.title || pin.title;
     pin.desc = req.body.desc || pin.desc;
     pin.date = req.body.date || pin.date;
-    pin.rating = req.body.rating || pin.rating;
     pin.lat = req.body.lat || pin.lat;
     pin.long = req.body.long || pin.long;
     pin.level = req.body.level || pin.level;

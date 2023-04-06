@@ -126,18 +126,7 @@ const Randos = () => {
                                   {item.price} DZD
                                 </p>
                               </div>
-                              <div className="flex">
-                                <div className="">
-                                  {Array(item.rating).fill(
-                                    <StarIcon sx={{ color: "gold" }} />
-                                  )}
-                                </div>
-                                <div className="ml-2">
-                                  <p className="text-gray-500 font-medium text-sm">
-                                    (1)
-                                  </p>
-                                </div>
-                              </div>
+                              <div className="flex"></div>
                             </div>
                           </div>
                         </div>

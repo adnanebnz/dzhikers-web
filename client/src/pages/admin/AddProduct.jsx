@@ -97,14 +97,15 @@ export default function AddProduct() {
             onChange={(e) => setBrand(e.target.value)}
           />
 
-          <input
+          <select
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            id="price"
-            type="text"
-            placeholder="Catégorie du produit"
-            name="category"
             onChange={(e) => setCategory(e.target.value)}
-          />
+          >
+            <option value="tantes">Tantes</option>
+            <option value="chaises">Chaises</option>
+            <option value="gourdes">Gourdes</option>
+            <option value="vetements">Vetements</option>
+          </select>
         </div>
 
         <div className="mb-4">

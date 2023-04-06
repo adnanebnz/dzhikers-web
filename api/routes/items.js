@@ -36,7 +36,7 @@ router.post("/", upload.array("images", 3), async (req, res, next) => {
       img: url + "/Images/" + req.files[0].filename,
       img2: url + "/Images/" + req.files[1].filename,
       img3: url + "/Images/" + req.files[2].filename,
-      rating: req.body.rating,
+
       price: req.body.price,
       quantity: req.body.quantity,
       category: req.body.category,
