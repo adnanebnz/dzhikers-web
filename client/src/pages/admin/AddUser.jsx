@@ -4,15 +4,36 @@ import Dropzone from "react-dropzone";
 import { Alert, Snackbar } from "@mui/material";
 
 export default function AddUser() {
-  const [images, setImages] = useState([]);
-  const [imagesPreview, setImagesPreview] = useState([]);
-  const [title, setTitle] = useState("");
-  const [desc, setDesc] = useState("");
-  const [price, setPrice] = useState(null);
-  const [quantity, setQuantity] = useState(null);
-  const [brand, setBrand] = useState("");
-  const [category, setCategory] = useState("");
   const [open, setOpen] = useState(false);
+  const [role, setRole] = useState("user");
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [isUser, setIsUser] = useState(true);
+  const [isOrg, setIsOrg] = useState(false);
+  const onOptionChange = (e) => {
+    switch (e.target.value) {
+      case "admin":
+        setIsAdmin(true);
+        setIsUser(false);
+        setIsOrg(false);
+        break;
+      case "user":
+        setIsAdmin(false);
+        setIsUser(true);
+        setIsOrg(false);
+        break;
+      case "org":
+        setIsAdmin(false);
+        setIsUser(false);
+        setIsOrg(true);
+        break;
+      default:
+        setIsAdmin(false);
+        setIsUser(true);
+        setIsOrg(false);
+        break;
+    }
+    setRole(e.target.value);
+  };
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
       return;
@@ -20,31 +41,24 @@ export default function AddUser() {
 
     setOpen(false);
   };
-  const handleDrop = (acceptedFiles) => {
-    setImages(acceptedFiles);
-    setImagesPreview(acceptedFiles.map((file) => URL.createObjectURL(file)));
-  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    data.set("title", title);
-    data.set("desc", desc);
-    data.set("price", price);
-    data.set("quantity", quantity);
-    data.set("brand", brand);
-    data.set("category", category);
-
-    images.forEach((file) => {
-      data.append("images", file);
-    });
+    const values = {
+      firstName: data.get("firstName"),
+      lastName: data.get("lastName"),
+      username: data.get("username"),
+      email: data.get("email"),
+      age: data.get("age"),
+      password: data.get("password"),
+      isAdmin: isAdmin,
+      isUser: isUser,
+      isOrg: isOrg,
+    };
 
     try {
-      await axios.post("http://localhost:8800/api/items", data, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      await axios.post("http://localhost:8800/api/users/register", values);
       setOpen(true);
     } catch (error) {
       console.log(error);
@@ -61,7 +75,7 @@ export default function AddUser() {
       >
         <div className="mb-4">
           <div>
-            <div>
+            <div className="mb-4">
               <label
                 className="block text-gray-700 font-bold mb-2"
                 htmlFor="name"
@@ -72,9 +86,8 @@ export default function AddUser() {
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 id="name"
                 type="text"
-                placeholder="Nom du produit"
-                name="title"
-                onChange={(e) => setTitle(e.target.value)}
+                placeholder="Nom*"
+                name="lastName"
               />
             </div>
             <div>
@@ -82,15 +95,14 @@ export default function AddUser() {
                 className="block text-gray-700 font-bold mb-2"
                 htmlFor="name"
               >
-                Nom
+                Prénom
               </label>
               <input
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 id="name"
                 type="text"
-                placeholder="Nom du produit"
-                name="title"
-                onChange={(e) => setTitle(e.target.value)}
+                placeholder="Prénom*"
+                name="firstName"
               />
             </div>
           </div>
@@ -105,39 +117,54 @@ export default function AddUser() {
           <input
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             id="description"
-            placeholder="Description du produit"
-            name="desc"
+            placeholder="Nom d'utulisateur*"
+            name="username"
             type="text"
-            onChange={(e) => setDesc(e.target.value)}
           />
         </div>
-        <div className="mb-4 flex items-center justify-around gap-4">
-          <h1 className="block text-gray-700 font-bold">Age</h1>
-        </div>
+        <h1 className="block text-gray-700 font-bold mb-2">Age</h1>
         <div className="flex items-center gap-3 mb-4">
           <input
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             id="price"
-            type="text"
-            placeholder="Marque du produit"
-            name="brand"
-            onChange={(e) => setBrand(e.target.value)}
+            type="number"
+            placeholder="Age*"
+            name="age"
           />
         </div>
 
         <div className="mb-4">
-          <div className="mb-4 flex items-center justify-around gap-4">
-            <h1 className="block text-gray-700 font-bold">Role</h1>
-          </div>
-          <div className="flex items-center gap-3">
-            <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="quantity"
-              type="number"
-              placeholder="Quantité du produit"
-              name="quantity"
-              onChange={(e) => setQuantity(e.target.value)}
-            />
+          <h1 className="block text-gray-700 font-bold mb-2">Role</h1>
+          <div className="flex items-center gap-6 justify-center">
+            <div>
+              <input
+                type="radio"
+                name="role"
+                value="user"
+                onChange={onOptionChange}
+              />
+              <label className="text-gray-700 font-bold mb-2">User</label>
+            </div>
+            <div>
+              <input
+                type="radio"
+                name="role"
+                value="admin"
+                onChange={onOptionChange}
+              />
+              <label className="text-gray-700 font-bold mb-2">Admin</label>
+            </div>
+            <div>
+              <input
+                type="radio"
+                name="role"
+                value="org"
+                onChange={onOptionChange}
+              />
+              <label className="text-gray-700 font-bold mb-2">
+                Organisateur
+              </label>
+            </div>
           </div>
         </div>
         <div className="mb-4">
@@ -150,10 +177,9 @@ export default function AddUser() {
           <input
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             id="description"
-            placeholder="Description du produit"
-            name="desc"
+            placeholder="Email*"
+            name="email"
             type="text"
-            onChange={(e) => setDesc(e.target.value)}
           />
         </div>
         <div className="mb-4">
@@ -166,41 +192,10 @@ export default function AddUser() {
           <input
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             id="description"
-            placeholder="Description du produit"
-            name="desc"
-            type="text"
-            onChange={(e) => setDesc(e.target.value)}
+            placeholder="Mot dz passe*"
+            name="password"
+            type="password"
           />
-        </div>
-
-        <div className="mb-4">
-          <label className="block text-gray-700 font-bold mb-2" htmlFor="image">
-            Photo de profil
-          </label>
-          <div className="border border-solid border-blue-500 p-4">
-            <Dropzone onDrop={handleDrop}>
-              {({ getRootProps, getInputProps }) => (
-                <div {...getRootProps()}>
-                  <input {...getInputProps()} />
-                  <p className="text-gray-700 font-semibold text-sm text-center">
-                    Faites glisser pour déposez vos images ici, ou simplement
-                    cliquez ici.
-                  </p>
-                </div>
-              )}
-            </Dropzone>
-          </div>
-        </div>
-        <div className="flex items-center justify-center gap-4 mb-4">
-          {imagesPreview.map((image) => (
-            <div>
-              <img
-                alt="image"
-                className="w-32 h-32 object-cover rounded-md"
-                src={image}
-              />
-            </div>
-          ))}
         </div>
         <div className="flex items-center justify-between">
           <button
@@ -208,7 +203,7 @@ export default function AddUser() {
             className="px-2 py-1 bg-blue-500 rounded-md text-white font-semibold
             hover:bg-blue-600 hover:transition-all duration-100"
           >
-            Ajouter le produit
+            Ajouter l'utulisateur
           </button>
         </div>
       </form>
@@ -224,7 +219,7 @@ export default function AddUser() {
             severity="success"
             sx={{ width: "100%" }}
           >
-            Produit Ajoutée avec success!
+            Utulisateur crée avec success!
           </Alert>
         </Snackbar>
       )}
