@@ -5,7 +5,7 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import { FiSettings } from "react-icons/fi";
 import { IoLogOutOutline } from "react-icons/io5";
 import { AiOutlineDashboard } from "react-icons/ai";
-import { GrClose, GrNotification } from "react-icons/gr";
+import { GrNotification } from "react-icons/gr";
 import { VscChromeClose } from "react-icons/vsc";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
@@ -368,6 +368,11 @@ const Header = () => {
               Panier
             </Link>
           </li>
+          {currentUser && (
+            <li>
+              <Link to={"/profile/notifs"}>Notifications</Link>
+            </li>
+          )}
           {!currentUser && (
             <>
               <li>
@@ -483,7 +488,7 @@ const Nav = styled.nav`
 const ResponsiveNav = styled.div`
   display: flex;
   position: absolute;
-  z-index: 1;
+  z-index: 999;
   top: ${({ state }) => (state ? "90px" : "-400px")};
   background-color: white;
   height: auto;
