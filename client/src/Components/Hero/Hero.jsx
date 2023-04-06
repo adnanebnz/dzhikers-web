@@ -9,7 +9,7 @@ const Hero = () => {
   return (
     <>
       <div className="bg-white w-full overflow-hidden pb-5" id="hero">
-        <div className="bg-white relative pt-16 px-10">
+        <div className="bg-white relative sm:pt-16 px-10">
           <div className="relative m-auto px-6">
             <h1 className="mx-auto w-full  font-black text-gray-700 text-4xl text-center sm:text-4xl md:text-5xl lg:w-auto lg:text-left xl:text-6xl">
               Nous trouverons un chemin
