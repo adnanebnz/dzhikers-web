@@ -5,6 +5,7 @@ import { Alert, Snackbar } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import moment from "moment";
+import Dropzone from "react-dropzone";
 import {
   IconButton,
   Table,
@@ -17,6 +18,7 @@ import { IoNotificationsSharp as IoMdNotifications } from "react-icons/io5";
 
 const SingleRandoViewer = () => {
   moment.locale("fr");
+  const handleDrop = (acceptedFiles) => {};
   const { id } = useParams();
   const [data, setData] = useState([]);
   const [editComment, setEditComment] = useState(false);
@@ -117,7 +119,16 @@ const SingleRandoViewer = () => {
       console.log(err);
     }
   };
-
+  const handleRandoEdit = async (event) => {
+    event.preventDefault();
+    try {
+      await axios.put("", {
+        organizer: currentUser.details.username,
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
   return (
     <div>
       {data.length === 0 && (
@@ -186,147 +197,128 @@ const SingleRandoViewer = () => {
           </div>
         </>
       )}
-      {/* <div className="container px-11 pt-11">
-        <h1 className="text-gray-800 text-2xl">
-          Modifier les informations de la randonnée
-        </h1>
-
-        <div className="flex items-center justify-center p-12">
-          <div className="mx-auto w-full max-w-[550px]">
-            <form action="https://formbold.com/s/FORM_ID" method="POST">
-              <div className="-mx-3 flex flex-wrap">
-                <div className="w-full px-3 sm:w-1/2">
-                  <div className="mb-5">
-                    <label
-                      for="fName"
-                      className="mb-3 block text-base font-medium text-[#07074D]"
-                    >
-                      First Name
-                    </label>
-                    <input
-                      type="text"
-                      name="fName"
-                      id="fName"
-                      placeholder="First Name"
-                      className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                    />
-                  </div>
-                </div>
-                <div className="w-full px-3 sm:w-1/2">
-                  <div className="mb-5">
-                    <label
-                      for="lName"
-                      className="mb-3 block text-base font-medium text-[#07074D]"
-                    >
-                      Last Name
-                    </label>
-                    <input
-                      type="text"
-                      name="lName"
-                      id="lName"
-                      placeholder="Last Name"
-                      className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                    />
-                  </div>
-                </div>
+      <div className="container px-11 pt-11 mt-5">
+        <div className="flex items-center gap-2 mb-3">
+          <h1 className="underline  decoration-sky-600 hover:decoration-blue-500 hover:transition text-2xl font-semibold underline-offset-8 text-gray-700">
+            Modifier la randonée
+          </h1>
+        </div>
+        <div className="mt-10 mb-10 flex  flex-col items-center justify-center sm:items-start sm:flex-row gap-10 sm:px-7">
+          <div className="w-4/5 sm:w-2/5">
+            <form onSubmit={handleRandoEdit}>
+              <label
+                className="block text-gray-700 font-bold mb-2"
+                htmlFor="image"
+              >
+                Images de l'emplacement de la randonée
+              </label>
+              <div className="border border-solid border-blue-500 p-4">
+                <Dropzone onDrop={handleDrop}>
+                  {({ getRootProps, getInputProps }) => (
+                    <div {...getRootProps()}>
+                      <input {...getInputProps()} />
+                      <p className="text-gray-700 font-semibold text-sm text-center">
+                        Faites glisser pour déposez vos images ici, ou
+                        simplement cliquez ici.
+                      </p>
+                    </div>
+                  )}
+                </Dropzone>
               </div>
-              <div className="mb-5">
-                <label
-                  for="guest"
-                  className="mb-3 block text-base font-medium text-[#07074D]"
-                >
-                  How many guest are you bringing?
-                </label>
-                <input
-                  type="number"
-                  name="guest"
-                  id="guest"
-                  placeholder="5"
-                  min="0"
-                  className="w-full appearance-none rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                />
-              </div>
-
-              <div className="-mx-3 flex flex-wrap">
-                <div className="w-full px-3 sm:w-1/2">
-                  <div className="mb-5">
-                    <label
-                      for="date"
-                      className="mb-3 block text-base font-medium text-[#07074D]"
-                    >
-                      Date
-                    </label>
-                    <input
-                      type="date"
-                      name="date"
-                      id="date"
-                      className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                    />
-                  </div>
-                </div>
-                <div className="w-full px-3 sm:w-1/2">
-                  <div className="mb-5">
-                    <label
-                      for="time"
-                      className="mb-3 block text-base font-medium text-[#07074D]"
-                    >
-                      Time
-                    </label>
-                    <input
-                      type="time"
-                      name="time"
-                      id="time"
-                      className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                    />
-                  </div>
-                </div>
-              </div>
-
-              <div className="mb-5">
-                <label className="mb-3 block text-base font-medium text-[#07074D]">
-                  Are you coming to the event?
-                </label>
-                <div className="flex items-center space-x-6">
-                  <div className="flex items-center">
-                    <input
-                      type="radio"
-                      name="radio1"
-                      id="radioButton1"
-                      className="h-5 w-5"
-                    />
-                    <label
-                      for="radioButton1"
-                      className="pl-3 text-base font-medium text-[#07074D]"
-                    >
-                      Yes
-                    </label>
-                  </div>
-                  <div className="flex items-center">
-                    <input
-                      type="radio"
-                      name="radio1"
-                      id="radioButton2"
-                      className="h-5 w-5"
-                    />
-                    <label
-                      for="radioButton2"
-                      className="pl-3 text-base font-medium text-[#07074D]"
-                    >
-                      No
-                    </label>
-                  </div>
-                </div>
-              </div>
-
-              <div>
-                <button className="hover:shadow-form rounded-md bg-[#6A64F1] py-3 px-8 text-center text-base font-semibold text-white outline-none">
-                  Submit
-                </button>
-              </div>
+              <button
+                type="submit"
+                className="px-2 py-1 bg-blue-500 rounded-md text-white font-semibold
+            hover:bg-blue-600 hover:transition-all duration-100 mt-4"
+              >
+                Mettre a jour la photo
+              </button>
             </form>
           </div>
-        </div> 
-      </div> */}
+          <form className="bg-gray-200 shadow-xl rounded px-8 pt-6 pb-8 mb-6  w-4/5 sm:w-3/5">
+            <div className="mb-4">
+              <label
+                className="block text-gray-700 font-bold mb-2"
+                htmlFor="name"
+              >
+                Titre
+              </label>
+              <input
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                id="name"
+                type="text"
+                placeholder="Nom du produit"
+                name="title"
+              />
+            </div>
+            <div className="mb-4">
+              <label
+                className="block text-gray-700 font-bold mb-2"
+                htmlFor="description"
+              >
+                Description
+              </label>
+              <textarea
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                id="description"
+                placeholder="Description du produit"
+                name="desc"
+              ></textarea>
+            </div>
+            <div className="mb-4 flex items-center justify-around gap-4">
+              <h1 className="block text-gray-700 font-bold">Date</h1>
+              <h1 className="block text-gray-700 font-bold">Prix</h1>
+            </div>
+            <div className="flex items-center gap-3 mb-4">
+              <input
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                id="price"
+                type="date"
+                name="brand"
+              />
+
+              <input
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                id="price"
+                type="number"
+                placeholder="Prix de la randonnée"
+                name="price"
+              />
+            </div>
+
+            <div className="mb-4">
+              <div className="mb-4 flex items-center justify-around gap-4">
+                <h1 className="block text-gray-700 font-bold">Niveau</h1>
+                <h1 className="block text-gray-700 font-bold">Places</h1>
+              </div>
+              <div className="flex items-center gap-3">
+                <select className="w-full p-2">
+                  <option>facile</option>
+                  <option>moyen</option>
+                  <option>difficile</option>
+                </select>
+
+                <input
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  id="quantity"
+                  type="number"
+                  placeholder="Maximum de places disponibles"
+                  name="quantity"
+                />
+              </div>
+            </div>
+
+            <div className="flex items-center justify-between">
+              <button
+                type="submit"
+                className="px-2 py-1 bg-blue-500 rounded-md text-white font-semibold
+            hover:bg-blue-600 hover:transition-all duration-100"
+              >
+                Mettre a jour la randonée
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
       {/* MAKE AN ANNOUNCE */}
       <div className="container px-11 pt-11 mt-5">
         <div className="flex items-center gap-2 mb-3">
