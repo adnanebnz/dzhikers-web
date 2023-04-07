@@ -41,6 +41,7 @@ export default function UserMap({ lat, long }) {
         mapStyle="mapbox://styles/mapbox/streets-v9"
         mapboxAccessToken={MAPBOX_TOKEN}
         style={{ height: "60vh   " }}
+        scrollZoom={false}
       >
         <Marker longitude={pins.long} latitude={pins.lat}>
           <LocationOnIcon

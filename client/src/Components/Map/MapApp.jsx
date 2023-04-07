@@ -97,6 +97,7 @@ export default function MapApp() {
         mapStyle="mapbox://styles/mapbox/streets-v9"
         mapboxAccessToken={MAPBOX_TOKEN}
         onDblClick={handleAddClick}
+        scrollZoom={false}
         style={{ height: "100vh" }}
       >
         <NavigationControl />

@@ -150,7 +150,7 @@ const Randos = () => {
                   </>
                 ))}
               </div>
-              {count > 0 && (
+              {count > 12 && (
                 <Pagination
                   count={Math.ceil(randosCount / 16)}
                   shape="rounded"
