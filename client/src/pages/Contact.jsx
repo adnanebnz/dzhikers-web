@@ -31,10 +31,10 @@ const Contact = () => {
   return (
     <section class="text-gray-600 body-font relative">
       <div class="absolute inset-0 bg-gray-100 sm:bg-gray-300">
-        <div style={{ width: "100%" }}>
+        <div style={{ width: "100%", height: "100%" }}>
           <iframe
             width="100%"
-            height="800px"
+            height="100%"
             frameborder="0"
             scrolling="no"
             marginheight="0"
