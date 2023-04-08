@@ -6,8 +6,7 @@ const Loading = () => {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        height: "100vh",
-        width: "100vw",
+        height: "70vh",
         overflow: "hidden",
       }}
     >
