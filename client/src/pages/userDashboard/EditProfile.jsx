@@ -14,6 +14,7 @@ export default function EditProfile() {
   const [pfpAlert, setPfpAlert] = useState(false);
   const [infosAlert, setInfosAlert] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [loadingOne, setLoadingOne] = useState(false);
   const currentUser = JSON.parse(localStorage.getItem("currentUser"));
 
   const handleClose = (event, reason) => {
@@ -43,7 +44,6 @@ export default function EditProfile() {
       );
       setPfpAlert(true);
       setLoading(true);
-      console.log(res);
       if (res) {
         setLoading(false);
       }
@@ -71,11 +71,9 @@ export default function EditProfile() {
         }
       );
       setInfosAlert(true);
-      setLoading(true);
-      if (res.data.message === "success") {
-        setTimeout(() => {
-          setLoading(false);
-        }, 2500);
+      setLoadingOne(true);
+      if (res) {
+        setLoading(false);
       }
     } catch (err) {
       console.log(err);
@@ -254,7 +252,7 @@ export default function EditProfile() {
                         Modifier vos informations
                       </button>
                     </div>
-                    {loading && <Loading />}
+                    {loadingOne && <Loading />}
                   </div>
                 </form>
               </div>
