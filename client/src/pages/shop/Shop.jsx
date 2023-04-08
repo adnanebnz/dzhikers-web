@@ -183,7 +183,7 @@ const Shop = () => {
                     </>
                   ))}
                 </div>
-                {countOne > 0 && (
+                {countOne > 12 && (
                   <Pagination
                     count={Math.ceil(itemCount / 12)}
                     shape="rounded"
