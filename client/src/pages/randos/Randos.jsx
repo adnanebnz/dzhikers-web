@@ -26,7 +26,7 @@ const Randos = () => {
     const fetchData = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:8800/api/pins?level=${level}&page=${page}&min=${minPrice}&max=${maxPrice}`
+          `https://dzhikers.onrender.com/api/pins?level=${level}&page=${page}&min=${minPrice}&max=${maxPrice}`
         );
         setItems(res.data.pins);
         setRandosCount(res.data.count);

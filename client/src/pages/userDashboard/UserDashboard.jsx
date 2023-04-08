@@ -45,11 +45,14 @@ const UserDashboard = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await axios.get(`http://localhost:8800/api/orders/${id}`, {
-        withCredentials: true,
-      });
+      const res = await axios.get(
+        `https://dzhikers.onrender.com/api/orders/${id}`,
+        {
+          withCredentials: true,
+        }
+      );
       const resPins = await axios.get(
-        `http://localhost:8800/api/reservations/${id}`,
+        `https://dzhikers.onrender.com/api/reservations/${id}`,
         {
           withCredentials: true,
         }
@@ -62,7 +65,7 @@ const UserDashboard = () => {
   }, [id]);
   const deleteOrder = async (order) => {
     try {
-      await axios.delete(`http://localhost:8800/api/orders/${order}`, {
+      await axios.delete(`https://dzhikers.onrender.com/api/orders/${order}`, {
         withCredentials: true,
       });
       setOpen(false);
@@ -74,7 +77,7 @@ const UserDashboard = () => {
   const deleteReservation = async (reservation) => {
     try {
       await axios.delete(
-        `http://localhost:8800/api/reservations/${reservation}`,
+        `https://dzhikers.onrender.com/api/reservations/${reservation}`,
         {
           withCredentials: true,
         }

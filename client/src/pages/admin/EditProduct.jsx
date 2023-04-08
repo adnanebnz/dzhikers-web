@@ -29,7 +29,7 @@ export default function EditProduct() {
     event.preventDefault();
 
     try {
-      await axios.put(`http://localhost:8800/api/items/${id}`, {
+      await axios.put(`https://dzhikers.onrender.com/api/items/${id}`, {
         title,
         desc,
         brand,
@@ -49,11 +49,15 @@ export default function EditProduct() {
       data.append("images", file);
     });
     try {
-      await axios.put(`http://localhost:8800/api/items/images/${id}`, data, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      await axios.put(
+        `https://dzhikers.onrender.com/api/items/images/${id}`,
+        data,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
       setOpen(true);
     } catch (err) {
       console.log(err);

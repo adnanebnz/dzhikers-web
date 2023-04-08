@@ -74,7 +74,7 @@ export default function Register() {
     };
     try {
       await axios.post(
-        "http://localhost:8800/api/users/register",
+        "https://dzhikers.onrender.com/api/users/register",
         values,
         { headers: { "Content-Type": "multipart/form-data" } },
         { withCredentials: true }
