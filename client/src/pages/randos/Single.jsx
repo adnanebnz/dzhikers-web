@@ -93,7 +93,7 @@ const Single = () => {
                 </h2>
                 <p className="text-gray-500 text-sm">
                   De{" "}
-                  <a href className="text-blue-600 hover:underline">
+                  <a className="text-blue-600 hover:underline">
                     {data.organizer}
                   </a>
                 </p>

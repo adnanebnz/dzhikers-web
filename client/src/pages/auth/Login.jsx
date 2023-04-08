@@ -28,7 +28,11 @@ function Copyright(props) {
       {...props}
     >
       {"Copyright © "}
-      <a color="inherit" href="https://www.dzhikers.live/">
+      <a
+        onClick={() => {
+          navigate("/");
+        }}
+      >
         DZHIKERS
       </a>
       {new Date().getFullYear()}
@@ -146,12 +150,20 @@ export default function Login() {
 
             <Grid container>
               <Grid item xs>
-                <a href="/reset-password" variant="body2">
+                <a
+                  onClick={() => {
+                    navigate("/reset-password");
+                  }}
+                >
                   Mot de passe oubliée?
                 </a>
               </Grid>
               <Grid item>
-                <a href="https://www.dzhikers.live/register" variant="body2">
+                <a
+                  onClick={() => {
+                    navigate("/register");
+                  }}
+                >
                   {"Vous n'avez pas de compte? Créez un"}
                 </a>
               </Grid>

@@ -57,10 +57,7 @@ const Product = () => {
                 {data.title}
               </h2>
               <p className="text-gray-500 text-sm">
-                De{" "}
-                <a href className="text-blue-600 hover:underline">
-                  {data.brand}
-                </a>
+                De <a className="text-blue-600 hover:underline">{data.brand}</a>
               </p>
 
               <div className="flex items-center space-x-4 my-4">

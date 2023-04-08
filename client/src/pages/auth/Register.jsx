@@ -37,7 +37,13 @@ function Copyright(props) {
       {...props}
     >
       {"Copyright © "}
-      <a href="https://www.dzhikers.live/">DZHIKERS</a>
+      <a
+        onClick={() => {
+          navigate("/");
+        }}
+      >
+        DZHIKERS
+      </a>
       {new Date().getFullYear()}
     </Typography>
   );
@@ -50,7 +56,6 @@ export default function Register() {
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
-  const navigate = useNavigate();
   const [selectedFile, setSelectedFile] = useState(undefined);
   const [error, setError] = useState(undefined);
   const handleFileSelect = (event) => {
@@ -81,6 +86,7 @@ export default function Register() {
       setError(err.response.data.message);
     }
   };
+  const navigate = useNavigate();
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
@@ -227,7 +233,11 @@ export default function Register() {
             </Button>
             <Grid container>
               <Grid item>
-                <a href="https://www.dzhikers.live/login" variant="body2">
+                <a
+                  onClick={() => {
+                    navigate("/login");
+                  }}
+                >
                   {"Vous avez déja un compte? Connectez-vous"}
                 </a>
               </Grid>

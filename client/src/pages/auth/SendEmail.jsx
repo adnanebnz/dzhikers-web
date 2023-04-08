@@ -12,7 +12,9 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import axios from "axios";
 import { useState } from "react";
 import { Alert, Snackbar } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 function Copyright(props) {
+  const navigate = useNavigate();
   return (
     <Typography
       variant="body2"
@@ -21,7 +23,13 @@ function Copyright(props) {
       {...props}
     >
       {"Copyright © "}
-      <a href="https://www.dzhikers.live">DZHIKERS</a>
+      <a
+        onClick={() => {
+          navigate("/boutique");
+        }}
+      >
+        DZHIKERS
+      </a>
       {new Date().getFullYear()}
     </Typography>
   );
