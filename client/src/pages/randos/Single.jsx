@@ -33,7 +33,6 @@ const Single = () => {
         `https://dzhikers.onrender.com/api/pins/${id}`
       );
       setData(res.data);
-      console.log(res.data);
       setLoading(false);
     };
     fetchData();
@@ -62,15 +61,14 @@ const Single = () => {
         }
       );
       setOpen(false);
-      console.log(res);
     } catch (error) {
       console.log(error);
     }
   };
   return (
     <>
-      {data.length === 0 && <Loading />}
-      {data.length > 0 && (
+      {loading && <Loading />}
+      {!loading && (
         <div>
           <div
             className="mx-auto px-4 sm:px-6 lg:px-8 mt-20"
