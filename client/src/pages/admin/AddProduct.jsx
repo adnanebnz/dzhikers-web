@@ -58,7 +58,7 @@ export default function AddProduct() {
           Vous n'avez pas accès à cette page
         </h1>
       )}
-      {currentUser.isAdmin(
+      {currentUser.isAdmin && (
         <div className="max-w-lg mx-auto mt-10 mb-10">
           <h1 className="mb-3 text-lg text-gray-700 font-semibold">
             Ajouter un produit
