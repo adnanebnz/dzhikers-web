@@ -37,7 +37,7 @@ function Copyright(props) {
       {...props}
     >
       {"Copyright © "}
-      <Link color="inherit" href="http://localhost:5173/">
+      <Link color="inherit" href="https://www.dzhikers.live">
         DZHIKERS
       </Link>{" "}
       {new Date().getFullYear()}
@@ -230,7 +230,7 @@ export default function Register() {
             </Button>
             <Grid container>
               <Grid item>
-                <Link href="http://localhost:5173/login" variant="body2">
+                <Link href="https://www.dzhikers.live/login" variant="body2">
                   {"Vous avez déja un compte? Connectez-vous"}
                 </Link>
               </Grid>
