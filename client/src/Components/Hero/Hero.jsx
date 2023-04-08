@@ -30,8 +30,9 @@ const Hero = () => {
                 </span>
                 <div className="flex  justify-center items-center md:space-x-6 md:flex md:justify-center md:items-center lg:justify-start">
                   <a
-                    aria-label="add to slack"
-                    href="/boutique"
+                    onClick={() => {
+                      navigate("/randos");
+                    }}
                     className="p-4 border border-gray-200  rounded-full duration-300 hover:border-cyan-400 hover:shadow-lg hover:shadow-cyan-600/20 "
                   >
                     <div className="flex justify-center space-x-4">
@@ -54,7 +55,9 @@ const Hero = () => {
                     </div>
                   </a>
                   <a
-                    href="/randos"
+                    onClick={() => {
+                      navigate("/boutique");
+                    }}
                     className="p-4 border border-gray-200 rounded-full duration-300 hover:border-blue-400 hover:shadow-lg hover:shadow-blue-600/20 "
                   >
                     <div className="flex justify-center space-x-4">
