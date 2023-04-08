@@ -73,7 +73,7 @@ export default function EditProfile() {
       setInfosAlert(true);
       setLoadingOne(true);
       if (res) {
-        setLoading(false);
+        setLoadingOne(false);
       }
     } catch (err) {
       console.log(err);
