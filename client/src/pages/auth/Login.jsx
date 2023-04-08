@@ -150,13 +150,14 @@ export default function Login() {
 
             <Grid container>
               <Grid item xs>
-                <a
+                <Link
+                  variant="body2"
                   onClick={() => {
                     navigate("/reset-password");
                   }}
                 >
                   Mot de passe oubliée?
-                </a>
+                </Link>
               </Grid>
               <Grid item>
                 <Link
