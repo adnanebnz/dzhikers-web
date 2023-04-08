@@ -43,7 +43,7 @@ const ProductsViewer = () => {
     const fetchProducts = async () => {
       try {
         const resultat = await axios.get(
-          `https://dzhikers.onrender.com/api/items?category=all&page=${page}&min=0&max=1000000`,
+          `http://localhost:8800/api/items?category=all&page=${page}&min=0&max=1000000`,
           {
             withCredentials: true,
           }
@@ -59,7 +59,7 @@ const ProductsViewer = () => {
   }, [page]);
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`https://dzhikers.onrender.com/api/items/${id}`, {
+      await axios.delete(`http://localhost:8800/api/items/${id}`, {
         withCredentials: true,
       });
       setProducts(products.filter((product) => product._id !== id));

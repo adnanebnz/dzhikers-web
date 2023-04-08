@@ -28,14 +28,11 @@ function Copyright(props) {
       {...props}
     >
       {"Copyright © "}
-      <a
-        onClick={() => {
-          navigate("/");
-        }}
-      >
+      <Link color="inherit" href="http://localhost:5173/">
         DZHIKERS
-      </a>
+      </Link>{" "}
       {new Date().getFullYear()}
+      {"."}
     </Typography>
   );
 }
@@ -58,7 +55,7 @@ export default function Login() {
     const password = data.get("password");
     try {
       const res = await axios.post(
-        "https://dzhikers.onrender.com/api/users/login",
+        "http://localhost:8800/api/users/login",
         { email, password },
         { withCredentials: true }
       );
@@ -150,22 +147,12 @@ export default function Login() {
 
             <Grid container>
               <Grid item xs>
-                <Link
-                  variant="body2"
-                  onClick={() => {
-                    navigate("/reset-password");
-                  }}
-                >
+                <Link href="/reset-password" variant="body2">
                   Mot de passe oubliée?
                 </Link>
               </Grid>
               <Grid item>
-                <Link
-                  variant="body2"
-                  onClick={() => {
-                    navigate("/register");
-                  }}
-                >
+                <Link href="http://localhost:5173/register" variant="body2">
                   {"Vous n'avez pas de compte? Créez un"}
                 </Link>
               </Grid>

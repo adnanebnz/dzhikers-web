@@ -15,19 +15,12 @@ const Error = () => {
         </p>
         <div className="mt-10 flex items-center justify-center gap-x-6">
           <a
-            onClick={() => {
-              navigate("/");
-            }}
+            href="/"
             className="rounded-md bg-blue-500 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-blue-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
           >
             Retour a l'acceuil
           </a>
-          <a
-            onClick={() => {
-              navigate("/contact");
-            }}
-            className="text-sm font-semibold text-gray-900"
-          >
+          <a href="/contact" className="text-sm font-semibold text-gray-900">
             Contacter le support <span aria-hidden="true">&rarr;</span>
           </a>
         </div>

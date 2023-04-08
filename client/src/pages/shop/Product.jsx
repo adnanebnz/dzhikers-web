@@ -19,9 +19,7 @@ const Product = () => {
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     const fetchData = async () => {
-      const res = await axios.get(
-        `https://dzhikers.onrender.com/api/items/${id}`
-      );
+      const res = await axios.get(`http://localhost:8800/api/items/${id}`);
       setData(res.data);
       setLoading(false);
     };
@@ -57,7 +55,10 @@ const Product = () => {
                 {data.title}
               </h2>
               <p className="text-gray-500 text-sm">
-                De <a className="text-blue-600 hover:underline">{data.brand}</a>
+                De{" "}
+                <a href className="text-blue-600 hover:underline">
+                  {data.brand}
+                </a>
               </p>
 
               <div className="flex items-center space-x-4 my-4">

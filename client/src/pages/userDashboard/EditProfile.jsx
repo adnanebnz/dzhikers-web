@@ -30,7 +30,7 @@ export default function EditProfile() {
     event.preventDefault();
     try {
       const res = await axios.put(
-        `https://dzhikers.onrender.com/api/users/${id}/updatePfp`,
+        `http://localhost:8800/api/users/${id}/updatePfp`,
         {
           img: selectedFile,
         },
@@ -50,7 +50,7 @@ export default function EditProfile() {
 
     try {
       const res = await axios.put(
-        `https://dzhikers.onrender.com/api/users/${id}`,
+        `http://localhost:8800/api/users/${id}`,
         {
           lastName: event.target.lastName.value,
           firstName: event.target.firstName.value,

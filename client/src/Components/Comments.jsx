@@ -19,7 +19,7 @@ const Comments = () => {
     const fetchComents = async () => {
       try {
         const resReview = await axios.get(
-          `https://dzhikers.onrender.com/api/reviews/${id}`,
+          `http://localhost:8800/api/reviews/${id}`,
           {
             withCredentials: true,
           }
@@ -38,7 +38,7 @@ const Comments = () => {
     e.preventDefault();
     try {
       const res = await axios.post(
-        `https://dzhikers.onrender.com/api/reviews/`,
+        `http://localhost:8800/api/reviews/`,
         {
           userId: currentUser.details._id,
           username: currentUser.details.username,
@@ -92,7 +92,7 @@ const Comments = () => {
                   sx={{ display: "flex", alignItems: "center", gap: "0.5rem" }}
                 >
                   {currentUser.details.img ===
-                    "https://dzhikers.onrender.com/Images/undefined" && (
+                    "http://localhost:8800/Images/undefined" && (
                     <img
                       src={noavatar}
                       alt=""
@@ -100,7 +100,7 @@ const Comments = () => {
                     />
                   )}
                   {currentUser.details.img !==
-                    "https://dzhikers.onrender.com/Images/undefined" && (
+                    "http://localhost:8800/Images/undefined" && (
                     <img
                       src={currentUser.details.img}
                       alt=""
@@ -178,8 +178,7 @@ const Comments = () => {
                   <div className="flex justify-start items-center gap-2">
                     <img
                       src={
-                        c.userPfp !==
-                        "https://dzhikers.onrender.com/Images/undefined"
+                        c.userPfp !== "http://localhost:8800/Images/undefined"
                           ? c.userPfp
                           : noavatar
                       }

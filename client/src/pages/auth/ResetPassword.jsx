@@ -27,7 +27,7 @@ export default function ResetPassword() {
     const fetchPage = async () => {
       try {
         await axios.get(
-          `https://dzhikers.onrender.com/api/reset/reset-password/${id}/${token}`
+          `http://localhost:8800/api/reset/reset-password/${id}/${token}`
         );
       } catch (err) {
         console.log(err);
@@ -45,7 +45,7 @@ export default function ResetPassword() {
     } else {
       try {
         await axios.post(
-          `https://dzhikers.onrender.com/api/reset/reset-password/${id}/${token}`,
+          `http://localhost:8800/api/reset/reset-password/${id}/${token}`,
           { password: password },
           { withCredentials: true }
         );

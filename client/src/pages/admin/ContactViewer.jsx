@@ -15,19 +15,16 @@ const ContactViewer = () => {
   const [contact, setContact] = useState([]);
   useEffect(() => {
     const fetchContact = async () => {
-      const res = await axios.get(
-        "https://dzhikers.onrender.com/api/messages",
-        {
-          withCredentials: true,
-        }
-      );
+      const res = await axios.get("http://localhost:8800/api/messages", {
+        withCredentials: true,
+      });
       setContact(res.data);
     };
     fetchContact();
   }, []);
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`https://dzhikers.onrender.com/api/messages/${id}`, {
+      await axios.delete(`http://localhost:8800/api/messages/${id}`, {
         withCredentials: true,
       });
       setContact(contact.filter((msg) => msg._id !== id));

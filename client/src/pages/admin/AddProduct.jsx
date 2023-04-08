@@ -39,7 +39,7 @@ export default function AddProduct() {
     });
 
     try {
-      await axios.post("https://dzhikers.onrender.com/api/items", data, {
+      await axios.post("http://localhost:8800/api/items", data, {
         headers: {
           "Content-Type": "multipart/form-data",
         },

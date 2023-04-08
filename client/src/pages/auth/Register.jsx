@@ -37,15 +37,11 @@ function Copyright(props) {
       {...props}
     >
       {"Copyright © "}
-      <Link
-        variant="body2"
-        onClick={() => {
-          navigate("/");
-        }}
-      >
+      <Link color="inherit" href="http://localhost:5173/">
         DZHIKERS
-      </Link>
+      </Link>{" "}
       {new Date().getFullYear()}
+      {"."}
     </Typography>
   );
 }
@@ -57,6 +53,7 @@ export default function Register() {
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
+  const navigate = useNavigate();
   const [selectedFile, setSelectedFile] = useState(undefined);
   const [error, setError] = useState(undefined);
   const handleFileSelect = (event) => {
@@ -77,7 +74,7 @@ export default function Register() {
     };
     try {
       await axios.post(
-        "https://dzhikers.onrender.com/api/users/register",
+        "http://localhost:8800/api/users/register",
         values,
         { headers: { "Content-Type": "multipart/form-data" } },
         { withCredentials: true }
@@ -87,7 +84,6 @@ export default function Register() {
       setError(err.response.data.message);
     }
   };
-  const navigate = useNavigate();
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
@@ -234,12 +230,7 @@ export default function Register() {
             </Button>
             <Grid container>
               <Grid item>
-                <Link
-                  variant="body2"
-                  onClick={() => {
-                    navigate("/login");
-                  }}
-                >
+                <Link href="http://localhost:5173/login" variant="body2">
                   {"Vous avez déja un compte? Connectez-vous"}
                 </Link>
               </Grid>

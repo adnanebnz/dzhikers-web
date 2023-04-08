@@ -114,10 +114,18 @@ export default function Footer() {
             <div>
               <p className="font-medium">Company</p>
               <nav className="flex flex-col mt-4 space-y-2 text-sm text-gray-500">
-                <a className="hover:opacity-75">About</a>
-                <a className="hover:opacity-75">Meet the Team</a>
-                <a className="hover:opacity-75">History</a>
-                <a className="hover:opacity-75">Careers</a>
+                <a className="hover:opacity-75" href>
+                  About
+                </a>
+                <a className="hover:opacity-75" href>
+                  Meet the Team
+                </a>
+                <a className="hover:opacity-75" href>
+                  History
+                </a>
+                <a className="hover:opacity-75" href>
+                  Careers
+                </a>
               </nav>
             </div>
             <div>

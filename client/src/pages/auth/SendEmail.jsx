@@ -12,9 +12,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import axios from "axios";
 import { useState } from "react";
 import { Alert, Snackbar } from "@mui/material";
-import { useNavigate } from "react-router-dom";
 function Copyright(props) {
-  const navigate = useNavigate();
   return (
     <Typography
       variant="body2"
@@ -23,14 +21,11 @@ function Copyright(props) {
       {...props}
     >
       {"Copyright © "}
-      <a
-        onClick={() => {
-          navigate("/boutique");
-        }}
-      >
+      <Link color="inherit" href="http://localhost:5173/">
         DZHIKERS
-      </a>
+      </Link>{" "}
       {new Date().getFullYear()}
+      {"."}
     </Typography>
   );
 }
@@ -55,12 +50,9 @@ export default function SendEmail() {
     const email = data.get("email");
     setOpen(true);
     try {
-      await axios.post(
-        "https://dzhikers.onrender.com/api/reset/forgot-password",
-        {
-          email: email,
-        }
-      );
+      await axios.post("http://localhost:8800/api/reset/forgot-password", {
+        email: email,
+      });
     } catch (err) {
       setError(err.response.data.message);
     }

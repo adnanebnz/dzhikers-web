@@ -26,12 +26,9 @@ const Profile = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get(
-          `https://dzhikers.onrender.com/api/users/${id}`,
-          {
-            withCredentials: true,
-          }
-        );
+        const res = await axios.get(`http://localhost:8800/api/users/${id}`, {
+          withCredentials: true,
+        });
         setData(res.data);
       } catch (error) {
         setError(error.response.data.message);
@@ -41,7 +38,7 @@ const Profile = () => {
   }, [id]);
   const handleAccountDelete = async () => {
     try {
-      await axios.delete(`https://dzhikers.onrender.com/api/users/${id}`, {
+      await axios.delete(`http://localhost:8800/api/users/${id}`, {
         withCredentials: true,
       });
       localStorage.setItem("currentUser", null);
@@ -72,16 +69,14 @@ const Profile = () => {
           {!error && (
             <div className="mt-3 mb-10">
               <div className="flex flex-col items-center justify-center py-12">
-                {data.img ===
-                  "https://dzhikers.onrender.com/Images/undefined" && (
+                {data.img === "http://localhost:8800/Images/undefined" && (
                   <img
                     src={noavatar}
                     alt="Avatar"
                     className="w-32 h-32 rounded-full mb-4 object-cover"
                   />
                 )}
-                {data.img !==
-                  "https://dzhikers.onrender.com/Images/undefined" && (
+                {data.img !== "http://localhost:8800/Images/undefined" && (
                   <img
                     src={data.img}
                     alt="Avatar"
