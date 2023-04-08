@@ -26,8 +26,3 @@ made by :
 - make sure to create your own .env file in the backend folder and put the values respecting the .env.example file.
 - run ```npm i``` on both backend and client folders.
 - run ```npm run dev``` on the client and  ```npm start``` in the api folder.
-
-
-## LICENCE
-
-MIT.
