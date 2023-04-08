@@ -31,6 +31,7 @@ export default function EditProfile() {
   };
   const handlePfpChange = async (event) => {
     event.preventDefault();
+    setLoading(true);
     try {
       const res = await axios.put(
         `https://dzhikers.onrender.com/api/users/${id}/updatePfp`,
@@ -42,11 +43,11 @@ export default function EditProfile() {
         },
         { withCredentials: true }
       );
-      setPfpAlert(true);
-      setLoading(true);
-      if (res !== undefined) {
+      console.log(res);
+      if (res) {
         setLoading(false);
       }
+      setPfpAlert(true);
     } catch (error) {
       console.log(error);
     }
@@ -55,6 +56,7 @@ export default function EditProfile() {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
+    setLoadingOne(true);
     try {
       const res = await axios.put(
         `https://dzhikers.onrender.com/api/users/${id}`,
@@ -70,11 +72,10 @@ export default function EditProfile() {
           withCredentials: true,
         }
       );
-      setInfosAlert(true);
-      setLoadingOne(true);
-      if (res !== undefined) {
+      if (res) {
         setLoadingOne(false);
       }
+      setInfosAlert(true);
     } catch (err) {
       console.log(err);
       setError(err.response.data.message);
