@@ -1,4 +1,9 @@
-import Map, { Marker, Popup } from "react-map-gl";
+import Map, {
+  Marker,
+  Popup,
+  NavigationControl,
+  GeolocateControl,
+} from "react-map-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { useEffect, useState } from "react";
 import "./map.css";
@@ -51,6 +56,8 @@ export default function UserMap({ lat, long }) {
             style={{ height: "60vh   " }}
             scrollZoom={false}
           >
+            <GeolocateControl />
+            <GeolocateControl />
             <Marker longitude={pins.long} latitude={pins.lat}>
               <LocationOnIcon
                 onClick={() => handleMarkerClick(pins._id)}
