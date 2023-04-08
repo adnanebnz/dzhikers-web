@@ -84,8 +84,6 @@ export default function MapApp() {
         }
       );
       setLoading(false);
-      setCurrentPlaceId(null);
-      setNewPin(false);
       setPins([...pins, res.data]);
     } catch (err) {
       console.log(err);
@@ -207,65 +205,67 @@ export default function MapApp() {
               anchor="left"
             >
               <div>
-                <form className="form" onSubmit={handleSubmit}>
-                  <label className="label">Titre</label>
-                  <input
-                    className="input"
-                    placeholder="Entrer un titre"
-                    name="title"
-                    autoFocus
-                  />
-                  <label className="label">Description</label>
-                  <textarea
-                    className="textarea"
-                    placeholder="Dites quelque chose a propose de cet endroit"
-                    name="desc"
-                  />
+                {!loading && (
+                  <form className="form" onSubmit={handleSubmit}>
+                    <label className="label">Titre</label>
+                    <input
+                      className="input"
+                      placeholder="Entrer un titre"
+                      name="title"
+                      autoFocus
+                    />
+                    <label className="label">Description</label>
+                    <textarea
+                      className="textarea"
+                      placeholder="Dites quelque chose a propose de cet endroit"
+                      name="desc"
+                    />
 
-                  <label className="label">Date de la randonnée</label>
-                  <input
-                    className="input"
-                    type="date"
-                    placeholder="Entrer le nombre de personnes qui peuvent venir"
-                    name="date"
-                  />
-                  <label className="label">Places disponibles</label>
-                  <input
-                    className="input"
-                    placeholder="Entrer le nombre de personnes qui peuvent venir"
-                    name="places"
-                  />
-                  <label className="label">Niveau de la randonée</label>
-                  <input
-                    className="input"
-                    placeholder="Entrer un niveau"
-                    name="level"
-                  />
-                  <label className="label">Duration de la randonée</label>
-                  <input
-                    className="input"
-                    placeholder="Entrer la duration"
-                    name="duration"
-                  />
-                  <label className="label">Prix de la randonée</label>
-                  <input
-                    className="input"
-                    placeholder="Entrer le prix de la randonée par personne"
-                    name="price"
-                  />
-                  <input
-                    className="input"
-                    type="file"
-                    required
-                    name="image"
-                    id="image"
-                    onChange={handleFileSelect}
-                    placeholder="Entrez une image de cet endroit"
-                  />
-                  <button type="submit" className="submitButton">
-                    Ajouter la randonée
-                  </button>
-                </form>
+                    <label className="label">Date de la randonnée</label>
+                    <input
+                      className="input"
+                      type="date"
+                      placeholder="Entrer le nombre de personnes qui peuvent venir"
+                      name="date"
+                    />
+                    <label className="label">Places disponibles</label>
+                    <input
+                      className="input"
+                      placeholder="Entrer le nombre de personnes qui peuvent venir"
+                      name="places"
+                    />
+                    <label className="label">Niveau de la randonée</label>
+                    <input
+                      className="input"
+                      placeholder="Entrer un niveau"
+                      name="level"
+                    />
+                    <label className="label">Duration de la randonée</label>
+                    <input
+                      className="input"
+                      placeholder="Entrer la duration"
+                      name="duration"
+                    />
+                    <label className="label">Prix de la randonée</label>
+                    <input
+                      className="input"
+                      placeholder="Entrer le prix de la randonée par personne"
+                      name="price"
+                    />
+                    <input
+                      className="input"
+                      type="file"
+                      required
+                      name="image"
+                      id="image"
+                      onChange={handleFileSelect}
+                      placeholder="Entrez une image de cet endroit"
+                    />
+                    <button type="submit" className="submitButton">
+                      Ajouter la randonée
+                    </button>
+                  </form>
+                )}
                 {loading && <Loading />}
               </div>
             </Popup>
