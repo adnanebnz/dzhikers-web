@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { Alert, Snackbar } from "@mui/material";
-import Loading from "../../components/Loading";
+import Loading from "../../Components/Loading";
 export default function EditProfile() {
   const { id } = useParams();
 
