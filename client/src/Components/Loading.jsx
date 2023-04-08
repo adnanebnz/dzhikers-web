@@ -8,6 +8,7 @@ const Loading = () => {
         alignItems: "center",
         height: "100vh",
         width: "100vw",
+        overflow: "hidden",
       }}
     >
       <CircularProgress />
