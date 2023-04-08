@@ -84,6 +84,8 @@ export default function MapApp() {
         }
       );
       setLoading(false);
+      setCurrentPlaceId(null);
+      setNewPin(false);
       setPins([...pins, res.data]);
     } catch (err) {
       console.log(err);

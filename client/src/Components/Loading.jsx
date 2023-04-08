@@ -6,7 +6,7 @@ const Loading = () => {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        height: "70vh",
+
         overflow: "hidden",
       }}
     >
