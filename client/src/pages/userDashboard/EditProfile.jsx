@@ -44,9 +44,7 @@ export default function EditProfile() {
         { withCredentials: true }
       );
       console.log(res);
-      if (res) {
-        setLoading(false);
-      }
+      setLoading(false);
       setPfpAlert(true);
     } catch (error) {
       console.log(error);
@@ -58,6 +56,7 @@ export default function EditProfile() {
 
     setLoadingOne(true);
     try {
+      setLoadingOne(true);
       const res = await axios.put(
         `https://dzhikers.onrender.com/api/users/${id}`,
         {
@@ -72,9 +71,8 @@ export default function EditProfile() {
           withCredentials: true,
         }
       );
-      if (res) {
-        setLoadingOne(false);
-      }
+      console.log(res);
+      setLoadingOne(false);
       setInfosAlert(true);
     } catch (err) {
       console.log(err);
