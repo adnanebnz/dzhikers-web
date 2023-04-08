@@ -37,13 +37,14 @@ function Copyright(props) {
       {...props}
     >
       {"Copyright © "}
-      <a
+      <Link
+        variant="body2"
         onClick={() => {
           navigate("/");
         }}
       >
         DZHIKERS
-      </a>
+      </Link>
       {new Date().getFullYear()}
     </Typography>
   );
@@ -233,13 +234,14 @@ export default function Register() {
             </Button>
             <Grid container>
               <Grid item>
-                <a
+                <Link
+                  variant="body2"
                   onClick={() => {
                     navigate("/login");
                   }}
                 >
                   {"Vous avez déja un compte? Connectez-vous"}
-                </a>
+                </Link>
               </Grid>
             </Grid>
           </Box>

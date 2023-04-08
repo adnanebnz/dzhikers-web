@@ -88,16 +88,40 @@ const Header = () => {
 
         <ul>
           <li>
-            <Link to="/">Acceuil</Link>
+            <Link
+              onClick={() => {
+                navigate("/");
+              }}
+            >
+              Acceuil
+            </Link>
           </li>
           <li>
-            <Link to="/randos">Randonnées</Link>
+            <Link
+              onClick={() => {
+                navigate("/randos");
+              }}
+            >
+              Randonnées
+            </Link>
           </li>
           <li>
-            <Link to="/boutique">Boutique</Link>
+            <Link
+              onClick={() => {
+                navigate("/boutique");
+              }}
+            >
+              Boutique
+            </Link>
           </li>
           <li>
-            <Link to="/contact">Contact</Link>
+            <Link
+              onClick={() => {
+                navigate("/contact");
+              }}
+            >
+              Contact
+            </Link>
           </li>
         </ul>
 
@@ -344,44 +368,85 @@ const Header = () => {
       <ResponsiveNav state={navbarState}>
         <ul>
           <li>
-            <Link to="/" onClick={() => setNavbarState(false)}>
+            <Link
+              onClick={() => {
+                setNavbarState(false);
+                navigate("/");
+              }}
+            >
               Acceuil
             </Link>
           </li>
           <li>
-            <Link to="/randos" onClick={() => setNavbarState(false)}>
+            <Link
+              onClick={() => {
+                setNavbarState(false);
+                navigate("/randos");
+              }}
+            >
               Randonnées
             </Link>
           </li>
           <li>
-            <Link to="/boutique" onClick={() => setNavbarState(false)}>
+            <Link
+              onClick={() => {
+                setNavbarState(false);
+                navigate("/boutique");
+              }}
+            >
               Boutique
             </Link>
           </li>
           <li>
-            <Link to="/contact" onClick={() => setNavbarState(false)}>
+            <Link
+              onClick={() => {
+                setNavbarState(false);
+                navigate("/contact");
+              }}
+            >
               Contact
             </Link>
           </li>
           <li>
-            <Link to="/checkout" onClick={() => setNavbarState(false)}>
+            <Link
+              onClick={() => {
+                setNavbarState(false);
+                navigate("/checkout");
+              }}
+            >
               Panier
             </Link>
           </li>
           {currentUser && (
             <li>
-              <Link to={"/profile/notifs"}>Notifications</Link>
+              <Link
+                onClick={() => {
+                  navigate("/profile/notifs");
+                }}
+              >
+                Notifications
+              </Link>
             </li>
           )}
           {!currentUser && (
             <>
               <li>
-                <Link to="/login" onClick={() => setNavbarState(false)}>
+                <Link
+                  onClick={() => {
+                    setNavbarState(false);
+                    navigate("/login");
+                  }}
+                >
                   Se connecter
                 </Link>
               </li>
               <li>
-                <Link to="/register" onClick={() => setNavbarState(false)}>
+                <Link
+                  onClick={() => {
+                    setNavbarState(false);
+                    navigate("/register");
+                  }}
+                >
                   Créer un Compte
                 </Link>
               </li>

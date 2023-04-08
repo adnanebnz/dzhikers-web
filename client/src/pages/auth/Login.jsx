@@ -159,13 +159,14 @@ export default function Login() {
                 </a>
               </Grid>
               <Grid item>
-                <a
+                <Link
+                  variant="body2"
                   onClick={() => {
                     navigate("/register");
                   }}
                 >
                   {"Vous n'avez pas de compte? Créez un"}
-                </a>
+                </Link>
               </Grid>
             </Grid>
           </Box>
