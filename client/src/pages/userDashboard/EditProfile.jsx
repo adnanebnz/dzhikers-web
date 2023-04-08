@@ -43,10 +43,9 @@ export default function EditProfile() {
       );
       setPfpAlert(true);
       setLoading(true);
+      console.log(res.data.message);
       if (res.data.message === "success") {
-        setTimeout(() => {
-          setLoading(false);
-        }, 2500);
+        setLoading(false);
       }
     } catch (error) {
       console.log(error);
