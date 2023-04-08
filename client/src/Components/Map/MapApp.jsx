@@ -22,6 +22,7 @@ export default function MapApp() {
   const [lat, setLat] = useState(34.666667);
   const [zoom, setZoom] = useState(5.6);
   const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
   const currentUser = JSON.parse(localStorage.getItem("currentUser"));
 
   const navigate = useNavigate();
@@ -83,6 +84,7 @@ export default function MapApp() {
           },
         }
       );
+      setSuccess(true);
       setLoading(false);
       setPins([...pins, res.data]);
     } catch (err) {
@@ -204,12 +206,7 @@ export default function MapApp() {
               }}
               anchor="bottom-left"
             >
-              {loading && (
-                <div className="w-11 h-11">
-                  <Loading />
-                </div>
-              )}
-              {!loading && (
+              {!success && (
                 <form className="form" onSubmit={handleSubmit}>
                   <label className="label">Titre</label>
                   <input
@@ -269,6 +266,18 @@ export default function MapApp() {
                     Ajouter la randonée
                   </button>
                 </form>
+              )}
+              {success && (
+                <div className="success">
+                  <h3 className="text-2xl font-semibold text-green-500">
+                    Vous avez ajouté une randonée avec succès
+                  </h3>
+                </div>
+              )}
+              {loading && (
+                <div className="w-11 h-11">
+                  <Loading />
+                </div>
               )}
             </Popup>
           </>
