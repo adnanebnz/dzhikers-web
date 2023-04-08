@@ -177,7 +177,11 @@ const Comments = () => {
                 <div className="bg-white max-w-xl rounded-2xl px-5 py-8 shadow-lg hover:shadow-2xl transition duration-500">
                   <div className="flex justify-start items-center gap-2">
                     <img
-                      src={c.userPfp}
+                      src={
+                        c.userPfp !== "http://localhost:8800/Images/undefined"
+                          ? c.userPfp
+                          : noavatar
+                      }
                       className="w-14 h-14 rounded-full object-cover"
                     />
                     <h1 className="text-gray-800 font-bold text-md">

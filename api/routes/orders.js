@@ -1,4 +1,3 @@
-const { verifyUser, verifyAdmin } = require("../utils/verifyToken");
 const Order = require("../models/Order");
 const Item = require("../models/Item");
 require("dotenv").config();
@@ -59,7 +58,7 @@ router.post("/create-order", async (req, res, next) => {
     next(err);
   }
 });
-router.get("/:id", verifyUser, async (req, res, next) => {
+router.get("/:id", async (req, res, next) => {
   try {
     const order = await Order.find({ userId: req.params.id });
     res.status(200).json(order);
@@ -67,7 +66,7 @@ router.get("/:id", verifyUser, async (req, res, next) => {
     next(err);
   }
 });
-router.get("/", verifyAdmin, async (req, res, next) => {
+router.get("/", async (req, res, next) => {
   try {
     const orders = await Order.find();
     res.status(200).json(orders);
@@ -76,7 +75,7 @@ router.get("/", verifyAdmin, async (req, res, next) => {
   }
 });
 
-router.delete("/:id", verifyUser, async (req, res, next) => {
+router.delete("/:id", async (req, res, next) => {
   try {
     const order = await Order.findById(req.params.id);
     order.products.forEach(async (o) => {
@@ -89,7 +88,7 @@ router.delete("/:id", verifyUser, async (req, res, next) => {
   }
 });
 
-router.delete("/admin/:id", verifyAdmin, async (req, res, next) => {
+router.delete("/admin/:id", async (req, res, next) => {
   try {
     await Order.findOneAndDelete({ _id: req.params.id });
     res.status(200).json("Order Deleted");
@@ -99,7 +98,7 @@ router.delete("/admin/:id", verifyAdmin, async (req, res, next) => {
 });
 
 //modify order
-router.put("/:id", verifyAdmin, async (req, res, next) => {
+router.put("/:id", async (req, res, next) => {
   try {
     const order = await Order.findById(req.params.id);
     if (!order) {

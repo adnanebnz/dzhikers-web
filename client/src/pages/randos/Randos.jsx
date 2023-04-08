@@ -82,8 +82,10 @@ const Randos = () => {
               />
             </div>
           </div>
-
           <div className="mt-6 lg:mt-0 lg:px-2 lg:w-4/5">
+            <div className="flex items-center justify-between text-sm tracking-widest uppercase ">
+              <p className="text-gray-500 ">{count} Randonées</p>
+            </div>
             {/* ITEMS MAPPING  HERE */}
             <div className="">
               <div className="grid grid-cols-1 gap-4 mt-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 sm:gap-3">
@@ -126,7 +128,20 @@ const Randos = () => {
                                   {item.price} DZD
                                 </p>
                               </div>
-                              <div className="flex"></div>
+                              {item.rating >= 1 && (
+                                <div className="flex">
+                                  <div className="">
+                                    {Array(item.rating).fill(
+                                      <StarIcon sx={{ color: "gold" }} />
+                                    )}
+                                  </div>
+                                  <div className="ml-2">
+                                    <p className="text-gray-500 font-medium text-sm">
+                                      ({item.numberOfRatings})
+                                    </p>
+                                  </div>
+                                </div>
+                              )}
                             </div>
                           </div>
                         </div>
@@ -135,7 +150,7 @@ const Randos = () => {
                   </>
                 ))}
               </div>
-              {count > 0 && (
+              {count > 12 && (
                 <Pagination
                   count={Math.ceil(randosCount / 16)}
                   shape="rounded"

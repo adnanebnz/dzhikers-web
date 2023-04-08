@@ -2,7 +2,6 @@ const router = require("express").Router();
 const Reservation = require("../models/Reservation");
 const Pin = require("../models/Pin");
 const User = require("../models/User");
-const { verifyUser, verifyOrg } = require("../utils/verifyToken");
 async function updatePlaces(_id) {
   const pin = await Pin.findById(_id);
   pin.places -= 1;
@@ -15,7 +14,7 @@ async function increasePlaces(_id) {
 
   await pin.save();
 }
-router.post("/:id/register", verifyUser, async (req, res, next) => {
+router.post("/:id/register", async (req, res, next) => {
   try {
     const pin = await Pin.findById(req.params.id);
     if (pin.places === 0) {
@@ -44,7 +43,7 @@ router.delete("/:id", async (req, res, next) => {
 });
 
 //get all reservations
-router.get("/", verifyOrg, async (req, res, next) => {
+router.get("/", async (req, res, next) => {
   try {
     const reservations = await Reservation.find();
     res.status(200).json(reservations);

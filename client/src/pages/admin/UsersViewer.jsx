@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-
+import { useNavigate } from "react-router-dom";
 import {
   IconButton,
   Table,
@@ -26,6 +26,7 @@ const UsersViewer = () => {
   const handleClose = () => {
     setOpen(false);
   };
+  const navigate = useNavigate();
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [open, setOpen] = useState(false);
@@ -57,6 +58,16 @@ const UsersViewer = () => {
   return (
     <div className=" mt-7">
       <h1 className="text-xl font-semibold mb-7 text-gray-700">Utilisateurs</h1>
+      <div className="flex items-center justify-end mb-3">
+        <Button
+          variant="contained"
+          onClick={() => {
+            navigate("/admin/ajouter-utulisateur");
+          }}
+        >
+          Créer un utilisateur
+        </Button>
+      </div>
       {loading ? (
         <Loading />
       ) : (

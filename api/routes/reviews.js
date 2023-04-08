@@ -72,20 +72,5 @@ router.delete("/:id", async (req, res, next) => {
     next(err);
   }
 });
-//LIKE REVIEW
-// router.put("/:id/like", async (req, res, next) => {
-//   try {
-//     const review = await Review.findById(req.params.id);
-//     if (!review.likes.includes(req.body.userId)) {
-//       await review.updateOne({ $push: { likes: req.body.userId } });
-//       res.status(200).json("Review has been liked!");
-//     } else {
-//       await review.updateOne({ $pull: { likes: req.body.userId } });
-//       res.status(200).json("Review has been disliked!");
-//     }
-//   } catch (err) {
-//     next(err);
-//   }
-// });
 
 module.exports = router;
