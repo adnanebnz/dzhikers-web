@@ -10,7 +10,7 @@ export default function AddProduct() {
   const [price, setPrice] = useState(null);
   const [quantity, setQuantity] = useState(null);
   const [brand, setBrand] = useState("");
-  const [category, setCategory] = useState("");
+  const [category, setCategory] = useState("tantes");
   const [open, setOpen] = useState(false);
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
