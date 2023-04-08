@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { Alert, Snackbar } from "@mui/material";
+import Loading from "../../components/Loading";
 export default function EditProfile() {
   const { id } = useParams();
 
@@ -12,6 +13,7 @@ export default function EditProfile() {
   const [error, setError] = useState(undefined);
   const [pfpAlert, setPfpAlert] = useState(false);
   const [infosAlert, setInfosAlert] = useState(false);
+  const [loading, setLoading] = useState(false);
   const currentUser = JSON.parse(localStorage.getItem("currentUser"));
 
   const handleClose = (event, reason) => {
@@ -40,6 +42,12 @@ export default function EditProfile() {
         { withCredentials: true }
       );
       setPfpAlert(true);
+      setLoading(true);
+      if (res.data.message === "success") {
+        setTimeout(() => {
+          setLoading(false);
+        }, 2500);
+      }
     } catch (error) {
       console.log(error);
     }
@@ -64,6 +72,12 @@ export default function EditProfile() {
         }
       );
       setInfosAlert(true);
+      setLoading(true);
+      if (res.data.message === "success") {
+        setTimeout(() => {
+          setLoading(false);
+        }, 2500);
+      }
     } catch (err) {
       console.log(err);
       setError(err.response.data.message);
@@ -143,6 +157,7 @@ export default function EditProfile() {
                       alt=""
                     />
                   </div>
+                  {loading && <Loading />}
                 </div>
 
                 <form
@@ -240,6 +255,7 @@ export default function EditProfile() {
                         Modifier vos informations
                       </button>
                     </div>
+                    {loading && <Loading />}
                   </div>
                 </form>
               </div>
