@@ -69,8 +69,8 @@ const Single = () => {
   };
   return (
     <>
-      {loading && <Loading />}
-      {!loading && (
+      {data.length === 0 && <Loading />}
+      {data.length > 0 && (
         <div>
           <div
             className="mx-auto px-4 sm:px-6 lg:px-8 mt-20"
