@@ -276,7 +276,7 @@ export default function MapApp() {
                   </div>
                 )}
                 {loading && (
-                  <div className="w-11 h-11 flex items-center justify-center mt-2">
+                  <div className="w-11 h-11  mt-2 pr-11 pl-11">
                     <Loading />
                   </div>
                 )}
