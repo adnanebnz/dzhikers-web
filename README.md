@@ -17,17 +17,8 @@ made by :
 
 ## Features
 
-- Booking for users.
+- Booking of hikes for users.
 - Verify user infos also check the bookings history.
 - Edit user's infos and credentials.
-- Admin dashboard to manage bookings and users.
-
-## How to use : 
-- make sure to create your own .env file in the backend folder and put the values respecting the .env.example file.
-- run ```npm i``` on both backend and client folders.
-- run ```npm run dev``` on the client and  ```npm start``` in the api folder.
-
-
-## LICENCE
-
-MIT.
+- Admin dashboard to manage shop and users.
+- Organizer dashboard to manage hikes.
