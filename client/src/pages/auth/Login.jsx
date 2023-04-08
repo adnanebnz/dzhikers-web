@@ -28,11 +28,10 @@ function Copyright(props) {
       {...props}
     >
       {"Copyright © "}
-      <Link color="inherit" href="https://www.dzhikers.live/">
+      <a color="inherit" href="https://www.dzhikers.live/">
         DZHIKERS
-      </Link>{" "}
+      </a>
       {new Date().getFullYear()}
-      {"."}
     </Typography>
   );
 }
@@ -147,14 +146,14 @@ export default function Login() {
 
             <Grid container>
               <Grid item xs>
-                <Link href="/reset-password" variant="body2">
+                <a href="/reset-password" variant="body2">
                   Mot de passe oubliée?
-                </Link>
+                </a>
               </Grid>
               <Grid item>
-                <Link href="https://www.dzhikers.live/register" variant="body2">
+                <a href="https://www.dzhikers.live/register" variant="body2">
                   {"Vous n'avez pas de compte? Créez un"}
-                </Link>
+                </a>
               </Grid>
             </Grid>
           </Box>
