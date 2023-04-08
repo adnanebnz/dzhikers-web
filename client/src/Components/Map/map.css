@@ -1,10 +1,9 @@
 .card {
   width: auto;
-  min-width: 220px;
+  min-width: 200px;
   height: auto;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
   justify-content: space-around;
 }
 
@@ -46,7 +45,6 @@
 .input {
   border: none;
   border-bottom: 1px solid gray;
-  padding: 2px;
 }
 
 .input::placeholder,

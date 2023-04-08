@@ -204,7 +204,7 @@ export default function MapApp() {
                 setLat(null);
                 setLng(null);
               }}
-              anchor="bottom-left"
+              anchor="left"
             >
               {!success && (
                 <form className="form" onSubmit={handleSubmit}>
@@ -269,13 +269,13 @@ export default function MapApp() {
               )}
               {success && (
                 <div className="success">
-                  <h3 className="text-2xl font-semibold text-green-500">
-                    Vous avez ajouté une randonée avec succès
+                  <h3 className="text-lg font-semibold text-green-500">
+                    Vous avez ajouté une randonée avec succès!
                   </h3>
                 </div>
               )}
               {loading && (
-                <div className="w-11 h-11">
+                <div className="w-11 h-11 flex items-center justify-center mt-2">
                   <Loading />
                 </div>
               )}
