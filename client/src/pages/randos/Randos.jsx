@@ -16,7 +16,7 @@ const Randos = () => {
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(100000);
   const [value, setValue] = useState([0, 3000]);
-  const [Loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
   const handleChange = (event, newValue) => {
     setValue(newValue);
     setMinPrice(newValue[0]);
@@ -40,9 +40,8 @@ const Randos = () => {
   }, [level, page, minPrice, maxPrice]);
   return (
     <>
-      {Loading ? (
-        <Loading />
-      ) : (
+      {loading && <Loading />}
+      {!loading && (
         <section className="bg-white mt-24 mb-6">
           <div className="container px-6 py-8 mx-auto">
             <div className="lg:flex lg:-mx-2">
