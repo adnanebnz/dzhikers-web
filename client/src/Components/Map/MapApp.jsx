@@ -206,79 +206,81 @@ export default function MapApp() {
               }}
               anchor="left"
             >
-              {!success && (
-                <form className="form" onSubmit={handleSubmit}>
-                  <label className="label">Titre</label>
-                  <input
-                    className="input"
-                    placeholder="Entrer un titre"
-                    name="title"
-                    autoFocus
-                  />
-                  <label className="label">Description</label>
-                  <textarea
-                    className="textarea"
-                    placeholder="Dites quelque chose a propose de cet endroit"
-                    name="desc"
-                  />
+              <div>
+                {!success && (
+                  <form className="form" onSubmit={handleSubmit}>
+                    <label className="label">Titre</label>
+                    <input
+                      className="input"
+                      placeholder="Entrer un titre"
+                      name="title"
+                      autoFocus
+                    />
+                    <label className="label">Description</label>
+                    <textarea
+                      className="textarea"
+                      placeholder="Dites quelque chose a propose de cet endroit"
+                      name="desc"
+                    />
 
-                  <label className="label">Date de la randonnée</label>
-                  <input
-                    className="input"
-                    type="date"
-                    placeholder="Entrer le nombre de personnes qui peuvent venir"
-                    name="date"
-                  />
-                  <label className="label">Places disponibles</label>
-                  <input
-                    className="input"
-                    placeholder="Entrer le nombre de personnes qui peuvent venir"
-                    name="places"
-                  />
-                  <label className="label">Niveau de la randonée</label>
-                  <input
-                    className="input"
-                    placeholder="Entrer un niveau"
-                    name="level"
-                  />
-                  <label className="label">Duration de la randonée</label>
-                  <input
-                    className="input"
-                    placeholder="Entrer la duration"
-                    name="duration"
-                  />
-                  <label className="label">Prix de la randonée</label>
-                  <input
-                    className="input"
-                    placeholder="Entrer le prix de la randonée par personne"
-                    name="price"
-                  />
-                  <input
-                    className="input"
-                    type="file"
-                    required
-                    name="image"
-                    id="image"
-                    onChange={handleFileSelect}
-                    placeholder="Entrez une image de cet endroit"
-                  />
-                  <button type="submit" className="submitButton">
-                    Ajouter la randonée
-                  </button>
-                </form>
-              )}
-              {success && (
-                <div className="success">
-                  <h3 className="text-lg font-semibold text-green-500">
-                    Vous avez ajouté une randonée avec succès!
-                  </h3>
-                </div>
-              )}
-              {loading && (
-                <div className="w-11 h-11 flex items-center justify-center mt-2">
-                  <Loading />
-                </div>
-              )}
+                    <label className="label">Date de la randonnée</label>
+                    <input
+                      className="input"
+                      type="date"
+                      placeholder="Entrer le nombre de personnes qui peuvent venir"
+                      name="date"
+                    />
+                    <label className="label">Places disponibles</label>
+                    <input
+                      className="input"
+                      placeholder="Entrer le nombre de personnes qui peuvent venir"
+                      name="places"
+                    />
+                    <label className="label">Niveau de la randonée</label>
+                    <input
+                      className="input"
+                      placeholder="Entrer un niveau"
+                      name="level"
+                    />
+                    <label className="label">Duration de la randonée</label>
+                    <input
+                      className="input"
+                      placeholder="Entrer la duration"
+                      name="duration"
+                    />
+                    <label className="label">Prix de la randonée</label>
+                    <input
+                      className="input"
+                      placeholder="Entrer le prix de la randonée par personne"
+                      name="price"
+                    />
+                    <input
+                      className="input"
+                      type="file"
+                      required
+                      name="image"
+                      id="image"
+                      onChange={handleFileSelect}
+                      placeholder="Entrez une image de cet endroit"
+                    />
+                    <button type="submit" className="submitButton">
+                      Ajouter la randonée
+                    </button>
+                  </form>
+                )}
+                {success && (
+                  <div className="success">
+                    <h3 className="text-lg font-semibold text-green-500">
+                      Vous avez ajouté une randonée avec succès!
+                    </h3>
+                  </div>
+                )}
+                {loading && (
+                  <div className="w-11 h-11 flex items-center justify-center mt-2">
+                    <Loading />
+                  </div>
+                )}
+              </div>
             </Popup>
           </>
         )}
