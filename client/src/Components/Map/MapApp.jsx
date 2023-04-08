@@ -202,9 +202,10 @@ export default function MapApp() {
                 setLat(null);
                 setLng(null);
               }}
-              anchor="left"
+              anchor="bottom"
             >
               <div>
+                {loading && <Loading />}
                 {!loading && (
                   <form className="form" onSubmit={handleSubmit}>
                     <label className="label">Titre</label>
@@ -266,7 +267,6 @@ export default function MapApp() {
                     </button>
                   </form>
                 )}
-                {loading && <Loading />}
               </div>
             </Popup>
           </>
