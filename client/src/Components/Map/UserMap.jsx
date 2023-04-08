@@ -56,7 +56,7 @@ export default function UserMap({ lat, long }) {
             style={{ height: "60vh   " }}
             scrollZoom={false}
           >
-            <GeolocateControl />
+            <NavigationControl />
             <GeolocateControl />
             <Marker longitude={pins.long} latitude={pins.lat}>
               <LocationOnIcon
