@@ -1,9 +1,10 @@
 .card {
   width: auto;
-  min-width: 200px;
+  min-width: 220px;
   height: auto;
   display: flex;
   flex-direction: column;
+  gap: 0.5rem;
   justify-content: space-around;
 }
 

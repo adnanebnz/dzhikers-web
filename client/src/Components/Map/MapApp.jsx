@@ -12,6 +12,7 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 import axios from "axios";
 import moment from "moment";
 import "moment/locale/fr";
+import Loading from "../Loading";
 export default function MapApp() {
   const [pins, setPins] = useState([]);
   const [newPin, setNewPin] = useState(false);
@@ -20,6 +21,7 @@ export default function MapApp() {
   const [lng, setLng] = useState(3.25);
   const [lat, setLat] = useState(34.666667);
   const [zoom, setZoom] = useState(5.6);
+  const [loading, setLoading] = useState(false);
   const currentUser = JSON.parse(localStorage.getItem("currentUser"));
 
   const navigate = useNavigate();
@@ -49,6 +51,7 @@ export default function MapApp() {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     const data = new FormData(e.currentTarget);
     const title = data.get("title");
     const desc = data.get("desc");
@@ -80,6 +83,7 @@ export default function MapApp() {
           },
         }
       );
+      setLoading(false);
       setPins([...pins, res.data]);
     } catch (err) {
       console.log(err);
@@ -260,6 +264,7 @@ export default function MapApp() {
                     Ajouter la randonée
                   </button>
                 </form>
+                {loading && <Loading />}
               </div>
             </Popup>
           </>

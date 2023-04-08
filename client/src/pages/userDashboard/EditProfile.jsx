@@ -71,7 +71,6 @@ export default function EditProfile() {
           withCredentials: true,
         }
       );
-      console.log(res);
       setLoadingOne(false);
       setInfosAlert(true);
     } catch (err) {
