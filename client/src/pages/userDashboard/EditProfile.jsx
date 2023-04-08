@@ -44,7 +44,7 @@ export default function EditProfile() {
       );
       setPfpAlert(true);
       setLoading(true);
-      if (res) {
+      if (res !== undefined) {
         setLoading(false);
       }
     } catch (error) {
@@ -72,7 +72,7 @@ export default function EditProfile() {
       );
       setInfosAlert(true);
       setLoadingOne(true);
-      if (res) {
+      if (res !== undefined) {
         setLoadingOne(false);
       }
     } catch (err) {
