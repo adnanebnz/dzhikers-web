@@ -37,7 +37,7 @@ const Checkout = () => {
     if (choice === "credit" && totalPrice > 0) {
       await axios
         .post(
-          "http://localhost:8800/api/orders/create-checkout-session",
+          "https://dzhikers.onrender.com/api/orders/create-checkout-session",
           {
             cart,
           },

@@ -58,7 +58,10 @@ export default function AddUser() {
     };
 
     try {
-      await axios.post("http://localhost:8800/api/users/register", values);
+      await axios.post(
+        "https://dzhikers.onrender.com/api/users/register",
+        values
+      );
       setOpen(true);
     } catch (error) {
       console.log(error);

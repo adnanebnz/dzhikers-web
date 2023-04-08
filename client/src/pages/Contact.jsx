@@ -17,7 +17,7 @@ const Contact = () => {
       const email = data.get("email");
       const msg = data.get("message");
       await axios.post(
-        "http://localhost:8800/api/messages",
+        "https://dzhikers.onrender.com/api/messages",
         { email, msg },
         {
           withCredentials: true,

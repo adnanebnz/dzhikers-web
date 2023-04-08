@@ -36,9 +36,12 @@ const OrdersViewer = () => {
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const resultat = await axios.get("http://localhost:8800/api/orders", {
-          withCredentials: true,
-        });
+        const resultat = await axios.get(
+          "https://dzhikers.onrender.com/api/orders",
+          {
+            withCredentials: true,
+          }
+        );
         setOrders(resultat.data);
         setLoading(false);
       } catch (error) {
@@ -49,9 +52,12 @@ const OrdersViewer = () => {
   }, []);
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:8800/api/orders/admin/${id}`, {
-        withCredentials: true,
-      });
+      await axios.delete(
+        `https://dzhikers.onrender.com/api/orders/admin/${id}`,
+        {
+          withCredentials: true,
+        }
+      );
       setOrders(orders.filter((order) => order._id !== id));
     } catch (error) {
       console.log(error);
@@ -60,7 +66,7 @@ const OrdersViewer = () => {
   const handleUpdate = async (id) => {
     try {
       await axios.put(
-        `http://localhost:8800/api/orders/${id}`,
+        `https://dzhikers.onrender.com/api/orders/${id}`,
         {
           delivery_status: shipping,
           payment_status: payed,

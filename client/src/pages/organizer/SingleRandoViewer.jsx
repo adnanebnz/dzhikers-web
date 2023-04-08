@@ -48,7 +48,7 @@ const SingleRandoViewer = () => {
     const fetchData = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:8800/api/reservations/${id}/details`
+          `https://dzhikers.onrender.com/api/reservations/${id}/details`
         );
 
         setData(res.data.reservations);
@@ -60,7 +60,7 @@ const SingleRandoViewer = () => {
     const fetchAnnounces = async () => {
       try {
         const res2 = await axios.get(
-          `http://localhost:8800/api/announces/${id}`
+          `https://dzhikers.onrender.com/api/announces/${id}`
         );
         setAnnounces(res2.data.announce);
       } catch (err) {
@@ -81,7 +81,7 @@ const SingleRandoViewer = () => {
     const desc = data.get("description");
     try {
       const res = await axios.post(
-        `http://localhost:8800/api/announces`,
+        `https://dzhikers.onrender.com/api/announces`,
         {
           title: title,
           description: desc,
@@ -107,7 +107,7 @@ const SingleRandoViewer = () => {
   };
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:8800/api/announces/${id}`, {
+      await axios.delete(`https://dzhikers.onrender.com/api/announces/${id}`, {
         withCredentials: true,
       });
       setAnnounces(announces.filter((announce) => announce._id !== id));
@@ -118,7 +118,7 @@ const SingleRandoViewer = () => {
   const handleEdit = async (id) => {
     try {
       const res = await axios.put(
-        `http://localhost:8800/api/announces/${id}`,
+        `https://dzhikers.onrender.com/api/announces/${id}`,
         { title: title, description: desc },
         {
           withCredentials: true,
@@ -137,16 +137,19 @@ const SingleRandoViewer = () => {
   const handleRandoEdit = async (event) => {
     event.preventDefault();
     try {
-      const res = await axios.put(`http://localhost:8800/api/pins/${id}`, {
-        organizer: currentUser.details.username,
-        title: randoTitle,
-        desc: randoDesc,
-        date: randoDate,
-        price: randoPrice,
-        duration: randoDuration,
-        places: randoMaxParticipants,
-        level: randoLevel,
-      });
+      const res = await axios.put(
+        `https://dzhikers.onrender.com/api/pins/${id}`,
+        {
+          organizer: currentUser.details.username,
+          title: randoTitle,
+          desc: randoDesc,
+          date: randoDate,
+          price: randoPrice,
+          duration: randoDuration,
+          places: randoMaxParticipants,
+          level: randoLevel,
+        }
+      );
       console.log(res);
       setOpenOne(true);
     } catch (err) {
@@ -158,11 +161,15 @@ const SingleRandoViewer = () => {
     const formData = new FormData(event.currentTarget);
     formData.append("image", image[0]);
     try {
-      await axios.put(`http://localhost:8800/api/pins/image/${id}`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      await axios.put(
+        `https://dzhikers.onrender.com/api/pins/image/${id}`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
       setOpenOne(true);
     } catch (err) {
       console.log(err);

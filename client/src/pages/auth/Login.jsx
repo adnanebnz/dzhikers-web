@@ -28,7 +28,7 @@ function Copyright(props) {
       {...props}
     >
       {"Copyright © "}
-      <Link color="inherit" href="http://localhost:5173/">
+      <Link color="inherit" href="https://www.dzhikers.live/">
         DZHIKERS
       </Link>{" "}
       {new Date().getFullYear()}
@@ -55,7 +55,7 @@ export default function Login() {
     const password = data.get("password");
     try {
       const res = await axios.post(
-        "http://localhost:8800/api/users/login",
+        "https://dzhikers.onrender.com/api/users/login",
         { email, password },
         { withCredentials: true }
       );
@@ -152,7 +152,7 @@ export default function Login() {
                 </Link>
               </Grid>
               <Grid item>
-                <Link href="http://localhost:5173/register" variant="body2">
+                <Link href="https://www.dzhikers.live/register" variant="body2">
                   {"Vous n'avez pas de compte? Créez un"}
                 </Link>
               </Grid>
