@@ -43,8 +43,8 @@ export default function EditProfile() {
       );
       setPfpAlert(true);
       setLoading(true);
-      console.log(res.data.message);
-      if (res.data.message === "success") {
+      console.log(res);
+      if (res) {
         setLoading(false);
       }
     } catch (error) {
