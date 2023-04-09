@@ -33,12 +33,9 @@ const UsersViewer = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const resultat = await axios.get(
-          "https://dzhikers.onrender.com/api/users",
-          {
-            withCredentials: true,
-          }
-        );
+        const resultat = await axios.get("http://localhost:8800/api/users", {
+          withCredentials: true,
+        });
         setUsers(resultat.data);
         setLoading(false);
       } catch (error) {
@@ -49,7 +46,7 @@ const UsersViewer = () => {
   }, []);
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`https://dzhikers.onrender.com/api/users/${id}`, {
+      await axios.delete(`http://localhost:8800/api/users/${id}`, {
         withCredentials: true,
       });
       setUsers(users.filter((user) => user._id !== id));

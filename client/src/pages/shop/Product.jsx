@@ -19,9 +19,7 @@ const Product = () => {
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     const fetchData = async () => {
-      const res = await axios.get(
-        `https://dzhikers.onrender.com/api/items/${id}`
-      );
+      const res = await axios.get(`http://localhost:8800/api/items/${id}`);
       setData(res.data);
       setLoading(false);
     };

@@ -21,7 +21,6 @@ export default function App() {
         #recommend,
         #text,
         #mapMain,
-        footer
         `,
       {
         opacity: 0,

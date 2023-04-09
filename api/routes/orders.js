@@ -37,8 +37,8 @@ router.post("/create-checkout-session", async (req, res) => {
   const session = await stripe.checkout.sessions.create({
     line_items,
     mode: "payment",
-    success_url: "https://dzhikers.live/checkout/success",
-    cancel_url: "https://dzhikers.live/checkout/cancel",
+    success_url: "http://localhost:5173/checkout/success",
+    cancel_url: "http://localhost:5173/checkout/cancel",
   });
 
   res.send({ url: session.url });

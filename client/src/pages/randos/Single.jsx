@@ -29,9 +29,7 @@ const Single = () => {
   };
   useEffect(() => {
     const fetchData = async () => {
-      const res = await axios.get(
-        `https://dzhikers.onrender.com/api/pins/${id}`
-      );
+      const res = await axios.get(`http://localhost:8800/api/pins/${id}`);
       setData(res.data);
       console.log(res.data);
       setLoading(false);
@@ -45,7 +43,7 @@ const Single = () => {
         navigate("/login");
       }
       const res = await axios.post(
-        `https://dzhikers.onrender.com/api/reservations/${id}/register`,
+        `http://localhost:8800/api/reservations/${id}/register`,
         {
           hikeId: id,
           organizerUsername: data.organizer,
@@ -72,10 +70,7 @@ const Single = () => {
       {loading && <Loading />}
       {!loading && (
         <div>
-          <div
-            className="mx-auto px-4 sm:px-6 lg:px-8 mt-20"
-            style={{ maxWidth: "1500px" }}
-          >
+          <div className="max-w-7xl pl-11 mx-auto px-4 sm:px-6 lg:px-8 mt-20">
             <div className="flex flex-col md:flex-row -mx-4">
               <div className="md:flex-1 sm:mr-4 p-4 sm:p-0">
                 <div>

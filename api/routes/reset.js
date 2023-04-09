@@ -15,7 +15,7 @@ router.post("/forgot-password", async (req, res, next) => {
     const token = jwt.sign({ email: oldUser.email, id: oldUser._id }, secret, {
       expiresIn: "5m",
     });
-    const link = `https://dzhikers.live/reset-password/${oldUser._id}/${token}`;
+    const link = `http://localhost:5173/reset-password/${oldUser._id}/${token}`;
     sendPasswordResetLink(oldUser.email, link);
     console.log(link);
   } catch (error) {

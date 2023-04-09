@@ -31,7 +31,7 @@ const Shop = () => {
     const fetchData = async () => {
       try {
         const res = await axios.get(
-          `https://dzhikers.onrender.com/api/items?category=${category}&page=${page}&min=${minPrice}&max=${maxPrice}`
+          `http://localhost:8800/api/items?category=${category}&page=${page}&min=${minPrice}&max=${maxPrice}`
         );
         setItems(res.data.items);
         setItemCount(res.data.count);
@@ -175,7 +175,7 @@ const Shop = () => {
                 </>
               ))}
             </div>
-            {countOne > 0 && (
+            {countOne > 12 && (
               <Pagination
                 count={Math.ceil(itemCount / 12)}
                 shape="rounded"

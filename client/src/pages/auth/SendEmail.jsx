@@ -21,7 +21,7 @@ function Copyright(props) {
       {...props}
     >
       {"Copyright © "}
-      <Link color="inherit" href="https://www.dzhikers.live/">
+      <Link color="inherit" href="http://localhost:5173/">
         DZHIKERS
       </Link>{" "}
       {new Date().getFullYear()}
@@ -50,12 +50,9 @@ export default function SendEmail() {
     const email = data.get("email");
     setOpen(true);
     try {
-      await axios.post(
-        "https://dzhikers.onrender.com/api/reset/forgot-password",
-        {
-          email: email,
-        }
-      );
+      await axios.post("http://localhost:8800/api/reset/forgot-password", {
+        email: email,
+      });
     } catch (err) {
       setError(err.response.data.message);
     }

@@ -15,9 +15,7 @@ export default function UserMap({ lat, long }) {
   useEffect(() => {
     const getPins = async () => {
       try {
-        const res = await axios.get(
-          `https://dzhikers.onrender.com/api/pins/${id}`
-        );
+        const res = await axios.get(`http://localhost:8800/api/pins/${id}`);
         setPins(res.data);
       } catch (error) {
         console.log(error);
