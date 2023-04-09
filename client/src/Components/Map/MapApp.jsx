@@ -231,6 +231,7 @@ export default function MapApp() {
                     <label className="label">Places disponibles</label>
                     <input
                       className="input"
+                      type="number"
                       placeholder="Entrer le nombre de personnes qui peuvent venir"
                       name="places"
                     />
@@ -246,12 +247,14 @@ export default function MapApp() {
                     <label className="label">Duration de la randonée</label>
                     <input
                       className="input"
+                      type="number"
                       placeholder="Entrer la duration"
                       name="duration"
                     />
                     <label className="label">Prix de la randonée</label>
                     <input
                       className="input"
+                      type="number"
                       placeholder="Entrer le prix de la randonée par personne"
                       name="price"
                     />
@@ -270,7 +273,7 @@ export default function MapApp() {
                   </form>
                 )}
                 {success && (
-                  <div className="success">
+                  <div className="success h-auto w-auto">
                     <h3 className="text-lg font-semibold text-green-500">
                       Vous avez ajouté une randonée avec succès!
                     </h3>
