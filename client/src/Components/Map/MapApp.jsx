@@ -12,6 +12,7 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 import axios from "axios";
 import moment from "moment";
 import "moment/locale/fr";
+import Loading from "../Loading";
 export default function MapApp() {
   const [pins, setPins] = useState([]);
   const [newPin, setNewPin] = useState(false);
@@ -20,6 +21,9 @@ export default function MapApp() {
   const [lng, setLng] = useState(3.25);
   const [lat, setLat] = useState(34.666667);
   const [zoom, setZoom] = useState(5.6);
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [level, setLevel] = useState("facile");
   const currentUser = JSON.parse(localStorage.getItem("currentUser"));
 
   const navigate = useNavigate();
@@ -47,12 +51,12 @@ export default function MapApp() {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     const data = new FormData(e.currentTarget);
     const title = data.get("title");
     const desc = data.get("desc");
     const duration = data.get("duration");
     const date = data.get("date");
-    const level = data.get("level");
     const places = data.get("places");
     const price = data.get("price");
 
@@ -64,7 +68,7 @@ export default function MapApp() {
           desc,
           duration,
           date,
-          level,
+          level: level,
           places,
           price,
           organizer: currentUser.details.username,
@@ -78,6 +82,8 @@ export default function MapApp() {
           },
         }
       );
+      setSuccess(true);
+      setLoading(false);
       setPins([...pins, res.data]);
     } catch (err) {
       console.log(err);
@@ -199,65 +205,82 @@ export default function MapApp() {
               anchor="left"
             >
               <div>
-                <form className="form" onSubmit={handleSubmit}>
-                  <label className="label">Titre</label>
-                  <input
-                    className="input"
-                    placeholder="Entrer un titre"
-                    name="title"
-                    autoFocus
-                  />
-                  <label className="label">Description</label>
-                  <textarea
-                    className="textarea"
-                    placeholder="Dites quelque chose a propose de cet endroit"
-                    name="desc"
-                  />
+                {!success && (
+                  <form className="form" onSubmit={handleSubmit}>
+                    <label className="label">Titre</label>
+                    <input
+                      className="input"
+                      placeholder="Entrer un titre"
+                      name="title"
+                      autoFocus
+                    />
+                    <label className="label">Description</label>
+                    <textarea
+                      className="textarea"
+                      placeholder="Dites quelque chose a propose de cet endroit"
+                      name="desc"
+                    />
 
-                  <label className="label">Date de la randonnée</label>
-                  <input
-                    className="input"
-                    type="date"
-                    placeholder="Entrer le nombre de personnes qui peuvent venir"
-                    name="date"
-                  />
-                  <label className="label">Places disponibles</label>
-                  <input
-                    className="input"
-                    placeholder="Entrer le nombre de personnes qui peuvent venir"
-                    name="places"
-                  />
-                  <label className="label">Niveau de la randonée</label>
-                  <input
-                    className="input"
-                    placeholder="Entrer un niveau"
-                    name="level"
-                  />
-                  <label className="label">Duration de la randonée</label>
-                  <input
-                    className="input"
-                    placeholder="Entrer la duration"
-                    name="duration"
-                  />
-                  <label className="label">Prix de la randonée</label>
-                  <input
-                    className="input"
-                    placeholder="Entrer le prix de la randonée par personne"
-                    name="price"
-                  />
-                  <input
-                    className="input"
-                    type="file"
-                    required
-                    name="image"
-                    id="image"
-                    onChange={handleFileSelect}
-                    placeholder="Entrez une image de cet endroit"
-                  />
-                  <button type="submit" className="submitButton">
-                    Ajouter la randonée
-                  </button>
-                </form>
+                    <label className="label">Date de la randonnée</label>
+                    <input
+                      className="input"
+                      type="date"
+                      placeholder="Entrer le nombre de personnes qui peuvent venir"
+                      name="date"
+                    />
+                    <label className="label">Places disponibles</label>
+                    <input
+                      className="input"
+                      placeholder="Entrer le nombre de personnes qui peuvent venir"
+                      name="places"
+                    />
+                    <label className="label">Niveau de la randonée</label>
+                    <select
+                      className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                      onChange={(e) => setLevel(e.target.value)}
+                    >
+                      <option value="facile">Facile</option>
+                      <option value="moyen">Moyen</option>
+                      <option value="difficile">Difficile</option>
+                    </select>
+                    <label className="label">Duration de la randonée</label>
+                    <input
+                      className="input"
+                      placeholder="Entrer la duration"
+                      name="duration"
+                    />
+                    <label className="label">Prix de la randonée</label>
+                    <input
+                      className="input"
+                      placeholder="Entrer le prix de la randonée par personne"
+                      name="price"
+                    />
+                    <input
+                      className="input"
+                      type="file"
+                      required
+                      name="image"
+                      id="image"
+                      onChange={handleFileSelect}
+                      placeholder="Entrez une image de cet endroit"
+                    />
+                    <button type="submit" className="submitButton">
+                      Ajouter la randonée
+                    </button>
+                  </form>
+                )}
+                {success && (
+                  <div className="success">
+                    <h3 className="text-lg font-semibold text-green-500">
+                      Vous avez ajouté une randonée avec succès!
+                    </h3>
+                  </div>
+                )}
+                {loading && (
+                  <div className="w-11 h-11  mt-2 pr-11 pl-11">
+                    <Loading />
+                  </div>
+                )}
               </div>
             </Popup>
           </>

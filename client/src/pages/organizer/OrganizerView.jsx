@@ -32,7 +32,6 @@ const OrganizerView = () => {
     setOpen(false);
   };
   const navigate = useNavigate();
-  // TODO DELETE RANDOS ON TRASHICON CLICK
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -51,9 +50,12 @@ const OrganizerView = () => {
   }, []);
   const handleDelete = async (id) => {
     try {
-      const res = await axios.delete(`http://localhost:8800/api/pins/${id}`, {
-        withCredentials: true,
-      });
+      const res = await axios.delete(
+        `http://localhost:8800/api/pins/${id}`,
+        {
+          withCredentials: true,
+        }
+      );
       setOpen(false);
       setData(data.filter((item) => item._id !== id));
     } catch (err) {

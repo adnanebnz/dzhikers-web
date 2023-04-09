@@ -10,7 +10,7 @@ export default function AddProduct() {
   const [price, setPrice] = useState(null);
   const [quantity, setQuantity] = useState(null);
   const [brand, setBrand] = useState("");
-  const [category, setCategory] = useState("");
+  const [category, setCategory] = useState("tantes");
   const [open, setOpen] = useState(false);
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
@@ -58,7 +58,7 @@ export default function AddProduct() {
           Vous n'avez pas accès à cette page
         </h1>
       )}
-      {currentUser.isAdmin(
+      {currentUser.isAdmin && (
         <div className="max-w-lg mx-auto mt-10 mb-10">
           <h1 className="mb-3 text-lg text-gray-700 font-semibold">
             Ajouter un produit
