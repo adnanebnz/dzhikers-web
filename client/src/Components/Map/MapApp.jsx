@@ -23,6 +23,7 @@ export default function MapApp() {
   const [zoom, setZoom] = useState(5.6);
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [level, setLevel] = useState("facile");
   const currentUser = JSON.parse(localStorage.getItem("currentUser"));
 
   const navigate = useNavigate();
@@ -58,19 +59,18 @@ export default function MapApp() {
     const desc = data.get("desc");
     const duration = data.get("duration");
     const date = data.get("date");
-    const level = data.get("level");
     const places = data.get("places");
     const price = data.get("price");
 
     try {
       const res = await axios.post(
-        "https://dzhikers.onrender.com/api/pins",
+        "http://localhost:8800/api/pins",
         {
           title,
           desc,
           duration,
           date,
-          level,
+          level: level,
           places,
           price,
           organizer: currentUser.details.username,
@@ -233,24 +233,30 @@ export default function MapApp() {
                     <label className="label">Places disponibles</label>
                     <input
                       className="input"
+                      type="number"
                       placeholder="Entrer le nombre de personnes qui peuvent venir"
                       name="places"
                     />
                     <label className="label">Niveau de la randonée</label>
-                    <input
-                      className="input"
-                      placeholder="Entrer un niveau"
-                      name="level"
-                    />
+                    <select
+                      className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                      onChange={(e) => setLevel(e.target.value)}
+                    >
+                      <option value="facile">Facile</option>
+                      <option value="moyen">Moyen</option>
+                      <option value="difficile">Difficile</option>
+                    </select>
                     <label className="label">Duration de la randonée</label>
                     <input
                       className="input"
+                      type="number"
                       placeholder="Entrer la duration"
                       name="duration"
                     />
                     <label className="label">Prix de la randonée</label>
                     <input
                       className="input"
+                      type="number"
                       placeholder="Entrer le prix de la randonée par personne"
                       name="price"
                     />
@@ -269,7 +275,7 @@ export default function MapApp() {
                   </form>
                 )}
                 {success && (
-                  <div className="success">
+                  <div className="success h-auto w-auto">
                     <h3 className="text-lg font-semibold text-green-500">
                       Vous avez ajouté une randonée avec succès!
                     </h3>
