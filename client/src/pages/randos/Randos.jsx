@@ -40,7 +40,11 @@ const Randos = () => {
   }, [level, page, minPrice, maxPrice]);
   return (
     <>
-      {loading && <Loading />}
+      {loading && (
+        <div className="flex items-center justify-center">
+          <Loading />
+        </div>
+      )}
       {!loading && (
         <section className="bg-white mt-24 mb-6">
           <div className="container px-6 py-8 mx-auto">
