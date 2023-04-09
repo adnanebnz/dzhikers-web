@@ -19,7 +19,7 @@ const Comments = () => {
     const fetchComents = async () => {
       try {
         const resReview = await axios.get(
-          `https://dzhikers.onrender.com/api/reviews/${id}`,
+          `https://dzhikers.up.railway.app/api/reviews/${id}`,
           {
             withCredentials: true,
           }
@@ -38,7 +38,7 @@ const Comments = () => {
     e.preventDefault();
     try {
       const res = await axios.post(
-        `https://dzhikers.onrender.com/api/reviews/`,
+        `https://dzhikers.up.railway.app/api/reviews/`,
         {
           userId: currentUser.details._id,
           username: currentUser.details.username,
@@ -92,7 +92,7 @@ const Comments = () => {
                   sx={{ display: "flex", alignItems: "center", gap: "0.5rem" }}
                 >
                   {currentUser.details.img ===
-                    "https://dzhikers.onrender.com/Images/undefined" && (
+                    "https://dzhikers.up.railway.app/Images/undefined" && (
                     <img
                       src={noavatar}
                       alt=""
@@ -100,7 +100,7 @@ const Comments = () => {
                     />
                   )}
                   {currentUser.details.img !==
-                    "https://dzhikers.onrender.com/Images/undefined" && (
+                    "https://dzhikers.up.railway.app/Images/undefined" && (
                     <img
                       src={currentUser.details.img}
                       alt=""
@@ -179,7 +179,7 @@ const Comments = () => {
                     <img
                       src={
                         c.userPfp !==
-                        "https://dzhikers.onrender.com/Images/undefined"
+                        "https://dzhikers.up.railway.app/Images/undefined"
                           ? c.userPfp
                           : noavatar
                       }

@@ -16,7 +16,7 @@ const ContactViewer = () => {
   useEffect(() => {
     const fetchContact = async () => {
       const res = await axios.get(
-        "https://dzhikers.onrender.com/api/messages",
+        "https://dzhikers.up.railway.app/api/messages",
         {
           withCredentials: true,
         }
@@ -27,7 +27,7 @@ const ContactViewer = () => {
   }, []);
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`https://dzhikers.onrender.com/api/messages/${id}`, {
+      await axios.delete(`https://dzhikers.up.railway.app/api/messages/${id}`, {
         withCredentials: true,
       });
       setContact(contact.filter((msg) => msg._id !== id));

@@ -30,7 +30,7 @@ const Single = () => {
   useEffect(() => {
     const fetchData = async () => {
       const res = await axios.get(
-        `https://dzhikers.onrender.com/api/pins/${id}`
+        `https://dzhikers.up.railway.app/api/pins/${id}`
       );
       setData(res.data);
       setLoading(false);
@@ -44,7 +44,7 @@ const Single = () => {
         navigate("/login");
       }
       const res = await axios.post(
-        `https://dzhikers.onrender.com/api/reservations/${id}/register`,
+        `https://dzhikers.up.railway.app/api/reservations/${id}/register`,
         {
           hikeId: id,
           organizerUsername: data.organizer,

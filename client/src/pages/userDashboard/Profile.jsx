@@ -27,7 +27,7 @@ const Profile = () => {
     const fetchData = async () => {
       try {
         const res = await axios.get(
-          `https://dzhikers.onrender.com/api/users/${id}`,
+          `https://dzhikers.up.railway.app/api/users/${id}`,
           {
             withCredentials: true,
           }
@@ -41,7 +41,7 @@ const Profile = () => {
   }, [id]);
   const handleAccountDelete = async () => {
     try {
-      await axios.delete(`https://dzhikers.onrender.com/api/users/${id}`, {
+      await axios.delete(`https://dzhikers.up.railway.app/api/users/${id}`, {
         withCredentials: true,
       });
       localStorage.setItem("currentUser", null);
@@ -73,7 +73,7 @@ const Profile = () => {
             <div className="mt-3 mb-10">
               <div className="flex flex-col items-center justify-center py-12">
                 {data.img ===
-                  "https://dzhikers.onrender.com/Images/undefined" && (
+                  "https://dzhikers.up.railway.app/Images/undefined" && (
                   <img
                     src={noavatar}
                     alt="Avatar"
@@ -81,7 +81,7 @@ const Profile = () => {
                   />
                 )}
                 {data.img !==
-                  "https://dzhikers.onrender.com/Images/undefined" && (
+                  "https://dzhikers.up.railway.app/Images/undefined" && (
                   <img
                     src={data.img}
                     alt="Avatar"

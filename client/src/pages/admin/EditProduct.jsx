@@ -29,7 +29,7 @@ export default function EditProduct() {
     event.preventDefault();
 
     try {
-      await axios.put(`https://dzhikers.onrender.com/api/items/${id}`, {
+      await axios.put(`https://dzhikers.up.railway.app/api/items/${id}`, {
         title,
         desc,
         brand,
@@ -50,7 +50,7 @@ export default function EditProduct() {
     });
     try {
       await axios.put(
-        `https://dzhikers.onrender.com/api/items/images/${id}`,
+        `https://dzhikers.up.railway.app/api/items/images/${id}`,
         data,
         {
           headers: {

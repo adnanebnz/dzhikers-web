@@ -51,7 +51,7 @@ export default function SendEmail() {
     setOpen(true);
     try {
       await axios.post(
-        "https://dzhikers.onrender.com/api/reset/forgot-password",
+        "https://dzhikers.up.railway.app/api/reset/forgot-password",
         {
           email: email,
         }

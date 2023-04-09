@@ -34,7 +34,7 @@ const UsersViewer = () => {
     const fetchUsers = async () => {
       try {
         const resultat = await axios.get(
-          "https://dzhikers.onrender.com/api/users",
+          "https://dzhikers.up.railway.app/api/users",
           {
             withCredentials: true,
           }
@@ -49,7 +49,7 @@ const UsersViewer = () => {
   }, []);
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`https://dzhikers.onrender.com/api/users/${id}`, {
+      await axios.delete(`https://dzhikers.up.railway.app/api/users/${id}`, {
         withCredentials: true,
       });
       setUsers(users.filter((user) => user._id !== id));

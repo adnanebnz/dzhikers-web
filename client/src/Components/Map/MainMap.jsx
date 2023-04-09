@@ -21,7 +21,7 @@ export default function MainMap() {
     const getPins = async () => {
       try {
         const res = await axios.get(
-          `https://dzhikers.onrender.com/api/pins/pure`
+          `https://dzhikers.up.railway.app/api/pins/pure`
         );
         setPins(res.data.pins);
         setLoading(false);

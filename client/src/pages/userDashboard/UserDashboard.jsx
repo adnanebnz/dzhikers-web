@@ -46,13 +46,13 @@ const UserDashboard = () => {
   useEffect(() => {
     const fetchData = async () => {
       const res = await axios.get(
-        `https://dzhikers.onrender.com/api/orders/${id}`,
+        `https://dzhikers.up.railway.app/api/orders/${id}`,
         {
           withCredentials: true,
         }
       );
       const resPins = await axios.get(
-        `https://dzhikers.onrender.com/api/reservations/${id}`,
+        `https://dzhikers.up.railway.app/api/reservations/${id}`,
         {
           withCredentials: true,
         }
@@ -65,9 +65,12 @@ const UserDashboard = () => {
   }, [id]);
   const deleteOrder = async (order) => {
     try {
-      await axios.delete(`https://dzhikers.onrender.com/api/orders/${order}`, {
-        withCredentials: true,
-      });
+      await axios.delete(
+        `https://dzhikers.up.railway.app/api/orders/${order}`,
+        {
+          withCredentials: true,
+        }
+      );
       setOpen(false);
       setData(data.filter((item) => item._id !== order));
     } catch (err) {
@@ -77,7 +80,7 @@ const UserDashboard = () => {
   const deleteReservation = async (reservation) => {
     try {
       await axios.delete(
-        `https://dzhikers.onrender.com/api/reservations/${reservation}`,
+        `https://dzhikers.up.railway.app/api/reservations/${reservation}`,
         {
           withCredentials: true,
         }

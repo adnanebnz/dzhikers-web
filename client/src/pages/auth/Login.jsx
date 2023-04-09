@@ -55,7 +55,7 @@ export default function Login() {
     const password = data.get("password");
     try {
       const res = await axios.post(
-        "https://dzhikers.onrender.com/api/users/login",
+        "https://dzhikers.up.railway.app/api/users/login",
         { email, password },
         { withCredentials: true }
       );

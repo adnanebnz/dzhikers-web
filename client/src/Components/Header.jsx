@@ -52,7 +52,7 @@ const Header = () => {
   };
   const handleDisconnect = async (event) => {
     event.preventDefault();
-    await axios.post("https://dzhikers.onrender.com/api/users/logout", "", {
+    await axios.post("https://dzhikers.up.railway.app/api/users/logout", "", {
       withCredentials: true,
     });
     localStorage.setItem("currentUser", null);
@@ -63,7 +63,7 @@ const Header = () => {
     const fetchNotifs = async () => {
       try {
         const res = await axios.get(
-          `https://dzhikers.onrender.com/api/announces/notifs/${currentUser.details._id}`,
+          `https://dzhikers.up.railway.app/api/announces/notifs/${currentUser.details._id}`,
           {
             withCredentials: true,
           }
