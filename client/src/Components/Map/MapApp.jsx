@@ -224,7 +224,7 @@ export default function MapApp() {
                     <label className="label">Date de la randonnée</label>
                     <input
                       className="input"
-                      type="date"
+                      type="datetime-local"
                       placeholder="Entrer le nombre de personnes qui peuvent venir"
                       name="date"
                     />
@@ -248,7 +248,7 @@ export default function MapApp() {
                     <input
                       className="input"
                       type="number"
-                      placeholder="Entrer la duration"
+                      placeholder="Entrer la duration (jours)"
                       name="duration"
                     />
                     <label className="label">Prix de la randonée</label>

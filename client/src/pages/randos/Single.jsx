@@ -119,7 +119,7 @@ const Single = () => {
                 <div className="flex gap-2 items-center">
                   <h1 className="text-md text-gray-800">Date :</h1>
                   <h1 className="text-xl text-gray-900 font-bold">
-                    {moment(data.date).format("DD/MM/YYYY")}
+                    {moment(data.date).format("DD-MM-YYYY HH:mm")}
                   </h1>
                 </div>
                 <div className="flex items-center gap-2">
