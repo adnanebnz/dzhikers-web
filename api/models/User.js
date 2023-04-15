@@ -47,7 +47,9 @@ const UserSchema = new mongoose.Schema(
       type: Boolean,
       default: true,
     },
-    //TODO AGE autorisation paternelle
+    deviceToken: {
+      type: Array,
+    },
   },
   { timestamps: true }
 );

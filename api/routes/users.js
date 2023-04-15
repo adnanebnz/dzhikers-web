@@ -73,7 +73,11 @@ router.post("/login", async (req, res, next) => {
     if (!isPasswordCorrect)
       return next(createError(400, "Email ou mot de passe incorrect!"));
 
+    user.deviceToken.push(req.body.deviceToken);
+    await user.save();
+
     //JWT AUTH
+
     const token = jwt.sign(
       { id: user._id, isAdmin: user.isAdmin, isOrg: user.isOrg },
       process.env.JWT
