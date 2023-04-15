@@ -17,8 +17,17 @@ async function increasePlaces(_id) {
 router.post("/:id/register", async (req, res, next) => {
   try {
     const pin = await Pin.findById(req.params.id);
+    const existingReservation = await Reservation.findOne({
+      userId: req.body.userId,
+      hikeId: req.params.id,
+    });
+    if (existingReservation) {
+      return res
+        .status(400)
+        .json({ message: "Vous avez déjà réservé cette randonnée" });
+    }
     if (pin.places === 0) {
-      res
+      return res
         .status(400)
         .json({ message: "Il ne reste pas de place pour cette randonnéee!" });
     }
@@ -68,7 +77,7 @@ router.delete("/:id", async (req, res, next) => {
     const reservation = await Reservation.findById(req.params.id);
     await increasePlaces(reservation.hikeId);
     await reservation.remove();
-    res.status(200).json({ message: "Reservation deleted" });
+    res.status(200).json({ message: "Reservation annulée!" });
   } catch (err) {
     next(err);
   }
