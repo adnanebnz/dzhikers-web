@@ -8,8 +8,11 @@ const Hero = () => {
   const navigate = useNavigate();
   return (
     <>
-      <div className="bg-white w-full overflow-hidden pb-5" id="hero">
-        <div className="bg-white relative sm:pt-16 px-10">
+      <div
+        className="bg-white w-full overflow-hidden pb-5 pt-7 sm:pt-3"
+        id="hero"
+      >
+        <div className="bg-white relative sm:pt-16 sm:px-10">
           <div className="relative m-auto px-6">
             <h1 className="mx-auto w-full  font-black text-gray-700 text-4xl text-center sm:text-4xl md:text-5xl lg:w-auto lg:text-left xl:text-6xl">
               Nous trouverons un chemin
@@ -25,10 +28,10 @@ const Hero = () => {
                   en Algérie, ainsi que des produits relatifs à ce genre
                   d'actvités.
                 </p>
-                <span className="block font-semibold text-gray-500 ">
+                <span className="block font-semibold text-gray-500 text-sm sm:text-lg ">
                   Faites un tour dans notre plateforme!
                 </span>
-                <div className="flex  justify-center items-center md:space-x-6 md:flex md:justify-center md:items-center lg:justify-start">
+                <div className="flex  justify-center items-center  space-x-3 md:space-x-6 md:flex md:justify-center md:items-center lg:justify-start">
                   <a
                     aria-label="add to slack"
                     href="/boutique"
@@ -107,8 +110,6 @@ const Hero = () => {
                     className="relative w-full"
                     alt="wath illustration"
                     loading="lazy"
-                    width="320"
-                    height="280"
                   />
                 </div>
               </div>

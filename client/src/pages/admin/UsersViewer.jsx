@@ -65,7 +65,7 @@ const UsersViewer = () => {
         <Button
           variant="contained"
           onClick={() => {
-            navigate("/admin/ajouter-utulisateur");
+            navigate("/admin/ajouter-utilisateur");
           }}
         >
           Créer un utilisateur
@@ -99,10 +99,10 @@ const UsersViewer = () => {
                       <DeleteForeverIcon sx={{ color: "red" }} />
                     </IconButton>
                     <Dialog open={open} keepMounted onClose={handleClose}>
-                      <DialogTitle>{"Supprimer cet utulisateur?"}</DialogTitle>
+                      <DialogTitle>{"Supprimer cet utilisateur?"}</DialogTitle>
                       <DialogContent>
                         <DialogContentText>
-                          Vous supprimez cet utulisateur. Êtes-vous sûr?
+                          Vous supprimez cet utilisateur. Êtes-vous sûr?
                         </DialogContentText>
                       </DialogContent>
                       <DialogActions>

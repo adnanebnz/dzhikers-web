@@ -77,7 +77,7 @@ const router = createBrowserRouter([
         element: <AddProduct />,
       },
       {
-        path: "/admin/ajouter-utulisateur",
+        path: "/admin/ajouter-utilisateur",
         element: <AddUser />,
       },
       {

@@ -73,12 +73,12 @@ export default function Services() {
             </svg>
           </span>
           <p className="text-xl font-medium text-slate-700 mt-3">
-            Support 24/7 disponible
+            Support 24hr/24 disponible
           </p>
           <p className="mt-2 text-sm text-slate-500">
-            Nous sommes disponibles 24/7 pour vous aider et vous conseiller donc
-            envoyez nous un message et nous vous répondrons dans les plus brefs
-            délais.
+            Nous sommes toujours disponibles pour vous aider et vous conseiller
+            donc envoyez nous un message et nous vous répondrons dans les plus
+            brefs délais.
           </p>
         </div>
 

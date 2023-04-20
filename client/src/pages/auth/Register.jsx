@@ -134,7 +134,7 @@ export default function Register() {
                 required
                 fullWidth
                 id="username"
-                label="Nom d'utulisateur"
+                label="Nom d'utilisateur"
                 name="username"
                 autoComplete="username"
                 autoFocus

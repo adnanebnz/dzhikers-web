@@ -3,7 +3,7 @@ import hikers from "../assets/hikers.jpg";
 import tante from "../assets/tante.jpg";
 import chair from "../assets/chair.jpg";
 import bottle from "../assets/bottle.jpg";
-import clothes from "../assets/adidassports.jpg";
+import clothes from "../assets/clothes.png";
 import { useNavigate } from "react-router-dom";
 const Section = () => {
   const navigate = useNavigate();
