@@ -52,6 +52,6 @@ app.use((err, req, res, next) => {
 
 //SERVER STARTUP
 
-app.listen(3000, () => {
-  console.log("Server listening at port 3000 🚀");
+app.listen(8800, () => {
+  console.log("Server listening at port 8800 🚀");
 });
