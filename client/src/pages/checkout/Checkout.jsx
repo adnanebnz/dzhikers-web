@@ -37,7 +37,7 @@ const Checkout = () => {
     if (choice === "credit" && totalPrice > 0) {
       await axios
         .post(
-          "https://dzhikers.up.railway.app/api/orders/create-checkout-session",
+          "https://busy-ruby-xerus-fez.cyclic.app/api/orders/create-checkout-session",
           {
             cart,
           },

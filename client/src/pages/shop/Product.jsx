@@ -20,7 +20,7 @@ const Product = () => {
   useEffect(() => {
     const fetchData = async () => {
       const res = await axios.get(
-        `https://dzhikers.up.railway.app/api/items/${id}`
+        `https://busy-ruby-xerus-fez.cyclic.app/api/items/${id}`
       );
       setData(res.data);
       setLoading(false);

@@ -72,7 +72,7 @@ function DashboardContent() {
   useEffect(() => {
     const getProductsCount = async () => {
       const { data } = await axios.get(
-        "https://dzhikers.up.railway.app/api/items?category=all&page=1&min=0&max=1000000000",
+        "https://busy-ruby-xerus-fez.cyclic.app/api/items?category=all&page=1&min=0&max=1000000000",
         {
           withCredentials: true,
         }
@@ -81,7 +81,7 @@ function DashboardContent() {
     };
     const getOrdersCount = async () => {
       const { data } = await axios.get(
-        "https://dzhikers.up.railway.app/api/orders",
+        "https://busy-ruby-xerus-fez.cyclic.app/api/orders",
         {
           withCredentials: true,
         }
@@ -95,7 +95,7 @@ function DashboardContent() {
     };
     const getContactsCount = async () => {
       const { data } = await axios.get(
-        "https://dzhikers.up.railway.app/api/messages",
+        "https://busy-ruby-xerus-fez.cyclic.app/api/messages",
         {
           withCredentials: true,
         }
@@ -104,7 +104,7 @@ function DashboardContent() {
     };
     const getUsersCount = async () => {
       const { data } = await axios.get(
-        "https://dzhikers.up.railway.app/api/users"
+        "https://busy-ruby-xerus-fez.cyclic.app/api/users"
       );
       setUsersCount(data.length);
       setOrgCount(

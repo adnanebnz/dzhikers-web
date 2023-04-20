@@ -31,7 +31,7 @@ export default function MapApp() {
     const getPins = async () => {
       try {
         const res = await axios.get(
-          "https://dzhikers.up.railway.app/api/pins/pure"
+          "https://busy-ruby-xerus-fez.cyclic.app/api/pins/pure"
         );
         setPins(res.data.pins);
       } catch (error) {
@@ -64,7 +64,7 @@ export default function MapApp() {
 
     try {
       const res = await axios.post(
-        "https://dzhikers.up.railway.app/api/pins",
+        "https://busy-ruby-xerus-fez.cyclic.app/api/pins",
         {
           title,
           desc,

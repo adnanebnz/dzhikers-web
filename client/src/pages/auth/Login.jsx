@@ -55,7 +55,7 @@ export default function Login() {
     const password = data.get("password");
     try {
       const res = await axios.post(
-        "https://dzhikers.up.railway.app/api/users/login",
+        "https://busy-ruby-xerus-fez.cyclic.app/api/users/login",
         { email, password },
         { withCredentials: true }
       );

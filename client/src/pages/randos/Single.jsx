@@ -30,7 +30,7 @@ const Single = () => {
   useEffect(() => {
     const fetchData = async () => {
       const res = await axios.get(
-        `https://dzhikers.up.railway.app/api/pins/${id}`
+        `https://busy-ruby-xerus-fez.cyclic.app/api/pins/${id}`
       );
       setData(res.data);
       setLoading(false);
@@ -44,7 +44,7 @@ const Single = () => {
         navigate("/login");
       }
       const res = await axios.post(
-        `https://dzhikers.up.railway.app/api/reservations/${id}/register`,
+        `https://busy-ruby-xerus-fez.cyclic.app/api/reservations/${id}/register`,
         {
           hikeId: id,
           organizerUsername: data.organizer,

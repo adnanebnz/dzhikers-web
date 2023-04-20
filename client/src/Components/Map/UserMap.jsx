@@ -23,7 +23,7 @@ export default function UserMap({ lat, long }) {
     const getPins = async () => {
       try {
         const res = await axios.get(
-          `https://dzhikers.up.railway.app/api/pins/${id}`
+          `https://busy-ruby-xerus-fez.cyclic.app/api/pins/${id}`
         );
         setPins(res.data);
         setLoading(false);

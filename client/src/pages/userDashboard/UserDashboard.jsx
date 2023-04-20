@@ -46,13 +46,13 @@ const UserDashboard = () => {
   useEffect(() => {
     const fetchData = async () => {
       const res = await axios.get(
-        `https://dzhikers.up.railway.app/api/orders/${id}`,
+        `https://busy-ruby-xerus-fez.cyclic.app/api/orders/${id}`,
         {
           withCredentials: true,
         }
       );
       const resPins = await axios.get(
-        `https://dzhikers.up.railway.app/api/reservations/${id}`,
+        `https://busy-ruby-xerus-fez.cyclic.app/api/reservations/${id}`,
         {
           withCredentials: true,
         }
@@ -66,7 +66,7 @@ const UserDashboard = () => {
   const deleteOrder = async (order) => {
     try {
       await axios.delete(
-        `https://dzhikers.up.railway.app/api/orders/${order}`,
+        `https://busy-ruby-xerus-fez.cyclic.app/api/orders/${order}`,
         {
           withCredentials: true,
         }
@@ -80,7 +80,7 @@ const UserDashboard = () => {
   const deleteReservation = async (reservation) => {
     try {
       await axios.delete(
-        `https://dzhikers.up.railway.app/api/reservations/${reservation}`,
+        `https://busy-ruby-xerus-fez.cyclic.app/api/reservations/${reservation}`,
         {
           withCredentials: true,
         }

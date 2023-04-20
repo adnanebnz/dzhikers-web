@@ -74,7 +74,7 @@ export default function Register() {
     };
     try {
       await axios.post(
-        "https://dzhikers.up.railway.app/api/users/register",
+        "https://busy-ruby-xerus-fez.cyclic.app/api/users/register",
         values,
         { headers: { "Content-Type": "multipart/form-data" } },
         { withCredentials: true }

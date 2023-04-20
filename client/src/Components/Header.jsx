@@ -53,7 +53,7 @@ const Header = () => {
   const handleDisconnect = async (event) => {
     event.preventDefault();
     await axios.post(
-      "https://dzhikers.up.railway.app/api/users/logout",
+      "https://busy-ruby-xerus-fez.cyclic.app/api/users/logout",
       { id: currentUser.details._id },
       {
         withCredentials: true,
@@ -67,7 +67,7 @@ const Header = () => {
     const fetchNotifs = async () => {
       try {
         const res = await axios.get(
-          `https://dzhikers.up.railway.app/api/announces/notifs/${currentUser.details._id}`,
+          `https://busy-ruby-xerus-fez.cyclic.app/api/announces/notifs/${currentUser.details._id}`,
           {
             withCredentials: true,
           }

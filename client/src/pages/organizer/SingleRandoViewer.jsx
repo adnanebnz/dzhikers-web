@@ -48,7 +48,7 @@ const SingleRandoViewer = () => {
     const fetchData = async () => {
       try {
         const res = await axios.get(
-          `https://dzhikers.up.railway.app/api/reservations/${id}/details`
+          `https://busy-ruby-xerus-fez.cyclic.app/api/reservations/${id}/details`
         );
 
         setData(res.data.reservations);
@@ -60,7 +60,7 @@ const SingleRandoViewer = () => {
     const fetchAnnounces = async () => {
       try {
         const res2 = await axios.get(
-          `https://dzhikers.up.railway.app/api/announces/${id}`
+          `https://busy-ruby-xerus-fez.cyclic.app/api/announces/${id}`
         );
         setAnnounces(res2.data.announce);
       } catch (err) {
@@ -81,7 +81,7 @@ const SingleRandoViewer = () => {
     const desc = data.get("description");
     try {
       const res = await axios.post(
-        `https://dzhikers.up.railway.app/api/announces`,
+        `https://busy-ruby-xerus-fez.cyclic.app/api/announces`,
         {
           title: title,
           description: desc,
@@ -108,7 +108,7 @@ const SingleRandoViewer = () => {
   const handleDelete = async (id) => {
     try {
       await axios.delete(
-        `https://dzhikers.up.railway.app/api/announces/${id}`,
+        `https://busy-ruby-xerus-fez.cyclic.app/api/announces/${id}`,
         {
           withCredentials: true,
         }
@@ -121,7 +121,7 @@ const SingleRandoViewer = () => {
   const handleEdit = async (id) => {
     try {
       const res = await axios.put(
-        `https://dzhikers.up.railway.app/api/announces/${id}`,
+        `https://busy-ruby-xerus-fez.cyclic.app/api/announces/${id}`,
         { title: title, description: desc },
         {
           withCredentials: true,
@@ -141,7 +141,7 @@ const SingleRandoViewer = () => {
     event.preventDefault();
     try {
       const res = await axios.put(
-        `https://dzhikers.up.railway.app/api/pins/${id}`,
+        `https://busy-ruby-xerus-fez.cyclic.app/api/pins/${id}`,
         {
           organizer: currentUser.details.username,
           title: randoTitle,
@@ -165,7 +165,7 @@ const SingleRandoViewer = () => {
     formData.append("image", image[0]);
     try {
       await axios.put(
-        `https://dzhikers.up.railway.app/api/pins/image/${id}`,
+        `https://busy-ruby-xerus-fez.cyclic.app/api/pins/image/${id}`,
         formData,
         {
           headers: {

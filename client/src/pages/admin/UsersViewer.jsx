@@ -34,7 +34,7 @@ const UsersViewer = () => {
     const fetchUsers = async () => {
       try {
         const resultat = await axios.get(
-          "https://dzhikers.up.railway.app/api/users",
+          "https://busy-ruby-xerus-fez.cyclic.app/api/users",
           {
             withCredentials: true,
           }
@@ -49,9 +49,12 @@ const UsersViewer = () => {
   }, []);
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`https://dzhikers.up.railway.app/api/users/${id}`, {
-        withCredentials: true,
-      });
+      await axios.delete(
+        `https://busy-ruby-xerus-fez.cyclic.app/api/users/${id}`,
+        {
+          withCredentials: true,
+        }
+      );
       setUsers(users.filter((user) => user._id !== id));
     } catch (error) {
       console.log(error);
