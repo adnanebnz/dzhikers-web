@@ -73,6 +73,16 @@ router.post("/login", async (req, res, next) => {
     if (!isPasswordCorrect)
       return next(createError(400, "Email ou mot de passe incorrect!"));
 
+    const hardwareToken = req.body.hardwareToken;
+    console.log(hardwareToken);
+    if (
+      hardwareToken !== undefined &&
+      !user.hardwareToken.includes(hardwareToken)
+    ) {
+      user.hardwareToken.push(hardwareToken);
+      await user.save();
+    }
+
     //JWT AUTH
     const token = jwt.sign(
       { id: user._id, isAdmin: user.isAdmin, isOrg: user.isOrg },
@@ -94,6 +104,16 @@ router.post("/login", async (req, res, next) => {
 //logout
 
 router.post("/logout", (req, res) => {
+  const id = req.body.id;
+  User.findById(id, (err, user) => {
+    if (err) {
+      console.log(err);
+    } else {
+      user.hardwareToken = [];
+      user.save();
+    }
+  });
+
   res
     .clearCookie("access_token", {
       sameSite: "none",
