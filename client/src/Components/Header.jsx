@@ -53,7 +53,7 @@ const Header = () => {
   const handleDisconnect = async (event) => {
     event.preventDefault();
     await axios.post(
-      "http://localhost:8800/api/users/logout",
+      "https://dzhikers.up.railway.app/api/users/logout",
       { id: currentUser.details._id },
       {
         withCredentials: true,
