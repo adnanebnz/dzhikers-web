@@ -106,14 +106,16 @@ router.post("/login", async (req, res, next) => {
 
 router.post("/logout", (req, res) => {
   const id = req.body.id;
-  User.findById(id, (err, user) => {
-    if (err) {
-      console.log(err);
-    } else {
-      user.hardwareToken = [];
-      user.save();
-    }
-  });
+  if (id !== undefined) {
+    User.findById(id, (err, user) => {
+      if (err) {
+        console.log(err);
+      } else {
+        user.hardwareToken = [];
+        user.save();
+      }
+    });
+  }
 
   res
     .clearCookie("access_token", {
