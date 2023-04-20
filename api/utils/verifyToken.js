@@ -2,7 +2,6 @@ const jwt = require("jsonwebtoken");
 const createError = require("../utils/error");
 
 // USER VERIF
-
 const verifyUser = (req, res, next) => {
   const token = req.cookies.access_token;
   if (!token) {
