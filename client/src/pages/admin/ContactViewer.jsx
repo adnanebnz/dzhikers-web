@@ -16,7 +16,7 @@ const ContactViewer = () => {
   useEffect(() => {
     const fetchContact = async () => {
       const res = await axios.get(
-        "https://busy-ruby-xerus-fez.cyclic.app/api/messages",
+        "https://dzhikers.up.railway.app/api/messages",
         {
           withCredentials: true,
         }
@@ -27,12 +27,9 @@ const ContactViewer = () => {
   }, []);
   const handleDelete = async (id) => {
     try {
-      await axios.delete(
-        `https://busy-ruby-xerus-fez.cyclic.app/api/messages/${id}`,
-        {
-          withCredentials: true,
-        }
-      );
+      await axios.delete(`https://dzhikers.up.railway.app/api/messages/${id}`, {
+        withCredentials: true,
+      });
       setContact(contact.filter((msg) => msg._id !== id));
     } catch (err) {
       console.log(err);

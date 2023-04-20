@@ -37,7 +37,7 @@ const OrdersViewer = () => {
     const fetchOrders = async () => {
       try {
         const resultat = await axios.get(
-          "https://busy-ruby-xerus-fez.cyclic.app/api/orders",
+          "https://dzhikers.up.railway.app/api/orders",
           {
             withCredentials: true,
           }
@@ -53,7 +53,7 @@ const OrdersViewer = () => {
   const handleDelete = async (id) => {
     try {
       await axios.delete(
-        `https://busy-ruby-xerus-fez.cyclic.app/api/orders/admin/${id}`,
+        `https://dzhikers.up.railway.app/api/orders/admin/${id}`,
         {
           withCredentials: true,
         }
@@ -66,7 +66,7 @@ const OrdersViewer = () => {
   const handleUpdate = async (id) => {
     try {
       await axios.put(
-        `https://busy-ruby-xerus-fez.cyclic.app/api/orders/${id}`,
+        `https://dzhikers.up.railway.app/api/orders/${id}`,
         {
           delivery_status: shipping,
           payment_status: payed,

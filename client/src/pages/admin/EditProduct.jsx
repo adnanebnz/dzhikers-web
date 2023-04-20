@@ -29,17 +29,14 @@ export default function EditProduct() {
     event.preventDefault();
 
     try {
-      await axios.put(
-        `https://busy-ruby-xerus-fez.cyclic.app/api/items/${id}`,
-        {
-          title,
-          desc,
-          brand,
-          category,
-          price,
-          quantity,
-        }
-      );
+      await axios.put(`https://dzhikers.up.railway.app/api/items/${id}`, {
+        title,
+        desc,
+        brand,
+        category,
+        price,
+        quantity,
+      });
       setOpen(true);
     } catch (error) {
       console.log(error);
@@ -53,7 +50,7 @@ export default function EditProduct() {
     });
     try {
       await axios.put(
-        `https://busy-ruby-xerus-fez.cyclic.app/api/items/images/${id}`,
+        `https://dzhikers.up.railway.app/api/items/images/${id}`,
         data,
         {
           headers: {

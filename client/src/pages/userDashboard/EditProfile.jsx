@@ -34,7 +34,7 @@ export default function EditProfile() {
     setLoading(true);
     try {
       const res = await axios.put(
-        `https://busy-ruby-xerus-fez.cyclic.app/api/users/${id}/updatePfp`,
+        `https://dzhikers.up.railway.app/api/users/${id}/updatePfp`,
         {
           img: selectedFile,
         },
@@ -58,7 +58,7 @@ export default function EditProfile() {
     try {
       setLoadingOne(true);
       const res = await axios.put(
-        `https://busy-ruby-xerus-fez.cyclic.app/api/users/${id}`,
+        `https://dzhikers.up.railway.app/api/users/${id}`,
         {
           lastName: event.target.lastName.value,
           firstName: event.target.firstName.value,

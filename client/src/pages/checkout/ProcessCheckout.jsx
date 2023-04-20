@@ -43,7 +43,7 @@ const ProcessCheckout = () => {
   async function makePayment(values) {
     try {
       await axios.post(
-        "https://busy-ruby-xerus-fez.cyclic.app/api/orders/create-order",
+        "https://dzhikers.up.railway.app/api/orders/create-order",
         {
           userId: currentUser.details._id,
           products: cart,

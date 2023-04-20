@@ -27,7 +27,7 @@ export default function ResetPassword() {
     const fetchPage = async () => {
       try {
         await axios.get(
-          `https://busy-ruby-xerus-fez.cyclic.app/api/reset/reset-password/${id}/${token}`
+          `https://dzhikers.up.railway.app/api/reset/reset-password/${id}/${token}`
         );
       } catch (err) {
         console.log(err);
@@ -45,7 +45,7 @@ export default function ResetPassword() {
     } else {
       try {
         await axios.post(
-          `https://busy-ruby-xerus-fez.cyclic.app/api/reset/reset-password/${id}/${token}`,
+          `https://dzhikers.up.railway.app/api/reset/reset-password/${id}/${token}`,
           { password: password },
           { withCredentials: true }
         );

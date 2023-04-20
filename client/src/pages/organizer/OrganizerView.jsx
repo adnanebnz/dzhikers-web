@@ -37,7 +37,7 @@ const OrganizerView = () => {
     const fetchData = async () => {
       try {
         const res = await axios.get(
-          `https://busy-ruby-xerus-fez.cyclic.app/api/pins/organizer/${currentUser.details.username}`,
+          `https://dzhikers.up.railway.app/api/pins/organizer/${currentUser.details.username}`,
           { withCredentials: true }
         );
         setData(res.data);
@@ -52,7 +52,7 @@ const OrganizerView = () => {
   const handleDelete = async (id) => {
     try {
       const res = await axios.delete(
-        `https://busy-ruby-xerus-fez.cyclic.app/api/pins/${id}`,
+        `https://dzhikers.up.railway.app/api/pins/${id}`,
         {
           withCredentials: true,
         }

@@ -27,7 +27,7 @@ const Profile = () => {
     const fetchData = async () => {
       try {
         const res = await axios.get(
-          `https://busy-ruby-xerus-fez.cyclic.app/api/users/${id}`,
+          `https://dzhikers.up.railway.app/api/users/${id}`,
           {
             withCredentials: true,
           }
@@ -41,12 +41,9 @@ const Profile = () => {
   }, [id]);
   const handleAccountDelete = async () => {
     try {
-      await axios.delete(
-        `https://busy-ruby-xerus-fez.cyclic.app/api/users/${id}`,
-        {
-          withCredentials: true,
-        }
-      );
+      await axios.delete(`https://dzhikers.up.railway.app/api/users/${id}`, {
+        withCredentials: true,
+      });
       localStorage.setItem("currentUser", null);
       navigate("/");
     } catch (error) {
@@ -76,7 +73,7 @@ const Profile = () => {
             <div className="mt-3 mb-10">
               <div className="flex flex-col items-center justify-center py-12">
                 {data.img ===
-                  "https://busy-ruby-xerus-fez.cyclic.app/Images/undefined" && (
+                  "https://dzhikers.up.railway.app/Images/undefined" && (
                   <img
                     src={noavatar}
                     alt="Avatar"
@@ -84,7 +81,7 @@ const Profile = () => {
                   />
                 )}
                 {data.img !==
-                  "https://busy-ruby-xerus-fez.cyclic.app/Images/undefined" && (
+                  "https://dzhikers.up.railway.app/Images/undefined" && (
                   <img
                     src={data.img}
                     alt="Avatar"

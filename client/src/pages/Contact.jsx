@@ -17,7 +17,7 @@ const Contact = () => {
       const email = data.get("email");
       const msg = data.get("message");
       await axios.post(
-        "https://busy-ruby-xerus-fez.cyclic.app/api/messages",
+        "https://dzhikers.up.railway.app/api/messages",
         { email, msg },
         {
           withCredentials: true,

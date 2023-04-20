@@ -59,7 +59,7 @@ export default function AddUser() {
 
     try {
       await axios.post(
-        "https://busy-ruby-xerus-fez.cyclic.app/api/users/register",
+        "https://dzhikers.up.railway.app/api/users/register",
         values
       );
       setOpen(true);

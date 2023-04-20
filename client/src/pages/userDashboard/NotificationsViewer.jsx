@@ -12,7 +12,7 @@ const NotificationsViewer = () => {
     const fetchNotifs = async () => {
       try {
         const res = await axios.get(
-          `https://busy-ruby-xerus-fez.cyclic.app/api/announces/notifs/${currentUser.details._id}`,
+          `https://dzhikers.up.railway.app/api/announces/notifs/${currentUser.details._id}`,
           {
             withCredentials: true,
           }
