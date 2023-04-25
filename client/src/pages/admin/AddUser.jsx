@@ -76,7 +76,7 @@ export default function AddUser() {
       {currentUser.isAdmin && (
         <div className="max-w-lg mx-auto mt-10 mb-10">
           <h1 className="mb-3 text-lg text-gray-700 font-semibold">
-            Ajouter un utulisateur
+            Ajouter un utilisateur
           </h1>
           <form
             className="bg-gray-200 shadow-xl rounded px-8 pt-6 pb-8 mb-6"
@@ -121,12 +121,12 @@ export default function AddUser() {
                 className="block text-gray-700 font-bold mb-2"
                 htmlFor="description"
               >
-                Nom d'utulisateur
+                Nom d'utilisateur
               </label>
               <input
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 id="description"
-                placeholder="Nom d'utulisateur*"
+                placeholder="Nom d'utilisateur*"
                 name="username"
                 type="text"
               />
@@ -212,7 +212,7 @@ export default function AddUser() {
                 className="px-2 py-1 bg-blue-500 rounded-md text-white font-semibold
        hover:bg-blue-600 hover:transition-all duration-100"
               >
-                Ajouter l'utulisateur
+                Ajouter l'utilisateur
               </button>
             </div>
           </form>
@@ -228,7 +228,7 @@ export default function AddUser() {
                 severity="success"
                 sx={{ width: "100%" }}
               >
-                Utulisateur crée avec success!
+                utilisateur crée avec success!
               </Alert>
             </Snackbar>
           )}

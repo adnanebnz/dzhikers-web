@@ -30,7 +30,6 @@
     "react-redux": "^8.0.5",
     "react-responsive-carousel": "^3.2.23",
     "react-router-dom": "^6.9.0",
-    "scrollreveal": "^4.0.9",
     "styled-components": "^5.3.9",
     "vite-plugin-rewrite-all": "^1.0.1",
     "yup": "^1.0.2"

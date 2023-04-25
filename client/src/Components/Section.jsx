@@ -3,12 +3,12 @@ import hikers from "../assets/hikers.jpg";
 import tante from "../assets/tante.jpg";
 import chair from "../assets/chair.jpg";
 import bottle from "../assets/bottle.jpg";
-import clothes from "../assets/adidassports.jpg";
+import clothes from "../assets/photo.png";
 import { useNavigate } from "react-router-dom";
 const Section = () => {
   const navigate = useNavigate();
   return (
-    <div className=" bg-gray-50 sm:px-14 py-10" id="recommend">
+    <div className="sm:px-11 py-10" id="recommend">
       <div className="col-span-full mb-3">
         <h2 className="mb-12 text-md text-gray-800 font-bold md:text-3xl md:px-11 text-sm px-4">
           Parcourez tout ce que nous avons a vous offrir

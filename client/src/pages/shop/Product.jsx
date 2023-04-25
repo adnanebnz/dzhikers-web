@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import StarIcon from "@mui/icons-material/Star";
 import { Typography, IconButton } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
@@ -32,12 +31,13 @@ const Product = () => {
       {!loading && (
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-20">
           <div className="flex flex-col md:flex-row -mx-4">
-            <div className="md:flex-1 px-4">
+            <div className="flex-1 px-4">
               <Carousel
                 autoPlay={true}
                 autoFocus={true}
                 emulateTouch={true}
                 infiniteLoop={true}
+                animationHandler={"fade"}
               >
                 <div>
                   <img src={data.img3} alt="" />
@@ -46,7 +46,7 @@ const Product = () => {
                   <img src={data.img2} alt="" />
                 </div>
                 <div>
-                  <img src={data.img} alt="" className="rounded-lg" />
+                  <img src={data.img} alt="" />
                 </div>
               </Carousel>
             </div>

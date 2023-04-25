@@ -73,12 +73,12 @@ export default function Services() {
             </svg>
           </span>
           <p className="text-xl font-medium text-slate-700 mt-3">
-            Support 24/7 disponible
+            Support disponible 24h/24
           </p>
           <p className="mt-2 text-sm text-slate-500">
-            Nous sommes disponibles 24/7 pour vous aider et vous conseiller donc
-            envoyez nous un message et nous vous répondrons dans les plus brefs
-            délais.
+            Nous sommes toujours disponibles pour vous aider et vous conseiller
+            donc envoyez nous un message et nous vous répondrons dans les plus
+            brefs délais.
           </p>
         </div>
 
@@ -103,7 +103,7 @@ export default function Services() {
             Paiement flexible
           </p>
           <p className="mt-2 text-sm text-slate-500">
-            Vous pouvez payer a la livraison ou bien sur place en utulisant
+            Vous pouvez payer a la livraison ou bien sur place en utilisant
             votre carte de crédit.
           </p>
         </div>

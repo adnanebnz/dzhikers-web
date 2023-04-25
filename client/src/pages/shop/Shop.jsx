@@ -96,7 +96,7 @@ const Shop = () => {
 
           <div className="mt-6 lg:mt-0 lg:px-2 lg:w-4/5 ">
             <div className="flex items-center justify-between text-sm tracking-widest uppercase ">
-              <p className="text-gray-500 ">{countOne} Produits</p>
+              <p className="text-gray-500 ">{itemCount} Produits</p>
             </div>
 
             {/* ITEMS MAPPING  HERE */}
@@ -175,7 +175,7 @@ const Shop = () => {
                 </>
               ))}
             </div>
-            {countOne > 12 && (
+            {itemCount > 12 && (
               <Pagination
                 count={Math.ceil(itemCount / 12)}
                 shape="rounded"
