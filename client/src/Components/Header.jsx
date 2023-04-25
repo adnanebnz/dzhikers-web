@@ -52,9 +52,13 @@ const Header = () => {
   };
   const handleDisconnect = async (event) => {
     event.preventDefault();
-    await axios.post("http://localhost:8800/api/users/logout", "", {
-      withCredentials: true,
-    });
+    await axios.post(
+      "http://localhost:8800/api/users/logout",
+      { id: currentUser.details._id },
+      {
+        withCredentials: true,
+      }
+    );
     localStorage.setItem("currentUser", null);
     navigate("/");
   };
