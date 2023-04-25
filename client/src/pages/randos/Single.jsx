@@ -137,14 +137,17 @@ const Single = () => {
                 <p className="text-gray-500">{data.desc}</p>
 
                 <div className="flex py-4 gap-7 items-center">
-                  <button
-                    type="button"
-                    className="h-12 w-30 mt-6 px-4 font-semibold rounded-xl bg-blue-600 hover:bg-blue-700 text-white flex gap-1 items-center"
-                    onClick={handleClickOpen}
-                  >
-                    <ConfirmationNumberIcon />
-                    Réserver
-                  </button>
+                  {data.places !== 0 && (
+                    <button
+                      type="button"
+                      className="h-12 w-30 mt-6 px-4 font-semibold rounded-xl bg-blue-600 hover:bg-blue-700 text-white flex gap-1 items-center"
+                      onClick={handleClickOpen}
+                    >
+                      <ConfirmationNumberIcon />
+                      Réserver
+                    </button>
+                  )}
+
                   <Dialog open={open} keepMounted onClose={handleClose}>
                     <DialogTitle>{"Êtes-vous sûr?"}</DialogTitle>
                     <DialogContent>

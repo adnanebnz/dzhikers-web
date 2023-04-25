@@ -85,40 +85,44 @@ const Product = () => {
               </div>
 
               <p className="text-gray-500">{data.desc}</p>
-
-              <div className="flex py-4 gap-7 items-center">
-                <div className="flex flex-col gap-1">
-                  <div className="px-2 text-xs uppercase text-gray-600 tracking-wide font-semibold">
-                    Quantité
-                  </div>
-                  <div className="cursor-pointer rounded-xl border border-gray-200 pl-2 pr-2 h-14 flex items-end pb-1">
-                    <div className="flex items-center">
-                      <IconButton
-                        onClick={() => setCount(Math.max(count - 1, 1))}
-                      >
-                        <RemoveIcon />
-                      </IconButton>
-                      <Typography color="black">{count}</Typography>
-                      <IconButton
-                        onClick={() => {
-                          if (count < data.quantity) setCount(count + 1);
-                        }}
-                      >
-                        <AddIcon />
-                      </IconButton>
+              {data.quantity !== 0 && (
+                <>
+                  <div className="flex py-4 gap-7 items-center">
+                    <div className="flex flex-col gap-1">
+                      <div className="px-2 text-xs uppercase text-gray-600 tracking-wide font-semibold">
+                        Quantité
+                      </div>
+                      <div className="cursor-pointer rounded-xl border border-gray-200 pl-2 pr-2 h-14 flex items-end pb-1">
+                        <div className="flex items-center">
+                          <IconButton
+                            onClick={() => setCount(Math.max(count - 1, 1))}
+                          >
+                            <RemoveIcon />
+                          </IconButton>
+                          <Typography color="black">{count}</Typography>
+                          <IconButton
+                            onClick={() => {
+                              if (count < data.quantity) setCount(count + 1);
+                            }}
+                          >
+                            <AddIcon />
+                          </IconButton>
+                        </div>
+                      </div>
                     </div>
+
+                    <button
+                      type="button"
+                      className="h-14 mt-6 px-4 font-semibold rounded-xl bg-blue-600 hover:bg-blue-500 text-white"
+                      onClick={() => {
+                        dispatch(addToCart({ item: { ...data, count } }));
+                      }}
+                    >
+                      Ajouter au panier
+                    </button>
                   </div>
-                </div>
-                <button
-                  type="button"
-                  className="h-14 mt-6 px-4 font-semibold rounded-xl bg-blue-600 hover:bg-blue-500 text-white"
-                  onClick={() => {
-                    dispatch(addToCart({ item: { ...data, count } }));
-                  }}
-                >
-                  Ajouter au panier
-                </button>
-              </div>
+                </>
+              )}
             </div>
           </div>
           <div className="mt-10">
