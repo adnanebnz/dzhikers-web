@@ -2,12 +2,10 @@ const nodemailer = require("nodemailer");
 
 const createMailTransporter = () => {
   const transporter = nodemailer.createTransport({
-    host: "smtp.titan.email",
-    port: 465,
-    secure: true,
+    service: "gmail",
     auth: {
-      user: "admin@dzhikers.live",
-      pass: "adnane20026",
+      user: "benzerdjebadnane13@gmail.com",
+      pass: "ftflxbzxxzidcbis",
     },
   });
   return transporter;

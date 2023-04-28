@@ -17,7 +17,10 @@ router.post("/forgot-password", async (req, res, next) => {
     });
     const link = `http://localhost:5173/reset-password/${oldUser._id}/${token}`;
     sendPasswordResetLink(oldUser.email, link);
-    console.log(link);
+    console.log(
+      "Votre lien de réinitialisation de mot de passe en cas ou vous n'navez pas de connexion (marche que en local): " +
+        link
+    );
   } catch (error) {
     next(error);
   }
