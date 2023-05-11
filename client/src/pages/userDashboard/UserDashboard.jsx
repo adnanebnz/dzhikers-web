@@ -111,6 +111,9 @@ const UserDashboard = () => {
               )}
               {data.length !== 0 && (
                 <>
+                  <h1 className="mb-6 mt-16 text-xl font-semibold text-gray-900">
+                    Mes achats:
+                  </h1>
                   <Table className="shadow-lg">
                     <TableHead>
                       <TableRow>
@@ -228,6 +231,9 @@ const UserDashboard = () => {
           )}
           {pins.length !== 0 && (
             <>
+              <h1 className="mb-3 mt-16 text-xl font-semibold text-gray-900">
+                Mes Réservations:
+              </h1>
               <Table className="shadow-lg mt-10">
                 <TableHead>
                   <TableRow>
