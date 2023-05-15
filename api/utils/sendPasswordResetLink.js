@@ -10,7 +10,7 @@ const sendPasswordResetLink = async (email, link) => {
   };
   try {
     await transporter.sendMail(mailOptions);
-    console.log("Email sent");
+    console.log("Email Envoyée");
   } catch (error) {
     console.log(error);
   }
