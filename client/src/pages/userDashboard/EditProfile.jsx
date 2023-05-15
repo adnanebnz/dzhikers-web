@@ -10,6 +10,7 @@ export default function EditProfile() {
   const [selectedFile, setSelectedFile] = useState(undefined);
   const [image, setImage] = useState(null);
   const [error, setError] = useState(undefined);
+  const [email, setEmail] = useState("");
   const [pfpAlert, setPfpAlert] = useState(false);
   const [infosAlert, setInfosAlert] = useState(false);
   const currentUser = JSON.parse(localStorage.getItem("currentUser"));
@@ -39,7 +40,11 @@ export default function EditProfile() {
         },
         { withCredentials: true }
       );
+      const user = JSON.parse(localStorage.getItem("currentUser"));
+      user.details.img = res.data.img;
+      localStorage.setItem("currentUser", JSON.stringify(user));
       setPfpAlert(true);
+      window.location.reload();
     } catch (error) {
       console.log(error);
     }
@@ -49,13 +54,20 @@ export default function EditProfile() {
     event.preventDefault();
 
     try {
+      console.log(
+        event.target.lastName.value,
+        event.target.firstName.value,
+        event.target.age.value,
+        email,
+        event.target.password.value
+      );
       const res = await axios.put(
         `http://localhost:8800/api/users/${id}`,
         {
           lastName: event.target.lastName.value,
           firstName: event.target.firstName.value,
           age: event.target.age.value,
-          email: event.target.email.value,
+          email: email,
           password: event.target.password.value,
         },
 
@@ -63,6 +75,14 @@ export default function EditProfile() {
           withCredentials: true,
         }
       );
+      const user = JSON.parse(localStorage.getItem("currentUser"));
+      user.details.lastName = res.data.lastName;
+      user.details.firstName = res.data.firstName;
+      user.details.age = res.data.age;
+      user.details.email = res.data.email;
+      console.log(res.data);
+      localStorage.setItem("currentUser", JSON.stringify(user));
+
       setInfosAlert(true);
     } catch (err) {
       console.log(err);
@@ -210,7 +230,8 @@ export default function EditProfile() {
                           id="username"
                           name="email"
                           className="border border-solid0 border-gray-300  rounded-r px-4 py-2 w-full"
-                          type="text"
+                          type="email"
+                          onChange={(e) => setEmail(e.target.value)}
                         />
                       </div>
                     </div>
@@ -235,7 +256,7 @@ export default function EditProfile() {
                     <div className="flex items-center justify-center pt-3">
                       <button
                         type="submit"
-                        className="-mt-2 text-md font-bold text-white bg-blue-600 rounded-full sm:px-5 sm:py-2 h-11 w-96  sm:w-64 hover:bg-blue-700"
+                        className="-mt-2 text-md font-bold text-white bg-blue-600 rounded-full sm:px-5 sm:py-2 px-1 py-1 sm:h-11 w-96  sm:w-64 hover:bg-blue-700"
                       >
                         Modifier vos informations
                       </button>
@@ -256,8 +277,7 @@ export default function EditProfile() {
                   severity="success"
                   sx={{ width: "100%" }}
                 >
-                  La photo de profil a été mise à jour avec succès, vous la
-                  verrez une fois que vous vous reconnecterez !
+                  La photo de profil a été mise à jour avec succès!.
                 </Alert>
               </Snackbar>
             )}

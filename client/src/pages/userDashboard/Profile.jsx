@@ -80,14 +80,14 @@ const Profile = () => {
                   <img
                     src={data.img}
                     alt="Avatar"
-                    className="w-32 h-32 rounded-full mb-4 object-cover"
+                    className="w-56 h-56 rounded-3xl mb-4 object-cover"
                   />
                 )}
                 <h1 className="text-2xl font-bold mb-2">
                   {data.lastName} {data.firstName}
                 </h1>
                 <p className="text-gray-600 mb-6">@{data.username}</p>
-                <div className="flex justify-center space-x-4">
+                <div className="flex flex-col sm:flex-row justify-center items-center sm:space-x-4 space-y-4 sm:space-y-0 px-4">
                   <button
                     className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                     onClick={() => {
@@ -101,7 +101,7 @@ const Profile = () => {
                     Modifier votre profil
                   </button>
                   <button
-                    className="flex items-center px-3 py-2  rounded font-semibold text-white focus:outline-none  bg-red-600 hover:bg-red-700"
+                    className="flex items-center px-4 py-2  rounded font-semibold text-white focus:outline-none  bg-red-600 hover:bg-red-700"
                     onClick={() => setOpen(true)}
                   >
                     <DeleteIcon

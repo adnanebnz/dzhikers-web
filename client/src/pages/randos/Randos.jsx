@@ -15,7 +15,7 @@ const Randos = () => {
   const [count, setCount] = useState(0);
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(100000);
-  const [value, setValue] = useState([0, 3000]);
+  const [value, setValue] = useState([0, 6000]);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
