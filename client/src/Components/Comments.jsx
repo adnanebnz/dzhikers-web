@@ -7,6 +7,7 @@ import { useParams } from "react-router-dom";
 import TextField from "@mui/material/TextField";
 import Rating from "@mui/material/Rating";
 import noavatar from "../assets/noavatar.png";
+import DeleteIcon from "@mui/icons-material/Delete";
 const Comments = () => {
   const [comments, setComments] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -57,7 +58,22 @@ const Comments = () => {
       setError(error.response.data.message);
     }
   };
-  console.log(comments);
+  const handleDeleteComment = async (id) => {
+    try {
+      await axios.post(
+        `http://localhost:8800/api/reviews/${id}`,
+        { userId: currentUser.details._id },
+        {
+          withCredentials: true,
+        }
+      );
+      setComments(comments.filter((comment) => comment._id !== id));
+    } catch (error) {
+      console.log(error);
+      setError(error.response.data.message);
+    }
+  };
+
   return (
     <div className="sm:px-4">
       {loading && <Loading />}
@@ -174,7 +190,17 @@ const Comments = () => {
           >
             {comments.map((c) => (
               <>
-                <div className="bg-white max-w-xl rounded-2xl px-5 py-8 shadow-lg hover:shadow-2xl transition duration-500">
+                <div className="bg-gray-100 max-w-xl rounded-2xl px-5 py-8 shadow-lg hover:shadow-2xl transition duration-500">
+                  {currentUser && currentUser.details._id === c.userId && (
+                    <div className="flex justify-end items-center gap-2">
+                      <DeleteIcon
+                        className="text-red-500 cursor-pointer hover:text-red-600 transition-all
+                        duration-200 ease-in-out"
+                        onClick={() => handleDeleteComment(c._id)}
+                      />
+                    </div>
+                  )}
+
                   <div className="flex justify-start items-center gap-2">
                     <img
                       src={
@@ -188,6 +214,7 @@ const Comments = () => {
                       {c.username}
                     </h1>
                   </div>
+
                   <div className="mt-4">
                     <h1 className="text-lg text-gray-700 font-semibold hover:underline cursor-pointer">
                       Évaluation du produit

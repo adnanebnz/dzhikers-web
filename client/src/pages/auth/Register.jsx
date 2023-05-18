@@ -22,12 +22,7 @@ import {
   InputLabel,
   OutlinedInput,
 } from "@mui/material";
-import {
-  AddCircleOutline,
-  AddIcCallOutlined,
-  Visibility,
-  VisibilityOff,
-} from "@mui/icons-material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 function Copyright(props) {
   return (
     <Typography
@@ -49,6 +44,7 @@ function Copyright(props) {
 const theme = createTheme();
 export default function Register() {
   const [showPassword, setShowPassword] = useState(false);
+  const [previewImage, setPreviewImage] = useState(undefined);
   const handleClickShowPassword = () => setShowPassword((show) => !show);
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
@@ -58,6 +54,7 @@ export default function Register() {
   const [error, setError] = useState(undefined);
   const handleFileSelect = (event) => {
     setSelectedFile(event.target.files[0]);
+    setPreviewImage(URL.createObjectURL(event.target.files[0]));
   };
 
   const handleSubmit = async (event) => {
@@ -177,6 +174,16 @@ export default function Register() {
                 </Fab>
               </label>
             </Box>
+            {previewImage !== undefined && (
+              <div className="flex items-center justify-center">
+                <img
+                  src={previewImage}
+                  alt=""
+                  className="h-20 w-20 rounded-full object-cover"
+                />
+              </div>
+            )}
+
             <TextField
               margin="normal"
               required

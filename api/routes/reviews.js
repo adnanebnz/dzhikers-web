@@ -59,7 +59,7 @@ router.put("/:id", async (req, res, next) => {
   }
 });
 //DELETE REVIEW
-router.delete("/:id", async (req, res, next) => {
+router.post("/:id", async (req, res, next) => {
   try {
     const review = await Review.findById(req.params.id);
     if (review.userId === req.body.userId) {
