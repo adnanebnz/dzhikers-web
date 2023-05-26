@@ -3,6 +3,7 @@ import ScrollToTop from "../../Components/ScrollToTop.jsx";
 import Services from "../../Components/Services";
 import Section from "../../Components/Section";
 import MainMap from "../../Components/Map/MainMap";
+import CallToAction from "../../Components/CallToAction";
 export default function App() {
   return (
     <div>
@@ -16,6 +17,7 @@ export default function App() {
         Vous trouvez nos randonées sur la carte ci-dessous
       </h2>
       <MainMap />
+      <CallToAction />
       <Services />
     </div>
   );
