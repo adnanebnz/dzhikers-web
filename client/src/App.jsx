@@ -29,6 +29,7 @@ import NotificationsViewer from "./pages/userDashboard/NotificationsViewer";
 import AddProduct from "./pages/admin/AddProduct";
 import EditProduct from "./pages/admin/EditProduct";
 import AddUser from "./pages/admin/AddUser";
+import OrganizerDashboard from "./pages/organizer/OrganizerDashboard";
 
 const Layout = () => {
   return (
@@ -95,6 +96,10 @@ const router = createBrowserRouter([
       {
         path: "/organizer/overview/:id",
         element: <SingleRandoViewer />,
+      },
+      {
+        path: "/organizer/dashboard/:id",
+        element: <OrganizerDashboard />,
       },
       {
         path: "/profile/:id",

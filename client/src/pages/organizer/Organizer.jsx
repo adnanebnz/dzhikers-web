@@ -75,14 +75,22 @@ const Organizer = () => {
                 PS: les marques de couleur bleue sont les vôtres
               </p>
             </div>
-            <div>
+            <div className="flex gap-4">
               <button
-                className="px-2 py-1 bg-blue-600 hover:bg-blue-700 text-white"
+                className="px-2 py-1 bg-blue-600 hover:bg-blue-700 text-white rounded-md"
                 onClick={() => {
                   navigate("/organizer/overview");
                 }}
               >
                 Gérer mes randonnées
+              </button>
+              <button
+                className="px-2 py-1 bg-blue-600 hover:bg-blue-700 text-white rounded-md"
+                onClick={() => {
+                  navigate(`/organizer/dashboard/${currentUser.details._id}`);
+                }}
+              >
+                Voir mes commandes / réservations
               </button>
             </div>
           </div>

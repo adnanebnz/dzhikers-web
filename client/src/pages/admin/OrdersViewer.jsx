@@ -25,7 +25,7 @@ const OrdersViewer = () => {
   const [loading, setLoading] = useState(true);
   const [open, setOpen] = useState(false);
   const [shipping, setShipping] = useState("pending");
-  const [payed, setPayed] = useState("not payed");
+  const [payed, setPayed] = useState("not_payed");
   const handleClickOpen = () => {
     setOpen(true);
   };

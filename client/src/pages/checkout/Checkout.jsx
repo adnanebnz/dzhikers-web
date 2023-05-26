@@ -35,11 +35,25 @@ const Checkout = () => {
       return navigate("/login");
     }
     if (choice === "credit" && totalPrice > 0) {
+      const modifiedCart = cart.map((item) => {
+        return {
+          title: item.title,
+          price: item.price,
+          count: item.count,
+          img3: item.img3,
+          _id: item._id,
+          img: item.img,
+          img2: item.img2,
+          category: item.category,
+          brand: item.brand,
+        };
+      });
       await axios
         .post(
           "http://localhost:8800/api/orders/create-checkout-session",
           {
-            cart,
+            cart: modifiedCart,
+            userId: currentUser.details._id,
           },
           {
             headers: {

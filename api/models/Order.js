@@ -24,7 +24,7 @@ const orderSchema = new mongoose.Schema(
       street2: { type: String },
       zipCode: { type: Number },
     },
-    phoneNumber: { type: Number, required: "true" },
+    phoneNumber: { type: String, required: "true" },
     emailAddress: { type: String, required: "true" },
     delivery_status: { type: String, default: "pending" },
     payment_status: { type: String, default: "not_payed" },

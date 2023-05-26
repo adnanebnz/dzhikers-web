@@ -16,15 +16,73 @@ async function increaseStock(_id, quantity) {
 
   await product.save();
 }
+let endpointSecret;
+// endpointSecret =
+//   "whsec_e320ee1663feae65f2a7ccd7892f16624800edc7275ef0f6fd9124a12f235989";
+router.post("/webhook", (req, res) => {
+  const sig = req.headers["stripe-signature"];
+  let eventType;
+  let data;
+  if (endpointSecret) {
+    let event;
+    try {
+      event = stripe.webhooks.constructEvent(req.body, sig, endpointSecret);
+    } catch (err) {
+      return res.status(400).send(`Webhook Error: ${err.message}`);
+    }
+    data = event.data.object;
+    eventType = event.type;
+  } else {
+    data = req.body.data.object;
+    eventType = req.body.type;
+  }
+
+  if (eventType === "checkout.session.completed") {
+    stripe.customers.retrieve(data.customer).then((customer) => {
+      console.log("customer", customer);
+      console.log("data", data);
+      const newOrder = new Order({
+        userId: customer.metadata.userId,
+        products: JSON.parse(customer.metadata.cart),
+        total: data.amount_total / 100,
+        billingAddress: {
+          city: data.customer_details.address.city,
+          firstName: data.customer_details.name.split(" ")[0],
+          lastName: data.customer_details.name.split(" ")[1],
+          street1: data.customer_details.address.line1,
+          street2: data.customer_details.address.line2,
+          zipCode: data.customer_details.address.postal_code,
+        },
+        phoneNumber: data.customer_details.phone,
+        emailAddress: data.customer_details.email,
+
+        delivery_status: "pending",
+        payment_status: "payed",
+      });
+      newOrder.save();
+      JSON.parse(customer.metadata.cart).forEach(async (item) => {
+        await updateStock(item._id, item.count);
+      });
+    });
+    // create order
+  }
+
+  res.status(200).json({ received: true }).end();
+});
 
 router.post("/create-checkout-session", async (req, res) => {
+  const customer = await stripe.customers.create({
+    metadata: {
+      userId: req.body.userId,
+      cart: JSON.stringify(req.body.cart),
+    },
+  });
   const line_items = req.body.cart.map((item) => {
     return {
       price_data: {
         currency: "dzd",
         product_data: {
           name: item.title,
-          description: item.desc,
           metadata: {
             id: item._id,
           },
@@ -34,9 +92,19 @@ router.post("/create-checkout-session", async (req, res) => {
       quantity: item.count,
     };
   });
+
   const session = await stripe.checkout.sessions.create({
+    customer: customer.id,
     line_items,
     mode: "payment",
+    payment_method_types: ["card"],
+    billing_address_collection: "required",
+    shipping_address_collection: {
+      allowed_countries: ["DZ"],
+    },
+    phone_number_collection: {
+      enabled: true,
+    },
     success_url: "http://localhost:5173/checkout/success",
     cancel_url: "http://localhost:5173/checkout/cancel",
   });
