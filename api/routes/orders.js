@@ -105,8 +105,8 @@ router.post("/create-checkout-session", async (req, res) => {
     phone_number_collection: {
       enabled: true,
     },
-    success_url: "http://localhost:5173/checkout/success",
-    cancel_url: "http://localhost:5173/checkout/cancel",
+    success_url: "https://dzhikers-web.vercel.app/checkout/success",
+    cancel_url: "https://dzhikers-web.vercel.app/checkout/cancel",
   });
 
   res.send({ url: session.url });

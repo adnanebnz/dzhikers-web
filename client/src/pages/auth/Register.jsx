@@ -32,7 +32,7 @@ function Copyright(props) {
       {...props}
     >
       {"Copyright © "}
-      <Link color="inherit" href="http://localhost:5173">
+      <Link color="inherit" href="https://dzhikers-web.vercel.app">
         DZHIKERS
       </Link>{" "}
       {new Date().getFullYear()}
@@ -237,7 +237,10 @@ export default function Register() {
             </Button>
             <Grid container>
               <Grid item>
-                <Link href="http://localhost:5173/login" variant="body2">
+                <Link
+                  href="https://dzhikers-web.vercel.app/login"
+                  variant="body2"
+                >
                   {"Vous avez déja un compte? Connectez-vous"}
                 </Link>
               </Grid>
