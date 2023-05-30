@@ -72,7 +72,7 @@ function DashboardContent() {
   useEffect(() => {
     const getProductsCount = async () => {
       const { data } = await axios.get(
-        "http://localhost:8800/api/items?category=all&page=1&min=0&max=1000000000",
+        "https://dzhikers-web-production.up.railway.app/api/items?category=all&page=1&min=0&max=1000000000",
         {
           withCredentials: true,
         }
@@ -80,9 +80,12 @@ function DashboardContent() {
       setProductsCount(data.count);
     };
     const getOrdersCount = async () => {
-      const { data } = await axios.get("http://localhost:8800/api/orders", {
-        withCredentials: true,
-      });
+      const { data } = await axios.get(
+        "https://dzhikers-web-production.up.railway.app/api/orders",
+        {
+          withCredentials: true,
+        }
+      );
       setOrdersCount(data.length);
       setTotalIncomes(
         data.reduce((acc, curr) => {
@@ -91,13 +94,18 @@ function DashboardContent() {
       );
     };
     const getContactsCount = async () => {
-      const { data } = await axios.get("http://localhost:8800/api/messages", {
-        withCredentials: true,
-      });
+      const { data } = await axios.get(
+        "https://dzhikers-web-production.up.railway.app/api/messages",
+        {
+          withCredentials: true,
+        }
+      );
       setContactsCount(data.length);
     };
     const getUsersCount = async () => {
-      const { data } = await axios.get("http://localhost:8800/api/users");
+      const { data } = await axios.get(
+        "https://dzhikers-web-production.up.railway.app/api/users"
+      );
       setUsersCount(data.length);
       setOrgCount(
         data.reduce((acc, curr) => {

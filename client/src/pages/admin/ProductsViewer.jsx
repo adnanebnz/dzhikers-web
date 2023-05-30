@@ -43,7 +43,7 @@ const ProductsViewer = () => {
     const fetchProducts = async () => {
       try {
         const resultat = await axios.get(
-          `http://localhost:8800/api/items?category=all&page=${page}&min=0&max=1000000`,
+          `https://dzhikers-web-production.up.railway.app/api/items?category=all&page=${page}&min=0&max=1000000`,
           {
             withCredentials: true,
           }
@@ -59,9 +59,12 @@ const ProductsViewer = () => {
   }, [page]);
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:8800/api/items/${id}`, {
-        withCredentials: true,
-      });
+      await axios.delete(
+        `https://dzhikers-web-production.up.railway.app/api/items/${id}`,
+        {
+          withCredentials: true,
+        }
+      );
       setProducts(products.filter((product) => product._id !== id));
     } catch (error) {
       console.log(error);

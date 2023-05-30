@@ -29,14 +29,17 @@ export default function EditProduct() {
     event.preventDefault();
 
     try {
-      await axios.put(`http://localhost:8800/api/items/${id}`, {
-        title,
-        desc,
-        brand,
-        category,
-        price,
-        quantity,
-      });
+      await axios.put(
+        `https://dzhikers-web-production.up.railway.app/api/items/${id}`,
+        {
+          title,
+          desc,
+          brand,
+          category,
+          price,
+          quantity,
+        }
+      );
       setOpen(true);
     } catch (error) {
       console.log(error);
@@ -49,11 +52,15 @@ export default function EditProduct() {
       data.append("images", file);
     });
     try {
-      await axios.put(`http://localhost:8800/api/items/images/${id}`, data, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      await axios.put(
+        `https://dzhikers-web-production.up.railway.app/api/items/images/${id}`,
+        data,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
       setOpen(true);
     } catch (err) {
       console.log(err);

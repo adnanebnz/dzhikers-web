@@ -15,18 +15,24 @@ const ContactViewer = () => {
   const [contact, setContact] = useState([]);
   useEffect(() => {
     const fetchContact = async () => {
-      const res = await axios.get("http://localhost:8800/api/messages", {
-        withCredentials: true,
-      });
+      const res = await axios.get(
+        "https://dzhikers-web-production.up.railway.app/api/messages",
+        {
+          withCredentials: true,
+        }
+      );
       setContact(res.data);
     };
     fetchContact();
   }, []);
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:8800/api/messages/${id}`, {
-        withCredentials: true,
-      });
+      await axios.delete(
+        `https://dzhikers-web-production.up.railway.app/api/messages/${id}`,
+        {
+          withCredentials: true,
+        }
+      );
       setContact(contact.filter((msg) => msg._id !== id));
     } catch (err) {
       console.log(err);

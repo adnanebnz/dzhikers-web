@@ -29,7 +29,9 @@ const Single = () => {
   };
   useEffect(() => {
     const fetchData = async () => {
-      const res = await axios.get(`http://localhost:8800/api/pins/${id}`);
+      const res = await axios.get(
+        `https://dzhikers-web-production.up.railway.app/api/pins/${id}`
+      );
       setData(res.data);
       console.log(res.data);
       setLoading(false);
@@ -43,7 +45,7 @@ const Single = () => {
         navigate("/login");
       }
       const res = await axios.post(
-        `http://localhost:8800/api/reservations/${id}/register`,
+        `https://dzhikers-web-production.up.railway.app/api/reservations/${id}/register`,
         {
           hikeId: id,
           organizerUsername: data.organizer,

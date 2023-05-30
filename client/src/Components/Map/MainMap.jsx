@@ -20,7 +20,9 @@ export default function MainMap() {
   useEffect(() => {
     const getPins = async () => {
       try {
-        const res = await axios.get(`http://localhost:8800/api/pins/pure`);
+        const res = await axios.get(
+          `https://dzhikers-web-production.up.railway.app/api/pins/pure`
+        );
         setPins(res.data.pins);
         setLoading(false);
       } catch (error) {

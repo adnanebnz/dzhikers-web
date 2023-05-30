@@ -22,7 +22,9 @@ export default function UserMap({ lat, long }) {
   useEffect(() => {
     const getPins = async () => {
       try {
-        const res = await axios.get(`http://localhost:8800/api/pins/${id}`);
+        const res = await axios.get(
+          `https://dzhikers-web-production.up.railway.app/api/pins/${id}`
+        );
         setPins(res.data);
         setLoading(false);
       } catch (error) {

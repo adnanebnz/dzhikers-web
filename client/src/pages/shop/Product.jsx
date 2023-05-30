@@ -18,7 +18,9 @@ const Product = () => {
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     const fetchData = async () => {
-      const res = await axios.get(`http://localhost:8800/api/items/${id}`);
+      const res = await axios.get(
+        `https://dzhikers-web-production.up.railway.app/api/items/${id}`
+      );
       setData(res.data);
       setLoading(false);
     };

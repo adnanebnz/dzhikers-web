@@ -39,11 +39,15 @@ export default function AddProduct() {
     });
 
     try {
-      await axios.post("http://localhost:8800/api/items", data, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      await axios.post(
+        "https://dzhikers-web-production.up.railway.app/api/items",
+        data,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
       setOpen(true);
     } catch (error) {
       console.log(error);

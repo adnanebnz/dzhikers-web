@@ -31,7 +31,7 @@ const Shop = () => {
     const fetchData = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:8800/api/items?category=${category}&page=${page}&min=${minPrice}&max=${maxPrice}`
+          `https://dzhikers-web-production.up.railway.app/api/items?category=${category}&page=${page}&min=${minPrice}&max=${maxPrice}`
         );
         setItems(res.data.items);
         setItemCount(res.data.count);

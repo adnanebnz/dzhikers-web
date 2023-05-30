@@ -31,7 +31,7 @@ export default function EditProfile() {
     event.preventDefault();
     try {
       const res = await axios.put(
-        `http://localhost:8800/api/users/${id}/updatePfp`,
+        `https://dzhikers-web-production.up.railway.app/api/users/${id}/updatePfp`,
         {
           img: selectedFile,
         },
@@ -62,7 +62,7 @@ export default function EditProfile() {
         event.target.password.value
       );
       const res = await axios.put(
-        `http://localhost:8800/api/users/${id}`,
+        `https://dzhikers-web-production.up.railway.app/api/users/${id}`,
         {
           lastName: event.target.lastName.value,
           firstName: event.target.firstName.value,

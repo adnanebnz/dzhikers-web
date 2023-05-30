@@ -30,7 +30,9 @@ export default function MapApp() {
   useEffect(() => {
     const getPins = async () => {
       try {
-        const res = await axios.get("http://localhost:8800/api/pins/pure");
+        const res = await axios.get(
+          "https://dzhikers-web-production.up.railway.app/api/pins/pure"
+        );
         setPins(res.data.pins);
       } catch (error) {
         console.log(error);
@@ -62,7 +64,7 @@ export default function MapApp() {
 
     try {
       const res = await axios.post(
-        "http://localhost:8800/api/pins",
+        "https://dzhikers-web-production.up.railway.app/api/pins",
         {
           title,
           desc,

@@ -36,7 +36,7 @@ const OrganizerView = () => {
     const fetchData = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:8800/api/pins/organizer/${currentUser.details.username}`,
+          `https://dzhikers-web-production.up.railway.app/api/pins/organizer/${currentUser.details.username}`,
           { withCredentials: true }
         );
         setData(res.data);
@@ -51,7 +51,7 @@ const OrganizerView = () => {
   const handleDelete = async (id) => {
     try {
       const res = await axios.delete(
-        `http://localhost:8800/api/pins/${id}`,
+        `https://dzhikers-web-production.up.railway.app/api/pins/${id}`,
         {
           withCredentials: true,
         }

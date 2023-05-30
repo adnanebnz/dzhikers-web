@@ -50,7 +50,7 @@ const Checkout = () => {
       });
       await axios
         .post(
-          "http://localhost:8800/api/orders/create-checkout-session",
+          "https://dzhikers-web-production.up.railway.app/api/orders/create-checkout-session",
           {
             cart: modifiedCart,
             userId: currentUser.details._id,

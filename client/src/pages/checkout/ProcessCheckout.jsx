@@ -43,7 +43,7 @@ const ProcessCheckout = () => {
   async function makePayment(values) {
     try {
       await axios.post(
-        "http://localhost:8800/api/orders/create-order",
+        "https://dzhikers-web-production.up.railway.app/api/orders/create-order",
         {
           userId: currentUser.details._id,
           products: cart,
