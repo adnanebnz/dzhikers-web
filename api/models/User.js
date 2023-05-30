@@ -49,7 +49,6 @@ const UserSchema = new mongoose.Schema(
     },
     hardwareToken: {
       type: Array,
-      unique: true,
     },
   },
   { timestamps: true }

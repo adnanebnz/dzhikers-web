@@ -51,7 +51,7 @@ app.use((err, req, res, next) => {
 });
 
 //SERVER STARTUP
-
-app.listen(process.env.PORT, "0.0.0.0", () => {
+const port = process.env.PORT || 3000;
+app.listen(port, "0.0.0.0", () => {
   console.log("Server listening at port 8800 🚀");
 });
